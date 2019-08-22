@@ -1,6 +1,6 @@
-## Welcome to GitHub Pages
+## ProjektC_WS19-20
 
-You can use the [editor on GitHub](https://github.com/ThoreAugust/ProjektC_WS19-20/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Projekt Repository von Thore August, Nikita Frabrizius und Christopher Giese
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
