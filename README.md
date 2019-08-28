@@ -1,6 +1,6 @@
 ## ProjektC_WS19-20
 
-Projekt Repository von Thore August, Nikita Frabrizius und Christopher Giese
+Projekt Repository von Thore August, Nikita Fabrizius und Christopher Giese
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
