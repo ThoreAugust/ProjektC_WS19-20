@@ -19,3 +19,12 @@ Recherche zum Auflisten installierter Software
 - da stehen einige code-Beispiele zur registry, jedoch tauchen bei mir ständig fehler auf, 
 dass die registry nicht in der libary "using Microsoft.win32;" gefunden wird
 evtl. liegts an meinem win 8.1 Betriebssystem..
+
+______________________________________________
+StartKillProcess-Tutorial 
+
+opens programs by buttons and close them with buttons + windows Form Application Tutorial
+https://www.youtube.com/watch?v=Lv2KGw5nv_o
+
+- theoretisch müsste man nur die installierten Programme in die Auswahl bekommen und statt der buttons nen Timer,
+sodass die Software mittels if-Schleife geschlossen wird.. aber an sich ist das die Basis ^^
