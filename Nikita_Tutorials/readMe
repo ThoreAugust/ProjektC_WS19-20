@@ -28,3 +28,6 @@ https://www.youtube.com/watch?v=Lv2KGw5nv_o
 
 - theoretisch müsste man nur die installierten Programme in die Auswahl bekommen und statt der buttons nen Timer,
 sodass die Software mittels if-Schleife geschlossen wird.. aber an sich ist das die Basis ^^
+
+- habe noch einen Timer hinzugefügt, der die ausgewählte Applikation nach 15 Sekunden (150ms) schließt , anstelle des 
+"Close App"-Btns
