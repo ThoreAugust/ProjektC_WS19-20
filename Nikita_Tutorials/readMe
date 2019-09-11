@@ -12,7 +12,7 @@ https://stackoverflow.com/questions/908850/get-installed-applications-in-a-syste
 lange nicht mit der Git-Website gearbeitet, brauchte paar Versuche zum Hochladen ^^.
 
 _____________________________________________
-Recherche zum Auflisten installierter Software
+Recherche zum Auflisten installierter Software (listPrgs_test.cs)
 
 - https://docs.microsoft.com/en-us/dotnet/api/microsoft.win32.registry?view=netframework-4.8
 
