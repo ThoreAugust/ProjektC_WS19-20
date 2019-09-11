@@ -30,4 +30,4 @@ https://www.youtube.com/watch?v=Lv2KGw5nv_o
 sodass die Software mittels if-Schleife geschlossen wird.. aber an sich ist das die Basis ^^
 
 - habe noch einen Timer hinzugefügt, der die ausgewählte Applikation nach 15 Sekunden (150ms) schließt , anstelle des 
-"Close App"-Btns ...fehlt nur noch etwas automatisierung :P
+"Close App"-Btns ...fehlt nur noch etwas Automatisierung :P
