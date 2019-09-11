@@ -10,3 +10,12 @@ https://stackoverflow.com/questions/908850/get-installed-applications-in-a-syste
 ..noch in Arbeit.
 
 lange nicht mit der Git-Website gearbeitet, brauchte paar Versuche zum Hochladen ^^.
+
+_____________________________________________
+Recherche zum Auflisten installierter Software
+
+- https://docs.microsoft.com/en-us/dotnet/api/microsoft.win32.registry?view=netframework-4.8
+
+- da stehen einige code-Beispiele zur registry, jedoch tauchen bei mir ständig fehler auf, 
+dass die registry nicht in der libary "using Microsoft.win32;" gefunden wird
+evtl. liegts an meinem win 8.1 Betriebssystem..
