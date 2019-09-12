@@ -1,0 +1,13 @@
+Projekttitel: (Anti-)Distraction-Manager, 
+
+WPA oder WPF?
+Autostart
+Vorhandene Funktionen kombinieren
+Zeitwarnungen als Popup
+Liste zu regulierender Programme erstellen und speichern
+Programme in Kategorien zusammen fassen
+Zeitgrenzen für individuelle Programme und Kategorien erstellen
+
+Bonus:
+Statistik aktiver Programme
+Online Einstellungen & Liste synchronisieren
