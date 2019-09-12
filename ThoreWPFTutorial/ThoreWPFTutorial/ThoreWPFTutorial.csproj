@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B140E794-0A25-4E4B-9058-9C48A2DA75F5}</ProjectGuid>
+    <ProjectGuid>{D6416DC3-BE0D-48DE-BEB8-F151DAA5A430}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ThoreWPFTutorial</RootNamespace>
     <AssemblyName>ThoreWPFTutorial</AssemblyName>
@@ -55,7 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Page Include="ThoreGreetings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -63,8 +63,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="ThoreGreetings.xaml.cs">
+      <DependentUpon>ThoreGreetings.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

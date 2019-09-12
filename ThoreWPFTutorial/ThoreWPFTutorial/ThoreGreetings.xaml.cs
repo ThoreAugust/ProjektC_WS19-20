@@ -24,5 +24,17 @@ namespace ThoreWPFTutorial
         {
             InitializeComponent();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (HelloButton.IsChecked == true)
+            {
+                MessageBox.Show("Hello.");
+            }
+            else if (GoodbyeButton.IsChecked == true)
+            {
+                MessageBox.Show("Goodbye.");
+            }
+        }
     }
 }
