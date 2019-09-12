@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Nikita_Tutorials",
+    "\\Nikita_Tutorials\\StartKillProcessInCsharp",
+    "\\Nikita_Tutorials\\StartKillProcessInCsharp\\StartKillProcessInCsharp"
   ],
-  "SelectedNode": "\\_config.yml",
+  "SelectedNode": "\\Nikita_Tutorials\\StartKillProcessInCsharp\\StartKillProcessInCsharp\\StartKillProcessInCsharp.sln",
   "PreviewInSolutionExplorer": false
 }
