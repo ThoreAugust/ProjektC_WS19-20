@@ -11,6 +11,7 @@ https://stackoverflow.com/questions/908850/get-installed-applications-in-a-syste
 
 lange nicht mit der Git-Website gearbeitet, brauchte paar Versuche zum Hochladen ^^.
 
+Fortschritt 29.08.- 12.09.19 
 _____________________________________________
 Recherche zum Auflisten installierter Software (listPrgs_test.cs)
 
@@ -31,3 +32,12 @@ sodass die Software mittels if-Schleife geschlossen wird.. aber an sich ist das 
 
 - habe noch einen Timer hinzugefügt, der die ausgewählte Applikation nach 15 Sekunden (150ms) schließt , anstelle des 
 "Close App"-Btns ...fehlt nur noch etwas Automatisierung :P
+
+
+Fortschritt 12.09.-26.09.19
+__________________________________________________
+Messagebox Tutorial:
+https://www.youtube.com/watch?v=9d6QfNXGShM
+
+Autostart Tutorial:
+https://www.youtube.com/watch?v=RHKsERiVjx4
