@@ -28,45 +28,83 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listViewProcesses = new System.Windows.Forms.ListView();
+            this.processID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.processName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.processTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.processRuntime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.processLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // button1
+            // listViewProcesses
             // 
-            this.button1.Location = new System.Drawing.Point(516, 169);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.listViewProcesses.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.processID,
+            this.processName,
+            this.processTitle,
+            this.processRuntime});
+            this.listViewProcesses.FullRowSelect = true;
+            this.listViewProcesses.GridLines = true;
+            this.listViewProcesses.HideSelection = false;
+            this.listViewProcesses.Location = new System.Drawing.Point(12, 101);
+            this.listViewProcesses.Name = "listViewProcesses";
+            this.listViewProcesses.Size = new System.Drawing.Size(1140, 587);
+            this.listViewProcesses.TabIndex = 0;
+            this.listViewProcesses.UseCompatibleStateImageBehavior = false;
+            this.listViewProcesses.View = System.Windows.Forms.View.Details;
+            this.listViewProcesses.SelectedIndexChanged += new System.EventHandler(this.ListViewProcesses_SelectedIndexChanged);
             // 
-            // listBox1
+            // processID
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(12, 12);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(294, 407);
-            this.listBox1.TabIndex = 1;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.ListBox1_SelectedIndexChanged);
+            this.processID.Text = "ID";
+            // 
+            // processName
+            // 
+            this.processName.Text = "Name";
+            this.processName.Width = 200;
+            // 
+            // processTitle
+            // 
+            this.processTitle.Text = "Title";
+            this.processTitle.Width = 200;
+            // 
+            // processRuntime
+            // 
+            this.processRuntime.Text = "Time";
+            this.processRuntime.Width = 120;
+            // 
+            // processLabel
+            // 
+            this.processLabel.AutoSize = true;
+            this.processLabel.Location = new System.Drawing.Point(13, 82);
+            this.processLabel.Name = "processLabel";
+            this.processLabel.Size = new System.Drawing.Size(138, 13);
+            this.processLabel.TabIndex = 1;
+            this.processLabel.Text = "Currently running Processes";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(1164, 700);
+            this.Controls.Add(this.processLabel);
+            this.Controls.Add(this.listViewProcesses);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListView listViewProcesses;
+        private System.Windows.Forms.Label processLabel;
+        private System.Windows.Forms.ColumnHeader processID;
+        private System.Windows.Forms.ColumnHeader processName;
+        private System.Windows.Forms.ColumnHeader processTitle;
+        private System.Windows.Forms.ColumnHeader processRuntime;
     }
 }
 
