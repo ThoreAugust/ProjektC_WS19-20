@@ -152,6 +152,7 @@ namespace CombinationsTest
                 var selectedItem = (Process)listViewProcesses.SelectedItems[0].Tag;
                 if (selectedItem != null)
                 {
+                    usage = DateTime.Now.Subtract(selectedItem.StartTime);
                     DialogResult result;
                     result = MessageBox.Show(
                         "Id: " + selectedItem.Id + "\n Name: " + selectedItem.ProcessName + "\n Title: " + selectedItem.MainWindowTitle + "\n Laufzeit: "
