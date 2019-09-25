@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Windows;
 using System.Windows.Input;
 using System.Diagnostics;
+using Microsoft.Win32;
 
 
 namespace CombinationsTest
@@ -57,6 +58,7 @@ namespace CombinationsTest
 
     public partial class Form1 : Form
     {
+        RegistryKey reg = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
         TimeSpan usage;
         ListViewItem lvi;
         List<Kategorie> logKategorien;
@@ -64,6 +66,7 @@ namespace CombinationsTest
         
         public Form1()
         {
+            reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
             InitializeComponent();
             
         }
