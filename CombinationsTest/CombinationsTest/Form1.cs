@@ -98,10 +98,14 @@ namespace CombinationsTest
             {
                 RegistryKey subkey = key.OpenSubKey(keyName);
                 displayName = subkey.GetValue("DisplayName") as string;
-                if (!programmNames.Contains(displayName))
+                if (displayName != null && !displayName.Contains("Microsoft") && !displayName.Contains("Windows"))
                 {
-                    programmNames.Add(displayName);
+                    if (!programmNames.Contains(displayName))
+                    {
+                        programmNames.Add(displayName);
+                    }
                 }
+                
 
             }
 
@@ -111,9 +115,12 @@ namespace CombinationsTest
             {
                 RegistryKey subkey = key.OpenSubKey(keyName);
                 displayName = subkey.GetValue("DisplayName") as string;
-                if (!programmNames.Contains(displayName))
+                if (displayName != null && !displayName.Contains("Microsoft") && !displayName.Contains("Windows"))
                 {
-                    programmNames.Add(displayName);
+                    if (!programmNames.Contains(displayName))
+                    {
+                        programmNames.Add(displayName);
+                    }
                 }
             }
 
@@ -123,9 +130,12 @@ namespace CombinationsTest
             {
                 RegistryKey subkey = key.OpenSubKey(keyName);
                 displayName = subkey.GetValue("DisplayName") as string;
-                if (!programmNames.Contains(displayName))
+                if (displayName != null && !displayName.Contains("Microsoft") && !displayName.Contains("Windows"))
                 {
-                    programmNames.Add(displayName);
+                    if (!programmNames.Contains(displayName))
+                    {
+                        programmNames.Add(displayName);
+                    }
                 }
             }
             return programmNames;
