@@ -34,6 +34,7 @@
             this.processTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.processRuntime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.processLabel = new System.Windows.Forms.Label();
+            this.processKillButton = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listViewProcesses
@@ -42,7 +43,8 @@
             this.processID,
             this.processName,
             this.processTitle,
-            this.processRuntime});
+            this.processRuntime,
+            this.processKillButton});
             this.listViewProcesses.FullRowSelect = true;
             this.listViewProcesses.GridLines = true;
             this.listViewProcesses.HideSelection = false;
@@ -82,6 +84,10 @@
             this.processLabel.TabIndex = 1;
             this.processLabel.Text = "Currently running Processes";
             // 
+            // processKillButton
+            // 
+            this.processKillButton.Text = "Beenden";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -105,6 +111,7 @@
         private System.Windows.Forms.ColumnHeader processName;
         private System.Windows.Forms.ColumnHeader processTitle;
         private System.Windows.Forms.ColumnHeader processRuntime;
+        private System.Windows.Forms.ColumnHeader processKillButton;
     }
 }
 

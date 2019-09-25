@@ -16,46 +16,6 @@ using Microsoft.Win32;
 
 namespace CombinationsTest
 {
-    public partial class Kategorie
-    {
-        public String name;
-        public double usedTime;
-        public double maxTime;
-
-        public Kategorie(String n, double ut, double mt)
-        {
-            name = n;
-            usedTime = ut;
-            maxTime = mt;
-        }
-
-        override public String ToString()
-        {
-            return name + ";" + usedTime + ";" + maxTime;
-        }
-    }
-
-    public partial class Programm
-    {
-        public String path;
-        public String kategorie;
-        public double usedTime;
-        public double maxTime;
-
-        public Programm(String p, String k, double ut, double mt)
-        {
-            path = p;
-            kategorie = k;
-            usedTime = ut;
-            maxTime = mt;
-        }
-
-        override public String ToString()
-        {
-            return path + ";" + kategorie + ";" + usedTime + ";" + maxTime;
-        }
-    }
-
     public partial class Form1 : Form
     {
         RegistryKey reg = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
@@ -70,7 +30,6 @@ namespace CombinationsTest
             InitializeComponent();
             
         }
-
         private void LoadLog()
         {
             if (!File.Exists("Log.txt"))
@@ -110,7 +69,6 @@ namespace CombinationsTest
                 }
             }
         }
-
         private void SaveLogs()
         {
             using (StreamWriter sw = File.CreateText("Log.txt"))
@@ -127,7 +85,6 @@ namespace CombinationsTest
                 }
             }
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             logKategorien = new List<Kategorie>();
@@ -147,7 +104,6 @@ namespace CombinationsTest
                 }
             }
         }
-
         private void ListViewProcesses_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -170,7 +126,6 @@ namespace CombinationsTest
                 Console.WriteLine(ex.Message);
             }
         }
-
         private void AddProgram(Process process)
         {
             var path = process.MainModule.FileName;
@@ -191,6 +146,43 @@ namespace CombinationsTest
                 SaveLogs();
                 MessageBox.Show("Eintrag gespeichert.", "Success", MessageBoxButtons.OK);
             }
+        }
+    }
+    public partial class Kategorie
+    {
+        public String name;
+        public double usedTime;
+        public double maxTime;
+
+        public Kategorie(String n, double ut, double mt)
+        {
+            name = n;
+            usedTime = ut;
+            maxTime = mt;
+        }
+
+        override public String ToString()
+        {
+            return name + ";" + usedTime + ";" + maxTime;
+        }
+    }
+    public partial class Programm
+    {
+        public String path;
+        public String kategorie;
+        public double usedTime;
+        public double maxTime;
+
+        public Programm(String p, String k, double ut, double mt)
+        {
+            path = p;
+            kategorie = k;
+            usedTime = ut;
+            maxTime = mt;
+        }
+        override public String ToString()
+        {
+            return path + ";" + kategorie + ";" + usedTime + ";" + maxTime;
         }
     }
 }
