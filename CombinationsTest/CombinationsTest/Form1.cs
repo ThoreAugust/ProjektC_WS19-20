@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -26,7 +27,7 @@ namespace CombinationsTest
         
         public Form1()
         {
-            reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
+            //reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
             InitializeComponent();
             
         }
@@ -85,6 +86,51 @@ namespace CombinationsTest
                 }
             }
         }
+        private List<String> getInstalledProgrammNames()
+        {
+            List<String> programmNames = new List<String>();
+            string displayName;
+            RegistryKey key;
+
+            // search in: CurrentUser
+            key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
+            foreach (String keyName in key.GetSubKeyNames())
+            {
+                RegistryKey subkey = key.OpenSubKey(keyName);
+                displayName = subkey.GetValue("DisplayName") as string;
+                if (!programmNames.Contains(displayName))
+                {
+                    programmNames.Add(displayName);
+                }
+
+            }
+
+            // search in: LocalMachine_32
+            key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
+            foreach (String keyName in key.GetSubKeyNames())
+            {
+                RegistryKey subkey = key.OpenSubKey(keyName);
+                displayName = subkey.GetValue("DisplayName") as string;
+                if (!programmNames.Contains(displayName))
+                {
+                    programmNames.Add(displayName);
+                }
+            }
+
+            // search in: LocalMachine_64
+            key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall");
+            foreach (String keyName in key.GetSubKeyNames())
+            {
+                RegistryKey subkey = key.OpenSubKey(keyName);
+                displayName = subkey.GetValue("DisplayName") as string;
+                if (!programmNames.Contains(displayName))
+                {
+                    programmNames.Add(displayName);
+                }
+            }
+            return programmNames;
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             logKategorien = new List<Kategorie>();
@@ -102,6 +148,10 @@ namespace CombinationsTest
 
                     listViewProcesses.Items.Add(lvi);
                 }
+            }
+            foreach ( var name in getInstalledProgrammNames())
+            {
+                Console.WriteLine(name);
             }
         }
         private void ListViewProcesses_SelectedIndexChanged(object sender, EventArgs e)
@@ -160,7 +210,6 @@ namespace CombinationsTest
             usedTime = ut;
             maxTime = mt;
         }
-
         override public String ToString()
         {
             return name + ";" + usedTime + ";" + maxTime;
