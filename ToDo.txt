@@ -1,12 +1,24 @@
 Projekttitel: (Anti-)Distraction-Manager, Balance, TimeIsUp, UpTime,
 
-WPA oder WPF?
-Autostart
-Vorhandene Funktionen kombinieren
-Zeitwarnungen als Popup
-Liste zu regulierender Programme erstellen und speichern
-Programme in Kategorien zusammen fassen
-Zeitgrenzen für individuelle Programme und Kategorien erstellen
+(Done)WPA oder WPF?
+(Done)Autostart
+(Done)Vorhandene Funktionen kombinieren
+-Zeitwarnungen als Popup
+(Done)Liste zu regulierender Programme erstellen und speichern
+-Programme in Kategorien zusammen fassen
+-Zeitgrenzen für individuelle Programme und Kategorien erstellen
+!Tabview Installierte Programme | Aktive Programme | Gespeicherte Programme
+	Aktiv: 			Prozess | Kategorie | Maximale Zeit | Button "Hinzufügen"
+	Gespeichert: 	Prozess | Kategorie | Maximale Zeit | Verbleibende Zeit
+!Menüleiste
+	Datei: Schliessen
+	Statistik: Anzeigen
+	Einstellungen: Optionen | Import | Export
+!Zeit/Timer
+!Prozesse beenden / killen
+-Kategorien: Liste enthaltener Programme, UsedTime = UsedTime aller enthaltener Programme
+!Tägliches Resetten der Timer
+!Statistik speichern
 
 Bonus:
 Statistik aktiver Programme
