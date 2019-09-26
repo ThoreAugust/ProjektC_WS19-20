@@ -19,7 +19,7 @@ namespace CombinationsTest
 {
     public partial class Form1 : Form
     {
-        RegistryKey reg = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
+        RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run",true);
         TimeSpan usage;
         ListViewItem lvi;
         List<Kategorie> logKategorien;
@@ -27,7 +27,7 @@ namespace CombinationsTest
         
         public Form1()
         {
-            //reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
+            reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
             InitializeComponent();
             
         }
