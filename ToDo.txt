@@ -1,4 +1,4 @@
-Projekttitel: (Anti-)Distraction-Manager, 
+Projekttitel: (Anti-)Distraction-Manager, Balance, TimeIsUp, UpTime,
 
 WPA oder WPF?
 Autostart
@@ -6,7 +6,7 @@ Vorhandene Funktionen kombinieren
 Zeitwarnungen als Popup
 Liste zu regulierender Programme erstellen und speichern
 Programme in Kategorien zusammen fassen
-Zeitgrenzen für individuelle Programme und Kategorien erstellen
+Zeitgrenzen fÃ¼r individuelle Programme und Kategorien erstellen
 
 Bonus:
 Statistik aktiver Programme
