@@ -146,7 +146,7 @@ namespace CombinationsTest
             logKategorien = new List<Kategorie>();
             logProgramme = new List<Programm>();
             LoadLog();
-            listViewProcesses.Items.Clear();
+            currentProgsListView.Items.Clear();
             foreach (Process process in Process.GetProcesses())
             {
                 if(process.MainWindowTitle != "")
@@ -156,19 +156,23 @@ namespace CombinationsTest
                     lvi = new ListViewItem(row);
                     lvi.Tag = process;
 
-                    listViewProcesses.Items.Add(lvi);
+                    currentProgsListView.Items.Add(lvi);
                 }
             }
             foreach ( var name in getInstalledProgrammNames())
             {
                 Console.WriteLine(name);
+                var row = new String[] { name };
+                lvi = new ListViewItem(row);
+
+                installedProgsListView.Items.Add(lvi);
             }
         }
         private void ListViewProcesses_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                var selectedItem = (Process)listViewProcesses.SelectedItems[0].Tag;
+                var selectedItem = (Process)currentProgsListView.SelectedItems[0].Tag;
                 if (selectedItem != null)
                 {
                     usage = DateTime.Now.Subtract(selectedItem.StartTime);
@@ -225,6 +229,11 @@ namespace CombinationsTest
                 this.Hide();
                 timerNotification.ShowBalloonTip(1000, "Important notice" , "You have xxx Seconds left for your CurrentApplication", ToolTipIcon.Info);
             }
+        }
+
+        private void ExitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
     public partial class Kategorie
