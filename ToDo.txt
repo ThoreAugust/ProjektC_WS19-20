@@ -19,6 +19,7 @@ Projekttitel: (Anti-)Distraction-Manager, Balance, TimeIsUp, UpTime,
 -Kategorien: Liste enthaltener Programme, UsedTime = UsedTime aller enthaltener Programme
 !Tägliches Resetten der Timer
 !Statistik speichern
+!Passwort um schließen des Programms zuverhindern
 
 Bonus:
 Statistik aktiver Programme
