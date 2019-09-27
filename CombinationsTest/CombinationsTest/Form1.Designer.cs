@@ -55,10 +55,15 @@
             this.programmTabs = new System.Windows.Forms.TabControl();
             this.installedProgs = new System.Windows.Forms.TabPage();
             this.installedProgsListView = new System.Windows.Forms.ListView();
+            this.installedName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.currentProgs = new System.Windows.Forms.TabPage();
             this.savedProgs = new System.Windows.Forms.TabPage();
             this.savedProgsListView = new System.Windows.Forms.ListView();
-            this.installedName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.savedName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.savedPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.savedKat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.savedUsedTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.savedMaxTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -170,12 +175,12 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(90, 6);
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(93, 22);
             this.exitToolStripMenuItem1.Text = "Exit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.ExitToolStripMenuItem1_Click);
             // 
@@ -272,6 +277,11 @@
             this.installedProgsListView.UseCompatibleStateImageBehavior = false;
             this.installedProgsListView.View = System.Windows.Forms.View.Details;
             // 
+            // installedName
+            // 
+            this.installedName.Text = "Name";
+            this.installedName.Width = 200;
+            // 
             // currentProgs
             // 
             this.currentProgs.Controls.Add(this.currentProgsListView);
@@ -296,6 +306,12 @@
             // 
             // savedProgsListView
             // 
+            this.savedProgsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.savedName,
+            this.savedPath,
+            this.savedKat,
+            this.savedUsedTime,
+            this.savedMaxTime});
             this.savedProgsListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.savedProgsListView.GridLines = true;
             this.savedProgsListView.HideSelection = false;
@@ -306,10 +322,30 @@
             this.savedProgsListView.UseCompatibleStateImageBehavior = false;
             this.savedProgsListView.View = System.Windows.Forms.View.Details;
             // 
-            // installedName
+            // savedName
             // 
-            this.installedName.Text = "Name";
-            this.installedName.Width = 200;
+            this.savedName.Text = "Name";
+            this.savedName.Width = 200;
+            // 
+            // savedPath
+            // 
+            this.savedPath.Text = "Dateipfad";
+            this.savedPath.Width = 150;
+            // 
+            // savedKat
+            // 
+            this.savedKat.Text = "Kategorie";
+            this.savedKat.Width = 100;
+            // 
+            // savedUsedTime
+            // 
+            this.savedUsedTime.Text = "Nutzungszeit";
+            this.savedUsedTime.Width = 100;
+            // 
+            // savedMaxTime
+            // 
+            this.savedMaxTime.Text = "Max Nutzungszeit";
+            this.savedMaxTime.Width = 100;
             // 
             // Form1
             // 
@@ -367,6 +403,11 @@
         private System.Windows.Forms.ToolStripMenuItem importMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportMenuItem;
         private System.Windows.Forms.ColumnHeader installedName;
+        private System.Windows.Forms.ColumnHeader savedPath;
+        private System.Windows.Forms.ColumnHeader savedName;
+        private System.Windows.Forms.ColumnHeader savedKat;
+        private System.Windows.Forms.ColumnHeader savedUsedTime;
+        private System.Windows.Forms.ColumnHeader savedMaxTime;
     }
 }
 

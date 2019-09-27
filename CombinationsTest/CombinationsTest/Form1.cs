@@ -27,7 +27,7 @@ namespace CombinationsTest
         
         public Form1()
         {
-            reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
+         //   reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
             InitializeComponent();
             
         }
@@ -65,7 +65,7 @@ namespace CombinationsTest
                         if (i == 1)
                             logKategorien.Add(new Kategorie( vs[0], Convert.ToInt64(vs[1]), Convert.ToInt64(vs[2])));
                         if (i == 2)
-                            logProgramme.Add(new Programm(vs[0], vs[1], Convert.ToDouble(vs[2]), Convert.ToDouble(vs[3])));
+                            logProgramme.Add(new Programm(vs[0],vs[1],vs[2], Convert.ToDouble(vs[3]), Convert.ToDouble(vs[4])));
                     }
                 }
             }
@@ -161,11 +161,16 @@ namespace CombinationsTest
             }
             foreach ( var name in getInstalledProgrammNames())
             {
-                Console.WriteLine(name);
                 var row = new String[] { name };
                 lvi = new ListViewItem(row);
 
                 installedProgsListView.Items.Add(lvi);
+            }
+            foreach (var savedProgs in logProgramme)
+            {
+                var row = new String[] {savedProgs.name, savedProgs.path, savedProgs.kategorie,""+savedProgs.usedTime,""+savedProgs.maxTime };
+                lvi = new ListViewItem(row);
+                savedProgsListView.Items.Add(lvi);
             }
         }
         private void ListViewProcesses_SelectedIndexChanged(object sender, EventArgs e)
@@ -206,7 +211,7 @@ namespace CombinationsTest
             }
             if (b)
             {
-                logProgramme.Add(new Programm(process.MainModule.FileName, null, usage.TotalMilliseconds, 0));
+                logProgramme.Add(new Programm(process.MainWindowTitle,process.MainModule.FileName, null, usage.TotalMilliseconds, 0));
                 SaveLogs();
                 MessageBox.Show("Eintrag gespeichert.", "Success", MessageBoxButtons.OK);
             }
@@ -238,9 +243,9 @@ namespace CombinationsTest
     }
     public partial class Kategorie
     {
-        public String name;
-        public double usedTime;
-        public double maxTime;
+        String name;
+        double usedTime;
+        double maxTime;
 
         public Kategorie(String n, double ut, double mt)
         {
@@ -255,13 +260,15 @@ namespace CombinationsTest
     }
     public partial class Programm
     {
+        public String name;
         public String path;
         public String kategorie;
         public double usedTime;
         public double maxTime;
 
-        public Programm(String p, String k, double ut, double mt)
+        public Programm(String n,String p, String k, double ut, double mt)
         {
+            name = n;
             path = p;
             kategorie = k;
             usedTime = ut;
@@ -269,7 +276,7 @@ namespace CombinationsTest
         }
         override public String ToString()
         {
-            return path + ";" + kategorie + ";" + usedTime + ";" + maxTime;
+            return name + ";" +path + ";" + kategorie + ";" + usedTime + ";" + maxTime;
         }
     }
 }
