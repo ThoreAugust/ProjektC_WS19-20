@@ -41,3 +41,14 @@ https://www.youtube.com/watch?v=9d6QfNXGShM
 
 Autostart Tutorial:
 https://www.youtube.com/watch?v=RHKsERiVjx4
+
+
+Fortschritt 26.09.19 - 10.10.19
+__________________________________________________
+
+Im neuen "CombinationsTest+Autostart+Timer.rar" müsste "comboBox1" durch "aktuelle Programme - Liste ersetzt werden, 
+damit er diese Liste durchgeht und Programme bei Zeitüberschreitung schließt.
+Steht auch im Code ab Zeile 262 der Form1 über der betreffenden Zeile. 
+
+Weiß leider nicht wo die liste "aktuelle Programme" erstellt wird oder wie ich drauf zugreife, da die comments fehlen ^^
+- Autostart + Timer läuft sonst
