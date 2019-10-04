@@ -19,17 +19,18 @@ namespace CombinationsTest
 {
     public partial class Form1 : Form
     {
-        RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run",true);
-        TimeSpan usage;
-        ListViewItem lvi;
-        List<Kategorie> logKategorien;
-        List<Programm> logProgramme;
+        private RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run",true);
+        private TimeSpan usage;
+        private ListViewItem lvi;
+        private List<Kategorie> logKategorien;
+        private List<Programm> logProgramme;
+        private int ticks;
         
         public Form1()
         {
          //   reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
             InitializeComponent();
-            
+            killTimer.Start();
         }
         private void LoadLog()
         {
@@ -147,6 +148,8 @@ namespace CombinationsTest
             logProgramme = new List<Programm>();
             LoadLog();
             currentProgsListView.Items.Clear();
+            installedProgsListView.Items.Clear();
+            savedProgsListView.Items.Clear();
             foreach (Process process in Process.GetProcesses())
             {
                 if(process.MainWindowTitle != "")
@@ -155,7 +158,7 @@ namespace CombinationsTest
                     var row = new String[] { "" + process.Id, process.ProcessName, process.MainWindowTitle, usage.ToString(@"hh\:mm\:ss") };
                     lvi = new ListViewItem(row);
                     lvi.Tag = process;
-
+                    //aktuelle Programme
                     currentProgsListView.Items.Add(lvi);
                 }
             }
@@ -163,13 +166,14 @@ namespace CombinationsTest
             {
                 var row = new String[] { name };
                 lvi = new ListViewItem(row);
-
+                // alle installierten Programme
                 installedProgsListView.Items.Add(lvi);
             }
             foreach (var savedProgs in logProgramme)
             {
                 var row = new String[] {savedProgs.name, savedProgs.path, savedProgs.kategorie,""+savedProgs.usedTime,""+savedProgs.maxTime };
                 lvi = new ListViewItem(row);
+                // alle gespeicherten Programme
                 savedProgsListView.Items.Add(lvi);
             }
         }
@@ -180,14 +184,19 @@ namespace CombinationsTest
                 var selectedItem = (Process)currentProgsListView.SelectedItems[0].Tag;
                 if (selectedItem != null)
                 {
-                    usage = DateTime.Now.Subtract(selectedItem.StartTime);
-                    DialogResult result;
-                    result = MessageBox.Show(
-                        "Id: " + selectedItem.Id + "\n Name: " + selectedItem.ProcessName + "\n Title: " + selectedItem.MainWindowTitle + "\n Laufzeit: "
-                        + usage.ToString(@"hh\:mm\:ss") + "\n\n Prozess hinzufügen?", "Process details", MessageBoxButtons.YesNo, MessageBoxIcon.Information
-                        );
-                    if (result == DialogResult.Yes)
-                        AddProgram(selectedItem);
+                    //usage = DateTime.Now.Subtract(selectedItem.StartTime);
+                    //DialogResult result;
+                    //result = MessageBox.Show(
+                    //    "Id: " + selectedItem.Id + "\n Name: " + selectedItem.ProcessName + "\n Title: " + selectedItem.MainWindowTitle + "\n Laufzeit: "
+                    //    + usage.ToString(@"hh\:mm\:ss") + "\n\n Prozess hinzufügen?", "Process details", MessageBoxButtons.YesNo, MessageBoxIcon.Information
+                    //    );
+                    //if (result == DialogResult.Yes)
+                    //    AddProgram(selectedItem);
+                    detailBox.Visible = false;
+                    detailBox.Text = selectedItem.ProcessName + ", "+ selectedItem.MainWindowTitle;
+                    detailBox.Visible = true;
+
+                    currentUseTimeTextBox.Text = DateTime.Now.Subtract(selectedItem.StartTime).ToString(@"hh\:mm\:ss"); ;
                 }
             }
             catch (Exception ex)
@@ -239,6 +248,92 @@ namespace CombinationsTest
         private void ExitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void MaxUseTimeTrackbar_Scroll(object sender, EventArgs e)
+        {
+            var selectedItem = (Process)currentProgsListView.FocusedItem.Tag;
+            int maxHours =  maxUseTimeTrackbar.Value / 60 / 60;
+            int maxMinutes = maxUseTimeTrackbar.Value / 60;
+            if (maxMinutes >= 60)
+            {
+                maxMinutes -= maxHours * 60;
+            }
+
+            maxHourUseTimeTextBox.Text = ""+maxHours;
+            maxMinuteUseTimeTextBox.Text = ""+maxMinutes;   
+        }
+
+        private void KillTimer_Tick(object sender, EventArgs e)
+        {
+            ticks++;
+            this.Text = ticks.ToString();
+
+            if (ticks == 50)
+            {
+               // MessageBox.Show("You got xxx Time to save and end your program! Time is gonna reset at midnight.", "Test Message", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            }
+
+            if (ticks >= 100)
+            {
+                //"comboBox1" müsste durch "aktuelle Programme - Liste ersetzt werden, damit er diese Liste durchgeht und Programme bei Zeitüberschreitung schließt
+
+                /*  foreach (var process in Process.GetProcessesByName(comboBox1.Text))
+                  {
+                      MessageBox.Show("Time is up!", "Test Message", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                      process.Kill();
+                  }*/
+                ticks = 0;
+            }
+        }
+
+        private void MaxMinuteUseTimeTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (maxMinuteUseTimeTextBox.Text != "")
+            {
+                int maxMinutes = Int32.Parse(maxMinuteUseTimeTextBox.Text);
+                int maxHours = Int32.Parse(maxHourUseTimeTextBox.Text);
+                int maxUse = maxUseTimeTrackbar.Value;
+                if (maxMinutes >= 60)
+                {
+                    maxMinutes -= 60;
+                    if (maxHours < 5)
+                    {
+                    maxHours += 1;
+                    }
+                }
+                if (maxHours > 5)
+                {
+                    maxHours = 5;
+                }
+                maxMinuteUseTimeTextBox.Text = "" + maxMinutes;
+                maxHourUseTimeTextBox.Text = "" + maxHours;
+                if (maxHours < 5* 3600)
+                {
+                    maxUseTimeTrackbar.Value = (maxHours * 3600) + (maxMinutes * 60);
+                }
+                else
+                {
+                    maxUseTimeTrackbar.Value = 5 * 3600;
+                }
+
+            }
+        }
+
+        private void MaxHourUseTimeTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (maxHourUseTimeTextBox.Text != "")
+            {
+                int maxHours = Int32.Parse(maxHourUseTimeTextBox.Text);
+                if (maxHours < 5 * 3600)
+                {
+                    maxUseTimeTrackbar.Value = maxHours * 3600;
+                }
+                else
+                {
+                    maxUseTimeTrackbar.Value = 5 * 3600;
+                }
+            }
         }
     }
     public partial class Kategorie

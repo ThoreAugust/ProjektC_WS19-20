@@ -64,6 +64,19 @@
             this.savedKat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.savedUsedTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.savedMaxTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.detailBox = new System.Windows.Forms.GroupBox();
+            this.maxMinuteUseTimeLabel = new System.Windows.Forms.Label();
+            this.maxMinuteUseTimeTextBox = new System.Windows.Forms.TextBox();
+            this.maxHourUseTimeLabel = new System.Windows.Forms.Label();
+            this.usedTimeProgressBar = new System.Windows.Forms.ProgressBar();
+            this.usedTimeLabel = new System.Windows.Forms.Label();
+            this.maxUseTimeTrackbar = new System.Windows.Forms.TrackBar();
+            this.maxHourUseTimeTextBox = new System.Windows.Forms.TextBox();
+            this.maxUseTimeLabel = new System.Windows.Forms.Label();
+            this.currentUseTimeTextBox = new System.Windows.Forms.TextBox();
+            this.currentUseTimeLabel = new System.Windows.Forms.Label();
+            this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
+            this.killTimer = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStrip1.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -71,6 +84,8 @@
             this.installedProgs.SuspendLayout();
             this.currentProgs.SuspendLayout();
             this.savedProgs.SuspendLayout();
+            this.detailBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxUseTimeTrackbar)).BeginInit();
             this.SuspendLayout();
             // 
             // currentProgsListView
@@ -87,7 +102,7 @@
             this.currentProgsListView.HideSelection = false;
             this.currentProgsListView.Location = new System.Drawing.Point(3, 3);
             this.currentProgsListView.Name = "currentProgsListView";
-            this.currentProgsListView.Size = new System.Drawing.Size(643, 638);
+            this.currentProgsListView.Size = new System.Drawing.Size(606, 638);
             this.currentProgsListView.TabIndex = 0;
             this.currentProgsListView.UseCompatibleStateImageBehavior = false;
             this.currentProgsListView.View = System.Windows.Forms.View.Details;
@@ -229,14 +244,15 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 57.04467F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.95533F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.78928F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.21072F));
             this.tableLayoutPanel1.Controls.Add(this.programmTabs, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.detailBox, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1164, 676);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
@@ -249,7 +265,7 @@
             this.programmTabs.Location = new System.Drawing.Point(3, 3);
             this.programmTabs.Name = "programmTabs";
             this.programmTabs.SelectedIndex = 0;
-            this.programmTabs.Size = new System.Drawing.Size(657, 670);
+            this.programmTabs.Size = new System.Drawing.Size(620, 670);
             this.programmTabs.TabIndex = 1;
             // 
             // installedProgs
@@ -258,7 +274,7 @@
             this.installedProgs.Location = new System.Drawing.Point(4, 22);
             this.installedProgs.Name = "installedProgs";
             this.installedProgs.Padding = new System.Windows.Forms.Padding(3);
-            this.installedProgs.Size = new System.Drawing.Size(649, 644);
+            this.installedProgs.Size = new System.Drawing.Size(612, 644);
             this.installedProgs.TabIndex = 0;
             this.installedProgs.Text = "Installierte Programme";
             this.installedProgs.UseVisualStyleBackColor = true;
@@ -272,7 +288,7 @@
             this.installedProgsListView.HideSelection = false;
             this.installedProgsListView.Location = new System.Drawing.Point(3, 3);
             this.installedProgsListView.Name = "installedProgsListView";
-            this.installedProgsListView.Size = new System.Drawing.Size(643, 638);
+            this.installedProgsListView.Size = new System.Drawing.Size(606, 638);
             this.installedProgsListView.TabIndex = 0;
             this.installedProgsListView.UseCompatibleStateImageBehavior = false;
             this.installedProgsListView.View = System.Windows.Forms.View.Details;
@@ -288,7 +304,7 @@
             this.currentProgs.Location = new System.Drawing.Point(4, 22);
             this.currentProgs.Name = "currentProgs";
             this.currentProgs.Padding = new System.Windows.Forms.Padding(3);
-            this.currentProgs.Size = new System.Drawing.Size(649, 644);
+            this.currentProgs.Size = new System.Drawing.Size(612, 644);
             this.currentProgs.TabIndex = 1;
             this.currentProgs.Text = "Aktuelle Programme";
             this.currentProgs.UseVisualStyleBackColor = true;
@@ -299,7 +315,7 @@
             this.savedProgs.Location = new System.Drawing.Point(4, 22);
             this.savedProgs.Name = "savedProgs";
             this.savedProgs.Padding = new System.Windows.Forms.Padding(3);
-            this.savedProgs.Size = new System.Drawing.Size(649, 644);
+            this.savedProgs.Size = new System.Drawing.Size(612, 644);
             this.savedProgs.TabIndex = 2;
             this.savedProgs.Text = "Gespeicherte Programme";
             this.savedProgs.UseVisualStyleBackColor = true;
@@ -317,7 +333,7 @@
             this.savedProgsListView.HideSelection = false;
             this.savedProgsListView.Location = new System.Drawing.Point(3, 3);
             this.savedProgsListView.Name = "savedProgsListView";
-            this.savedProgsListView.Size = new System.Drawing.Size(643, 638);
+            this.savedProgsListView.Size = new System.Drawing.Size(606, 638);
             this.savedProgsListView.TabIndex = 0;
             this.savedProgsListView.UseCompatibleStateImageBehavior = false;
             this.savedProgsListView.View = System.Windows.Forms.View.Details;
@@ -347,6 +363,130 @@
             this.savedMaxTime.Text = "Max Nutzungszeit";
             this.savedMaxTime.Width = 100;
             // 
+            // detailBox
+            // 
+            this.detailBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.detailBox.Controls.Add(this.maxMinuteUseTimeLabel);
+            this.detailBox.Controls.Add(this.maxMinuteUseTimeTextBox);
+            this.detailBox.Controls.Add(this.maxHourUseTimeLabel);
+            this.detailBox.Controls.Add(this.usedTimeProgressBar);
+            this.detailBox.Controls.Add(this.usedTimeLabel);
+            this.detailBox.Controls.Add(this.maxUseTimeTrackbar);
+            this.detailBox.Controls.Add(this.maxHourUseTimeTextBox);
+            this.detailBox.Controls.Add(this.maxUseTimeLabel);
+            this.detailBox.Controls.Add(this.currentUseTimeTextBox);
+            this.detailBox.Controls.Add(this.currentUseTimeLabel);
+            this.detailBox.Location = new System.Drawing.Point(629, 12);
+            this.detailBox.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
+            this.detailBox.Name = "detailBox";
+            this.detailBox.Size = new System.Drawing.Size(532, 661);
+            this.detailBox.TabIndex = 2;
+            this.detailBox.TabStop = false;
+            this.detailBox.Text = "detailBox";
+            this.detailBox.Visible = false;
+            // 
+            // maxMinuteUseTimeLabel
+            // 
+            this.maxMinuteUseTimeLabel.AutoSize = true;
+            this.maxMinuteUseTimeLabel.Location = new System.Drawing.Point(253, 118);
+            this.maxMinuteUseTimeLabel.Name = "maxMinuteUseTimeLabel";
+            this.maxMinuteUseTimeLabel.Size = new System.Drawing.Size(45, 13);
+            this.maxMinuteUseTimeLabel.TabIndex = 9;
+            this.maxMinuteUseTimeLabel.Text = "Minuten";
+            // 
+            // maxMinuteUseTimeTextBox
+            // 
+            this.maxMinuteUseTimeTextBox.Location = new System.Drawing.Point(227, 115);
+            this.maxMinuteUseTimeTextBox.Name = "maxMinuteUseTimeTextBox";
+            this.maxMinuteUseTimeTextBox.Size = new System.Drawing.Size(20, 20);
+            this.maxMinuteUseTimeTextBox.TabIndex = 8;
+            this.maxMinuteUseTimeTextBox.Text = "0";
+            this.maxMinuteUseTimeTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.maxMinuteUseTimeTextBox.TextChanged += new System.EventHandler(this.MaxMinuteUseTimeTextBox_TextChanged);
+            // 
+            // maxHourUseTimeLabel
+            // 
+            this.maxHourUseTimeLabel.AutoSize = true;
+            this.maxHourUseTimeLabel.Location = new System.Drawing.Point(174, 118);
+            this.maxHourUseTimeLabel.Name = "maxHourUseTimeLabel";
+            this.maxHourUseTimeLabel.Size = new System.Drawing.Size(47, 13);
+            this.maxHourUseTimeLabel.TabIndex = 7;
+            this.maxHourUseTimeLabel.Text = "Stunden";
+            // 
+            // usedTimeProgressBar
+            // 
+            this.usedTimeProgressBar.Location = new System.Drawing.Point(166, 194);
+            this.usedTimeProgressBar.Name = "usedTimeProgressBar";
+            this.usedTimeProgressBar.Size = new System.Drawing.Size(348, 23);
+            this.usedTimeProgressBar.Step = 1;
+            this.usedTimeProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.usedTimeProgressBar.TabIndex = 6;
+            // 
+            // usedTimeLabel
+            // 
+            this.usedTimeLabel.AutoSize = true;
+            this.usedTimeLabel.Location = new System.Drawing.Point(18, 194);
+            this.usedTimeLabel.Name = "usedTimeLabel";
+            this.usedTimeLabel.Size = new System.Drawing.Size(131, 13);
+            this.usedTimeLabel.TabIndex = 5;
+            this.usedTimeLabel.Text = "Abgelaufene Nutzungszeit";
+            // 
+            // maxUseTimeTrackbar
+            // 
+            this.maxUseTimeTrackbar.LargeChange = 3600;
+            this.maxUseTimeTrackbar.Location = new System.Drawing.Point(310, 112);
+            this.maxUseTimeTrackbar.Margin = new System.Windows.Forms.Padding(3, 3, 12, 3);
+            this.maxUseTimeTrackbar.Maximum = 18000;
+            this.maxUseTimeTrackbar.Name = "maxUseTimeTrackbar";
+            this.maxUseTimeTrackbar.Size = new System.Drawing.Size(204, 45);
+            this.maxUseTimeTrackbar.SmallChange = 1800;
+            this.maxUseTimeTrackbar.TabIndex = 4;
+            this.maxUseTimeTrackbar.TickFrequency = 1800;
+            this.maxUseTimeTrackbar.Scroll += new System.EventHandler(this.MaxUseTimeTrackbar_Scroll);
+            // 
+            // maxHourUseTimeTextBox
+            // 
+            this.maxHourUseTimeTextBox.Location = new System.Drawing.Point(143, 115);
+            this.maxHourUseTimeTextBox.Name = "maxHourUseTimeTextBox";
+            this.maxHourUseTimeTextBox.Size = new System.Drawing.Size(25, 20);
+            this.maxHourUseTimeTextBox.TabIndex = 3;
+            this.maxHourUseTimeTextBox.Text = "0";
+            this.maxHourUseTimeTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.maxHourUseTimeTextBox.TextChanged += new System.EventHandler(this.MaxHourUseTimeTextBox_TextChanged);
+            // 
+            // maxUseTimeLabel
+            // 
+            this.maxUseTimeLabel.AutoSize = true;
+            this.maxUseTimeLabel.Location = new System.Drawing.Point(15, 115);
+            this.maxUseTimeLabel.Name = "maxUseTimeLabel";
+            this.maxUseTimeLabel.Size = new System.Drawing.Size(115, 13);
+            this.maxUseTimeLabel.TabIndex = 2;
+            this.maxUseTimeLabel.Text = "Maximale Nutzungszeit";
+            // 
+            // currentUseTimeTextBox
+            // 
+            this.currentUseTimeTextBox.Location = new System.Drawing.Point(143, 43);
+            this.currentUseTimeTextBox.Name = "currentUseTimeTextBox";
+            this.currentUseTimeTextBox.Size = new System.Drawing.Size(146, 20);
+            this.currentUseTimeTextBox.TabIndex = 1;
+            this.currentUseTimeTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // currentUseTimeLabel
+            // 
+            this.currentUseTimeLabel.AutoSize = true;
+            this.currentUseTimeLabel.Location = new System.Drawing.Point(15, 43);
+            this.currentUseTimeLabel.Margin = new System.Windows.Forms.Padding(12, 0, 3, 0);
+            this.currentUseTimeLabel.Name = "currentUseTimeLabel";
+            this.currentUseTimeLabel.Size = new System.Drawing.Size(109, 13);
+            this.currentUseTimeLabel.TabIndex = 0;
+            this.currentUseTimeLabel.Text = "Aktuelle Nutzungszeit";
+            // 
+            // killTimer
+            // 
+            this.killTimer.Tick += new System.EventHandler(this.KillTimer_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -367,6 +507,9 @@
             this.installedProgs.ResumeLayout(false);
             this.currentProgs.ResumeLayout(false);
             this.savedProgs.ResumeLayout(false);
+            this.detailBox.ResumeLayout(false);
+            this.detailBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxUseTimeTrackbar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -408,6 +551,19 @@
         private System.Windows.Forms.ColumnHeader savedKat;
         private System.Windows.Forms.ColumnHeader savedUsedTime;
         private System.Windows.Forms.ColumnHeader savedMaxTime;
+        private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
+        private System.Windows.Forms.GroupBox detailBox;
+        private System.Windows.Forms.TrackBar maxUseTimeTrackbar;
+        private System.Windows.Forms.TextBox maxHourUseTimeTextBox;
+        private System.Windows.Forms.Label maxUseTimeLabel;
+        private System.Windows.Forms.TextBox currentUseTimeTextBox;
+        private System.Windows.Forms.Label currentUseTimeLabel;
+        private System.Windows.Forms.Label usedTimeLabel;
+        private System.Windows.Forms.ProgressBar usedTimeProgressBar;
+        private System.Windows.Forms.Label maxMinuteUseTimeLabel;
+        private System.Windows.Forms.TextBox maxMinuteUseTimeTextBox;
+        private System.Windows.Forms.Label maxHourUseTimeLabel;
+        private System.Windows.Forms.Timer killTimer;
     }
 }
 

@@ -2,7 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\CombinationsTest",
-    "\\CombinationsTest\\CombinationsTest"
+    "\\CombinationsTest\\CombinationsTest",
+    "\\Nikita_Tutorials",
+    "\\Nikita_Tutorials\\CombinationsTest",
+    "\\Nikita_Tutorials\\CombinationsTest\\CombinationsTest"
   ],
   "SelectedNode": "\\CombinationsTest\\CombinationsTest.sln",
   "PreviewInSolutionExplorer": false
