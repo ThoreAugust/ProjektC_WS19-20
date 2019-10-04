@@ -51,4 +51,4 @@ damit er diese Liste durchgeht und Programme bei Zeitüberschreitung schließt.
 Steht auch im Code ab Zeile 262 der Form1 über der betreffenden Zeile. 
 
 Weiß leider nicht wo die liste "aktuelle Programme" erstellt wird oder wie ich drauf zugreife, da die comments fehlen ^^
-- Autostart + Timer läuft sonst
+- Autostart + Timer + reset läuft sonst
