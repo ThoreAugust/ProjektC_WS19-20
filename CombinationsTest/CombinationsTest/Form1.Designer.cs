@@ -77,6 +77,7 @@
             this.currentUseTimeLabel = new System.Windows.Forms.Label();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.killTimer = new System.Windows.Forms.Timer(this.components);
+            this.autostartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -190,12 +191,12 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(90, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(89, 6);
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(93, 22);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem1.Text = "Exit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.ExitToolStripMenuItem1_Click);
             // 
@@ -225,20 +226,22 @@
             // 
             // optionMenuItem
             // 
+            this.optionMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.autostartToolStripMenuItem});
             this.optionMenuItem.Name = "optionMenuItem";
-            this.optionMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.optionMenuItem.Size = new System.Drawing.Size(180, 22);
             this.optionMenuItem.Text = "Optionen";
             // 
             // importMenuItem
             // 
             this.importMenuItem.Name = "importMenuItem";
-            this.importMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.importMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importMenuItem.Text = "Import";
             // 
             // exportMenuItem
             // 
             this.exportMenuItem.Name = "exportMenuItem";
-            this.exportMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.exportMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportMenuItem.Text = "Export";
             // 
             // tableLayoutPanel1
@@ -487,6 +490,14 @@
             // 
             this.killTimer.Tick += new System.EventHandler(this.KillTimer_Tick);
             // 
+            // autostartToolStripMenuItem
+            // 
+            this.autostartToolStripMenuItem.CheckOnClick = true;
+            this.autostartToolStripMenuItem.Name = "autostartToolStripMenuItem";
+            this.autostartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.autostartToolStripMenuItem.Text = "Autostart";
+            this.autostartToolStripMenuItem.Click += new System.EventHandler(this.AutostartToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -564,6 +575,7 @@
         private System.Windows.Forms.TextBox maxMinuteUseTimeTextBox;
         private System.Windows.Forms.Label maxHourUseTimeLabel;
         private System.Windows.Forms.Timer killTimer;
+        private System.Windows.Forms.ToolStripMenuItem autostartToolStripMenuItem;
     }
 }
 

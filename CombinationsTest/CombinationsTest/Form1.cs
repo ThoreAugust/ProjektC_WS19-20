@@ -38,8 +38,8 @@ namespace CombinationsTest
             {
                 using (StreamWriter sw = File.CreateText("Log.txt"))
                 {
-                    sw.WriteLine("[Kategorien]");
                     sw.WriteLine("[Programme]");
+                    sw.WriteLine("[Kategorien]");
                 }
             } else
             {
@@ -48,14 +48,19 @@ namespace CombinationsTest
                     int i = 0;
                     String s;
                     String[] vs;
+                    List<Programm> p;
+                    Double ut;
+                    bool newDay = false;
+                    if (File.GetLastWriteTime("Log.txt").Date.CompareTo(DateTime.Today) < 0)
+                        newDay = true;
                     while ((s = sr.ReadLine()) != null)
                     {
-                        if (s == "[Kategorien]")
+                        if (s == "[Programme]")
                         {
                             i = 1;
                             continue;
                         }
-                        if (s == "[Programme]")
+                        if (s == "[Kategorien]")
                         {
                             i = 2;
                             continue;
@@ -63,10 +68,28 @@ namespace CombinationsTest
                         if (s == "")
                             break;
                         vs = s.Split(';');
-                        if (i == 1)
-                            logKategorien.Add(new Kategorie( vs[0], Convert.ToInt64(vs[1]), Convert.ToInt64(vs[2])));
+                        if (i == 1 && !newDay)
+                            logProgramme.Add(new Programm(vs[0], vs[1], Convert.ToDouble(vs[2]), Convert.ToDouble(vs[3])));
+                        if (i == 1 && newDay)
+                            logProgramme.Add(new Programm(vs[0], vs[1], 0, Convert.ToDouble(vs[3])));
                         if (i == 2)
-                            logProgramme.Add(new Programm(vs[0],vs[1],vs[2], Convert.ToDouble(vs[3]), Convert.ToDouble(vs[4])));
+                        {
+                            p = new List<Programm>();
+                            ut = 0;
+                            foreach(String n in vs[3].Split(':'))
+                            {
+                                foreach (Programm programm in logProgramme)
+                                {
+                                    if (programm.path == n)
+                                    {
+                                        p.Add(programm);
+                                        programm.kategorie = vs[0];
+                                        ut += programm.usedTime;
+                                    }
+                                }
+                            }
+                            logKategorien.Add(new Kategorie(vs[0], ut, Convert.ToInt64(vs[1]), p));
+                        }
                     }
                 }
             }
@@ -75,15 +98,15 @@ namespace CombinationsTest
         {
             using (StreamWriter sw = File.CreateText("Log.txt"))
             {
+                sw.WriteLine("[Programme]");
+                foreach (Programm p in logProgramme)
+                {
+                    sw.WriteLine(p);
+                }
                 sw.WriteLine("[Kategorien]");
                 foreach(Kategorie k in logKategorien)
                 {
                     sw.WriteLine(k);
-                }
-                sw.WriteLine("[Programme]");
-                foreach(Programm p in logProgramme)
-                {
-                    sw.WriteLine(p);
                 }
             }
         }
@@ -220,7 +243,7 @@ namespace CombinationsTest
             }
             if (b)
             {
-                logProgramme.Add(new Programm(process.MainWindowTitle,process.MainModule.FileName, null, usage.TotalMilliseconds, 0));
+                logProgramme.Add(new Programm(process.MainWindowTitle,process.MainModule.FileName, usage.TotalMilliseconds, 0));
                 SaveLogs();
                 MessageBox.Show("Eintrag gespeichert.", "Success", MessageBoxButtons.OK);
             }
@@ -233,6 +256,7 @@ namespace CombinationsTest
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveLogs();
             Application.Exit();
         }
 
@@ -247,6 +271,7 @@ namespace CombinationsTest
 
         private void ExitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            SaveLogs();
             Application.Exit();
         }
 
@@ -302,9 +327,10 @@ namespace CombinationsTest
                     maxHours += 1;
                     }
                 }
-                if (maxHours > 5)
+                if (maxHours >= 5)
                 {
                     maxHours = 5;
+                    maxMinutes = 0;
                 }
                 maxMinuteUseTimeTextBox.Text = "" + maxMinutes;
                 maxHourUseTimeTextBox.Text = "" + maxHours;
@@ -325,53 +351,63 @@ namespace CombinationsTest
             if (maxHourUseTimeTextBox.Text != "")
             {
                 int maxHours = Int32.Parse(maxHourUseTimeTextBox.Text);
-                if (maxHours < 5 * 3600)
+                if (maxHours <= 5)
                 {
                     maxUseTimeTrackbar.Value = maxHours * 3600;
                 }
                 else
                 {
                     maxUseTimeTrackbar.Value = 5 * 3600;
+                    maxHourUseTimeTextBox.Text = "5";
                 }
             }
+        }
+
+        private void AutostartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
     public partial class Kategorie
     {
-        String name;
-        double usedTime;
-        double maxTime;
+        public String name;
+        public double usedTime;
+        public double maxTime;
+        public List<Programm> programme;
 
-        public Kategorie(String n, double ut, double mt)
+        public Kategorie(String n, double ut, double mt, List<Programm> p)
         {
             name = n;
             usedTime = ut;
             maxTime = mt;
+            programme = p;
         }
         override public String ToString()
         {
-            return name + ";" + usedTime + ";" + maxTime;
+            String p = "";
+            foreach (Programm programm in programme)
+                p += programm.path + ":";
+            return name + ";" + maxTime + ";" + p;
         }
     }
     public partial class Programm
     {
         public String name;
         public String path;
-        public String kategorie;
         public double usedTime;
         public double maxTime;
+        public String kategorie;
 
-        public Programm(String n,String p, String k, double ut, double mt)
+        public Programm(String n,String p, double ut, double mt)
         {
             name = n;
             path = p;
-            kategorie = k;
             usedTime = ut;
             maxTime = mt;
         }
         override public String ToString()
         {
-            return name + ";" +path + ";" + kategorie + ";" + usedTime + ";" + maxTime;
+            return name + ";" +path + ";" + usedTime + ";" + maxTime;
         }
     }
 }
