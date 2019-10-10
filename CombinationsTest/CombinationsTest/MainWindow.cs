@@ -17,7 +17,7 @@ using Microsoft.Win32;
 
 namespace CombinationsTest
 {
-    public partial class Form1 : Form
+    public partial class MainWindow : Form
     {
         private RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run",true);
         private TimeSpan usage;
@@ -25,8 +25,9 @@ namespace CombinationsTest
         private List<Kategorie> logKategorien;
         private List<Programm> logProgramme;
         private int ticks;
+        private PasswordHandler pwHandler;
         
-        public Form1()
+        public MainWindow()
         {
          //   reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
             InitializeComponent();
@@ -219,7 +220,7 @@ namespace CombinationsTest
                     detailBox.Text = selectedItem.ProcessName + ", "+ selectedItem.MainWindowTitle;
                     detailBox.Visible = true;
 
-                    currentUseTimeTextBox.Text = DateTime.Now.Subtract(selectedItem.StartTime).ToString(@"hh\:mm\:ss"); ;
+                    currentUseTimeTextBox.Text = DateTime.Now.Subtract(selectedItem.StartTime).ToString(@"hh\:mm\:ss");
                 }
             }
             catch (Exception ex)
@@ -257,7 +258,7 @@ namespace CombinationsTest
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveLogs();
-            Application.Exit();
+            this.Close();
         }
 
         private void Form1_Move(object sender, EventArgs e)
@@ -272,7 +273,7 @@ namespace CombinationsTest
         private void ExitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             SaveLogs();
-            Application.Exit();
+            this.Close();
         }
 
         private void MaxUseTimeTrackbar_Scroll(object sender, EventArgs e)
@@ -296,12 +297,12 @@ namespace CombinationsTest
 
             if (ticks == 50)
             {
-               // MessageBox.Show("You got xxx Time to save and end your program! Time is gonna reset at midnight.", "Test Message", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                //MessageBox.Show("You got xxx Time to save and end your program! Time is gonna reset at midnight.", "Test Message", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             }
 
             if (ticks >= 100)
             {
-                //"comboBox1" müsste durch "aktuelle Programme - Liste ersetzt werden, damit er diese Liste durchgeht und Programme bei Zeitüberschreitung schließt
+               //"comboBox1" müsste durch "aktuelle Programme - Liste ersetzt werden, damit er diese Liste durchgeht und Programme bei Zeitüberschreitung schließt
 
                 /*  foreach (var process in Process.GetProcessesByName(comboBox1.Text))
                   {
@@ -366,6 +367,19 @@ namespace CombinationsTest
         private void AutostartToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private bool confirmCloseWithPassword()
+        {
+            PasswordDialog pw = new PasswordDialog();
+            pw.ShowDialog();            
+
+            return pw.keepWindowOpen();
+        }
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = confirmCloseWithPassword();
         }
     }
     public partial class Kategorie

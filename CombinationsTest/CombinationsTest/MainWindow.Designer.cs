@@ -1,6 +1,6 @@
 ﻿namespace CombinationsTest
 {
-    partial class Form1
+    partial class MainWindow
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.currentProgsListView = new System.Windows.Forms.ListView();
             this.processID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.processName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -49,6 +49,7 @@
             this.anzeigenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.einstellungenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.autostartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -75,9 +76,7 @@
             this.maxUseTimeLabel = new System.Windows.Forms.Label();
             this.currentUseTimeTextBox = new System.Windows.Forms.TextBox();
             this.currentUseTimeLabel = new System.Windows.Forms.Label();
-            this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.killTimer = new System.Windows.Forms.Timer(this.components);
-            this.autostartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -191,12 +190,12 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(89, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(90, 6);
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(93, 22);
             this.exitToolStripMenuItem1.Text = "Exit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.ExitToolStripMenuItem1_Click);
             // 
@@ -229,19 +228,27 @@
             this.optionMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.autostartToolStripMenuItem});
             this.optionMenuItem.Name = "optionMenuItem";
-            this.optionMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.optionMenuItem.Size = new System.Drawing.Size(124, 22);
             this.optionMenuItem.Text = "Optionen";
+            // 
+            // autostartToolStripMenuItem
+            // 
+            this.autostartToolStripMenuItem.CheckOnClick = true;
+            this.autostartToolStripMenuItem.Name = "autostartToolStripMenuItem";
+            this.autostartToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.autostartToolStripMenuItem.Text = "Autostart";
+            this.autostartToolStripMenuItem.Click += new System.EventHandler(this.AutostartToolStripMenuItem_Click);
             // 
             // importMenuItem
             // 
             this.importMenuItem.Name = "importMenuItem";
-            this.importMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importMenuItem.Size = new System.Drawing.Size(124, 22);
             this.importMenuItem.Text = "Import";
             // 
             // exportMenuItem
             // 
             this.exportMenuItem.Name = "exportMenuItem";
-            this.exportMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportMenuItem.Size = new System.Drawing.Size(124, 22);
             this.exportMenuItem.Text = "Export";
             // 
             // tableLayoutPanel1
@@ -472,6 +479,7 @@
             // 
             this.currentUseTimeTextBox.Location = new System.Drawing.Point(143, 43);
             this.currentUseTimeTextBox.Name = "currentUseTimeTextBox";
+            this.currentUseTimeTextBox.ReadOnly = true;
             this.currentUseTimeTextBox.Size = new System.Drawing.Size(146, 20);
             this.currentUseTimeTextBox.TabIndex = 1;
             this.currentUseTimeTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -490,15 +498,7 @@
             // 
             this.killTimer.Tick += new System.EventHandler(this.KillTimer_Tick);
             // 
-            // autostartToolStripMenuItem
-            // 
-            this.autostartToolStripMenuItem.CheckOnClick = true;
-            this.autostartToolStripMenuItem.Name = "autostartToolStripMenuItem";
-            this.autostartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.autostartToolStripMenuItem.Text = "Autostart";
-            this.autostartToolStripMenuItem.Click += new System.EventHandler(this.AutostartToolStripMenuItem_Click);
-            // 
-            // Form1
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -506,8 +506,9 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.mainMenu);
             this.MainMenuStrip = this.mainMenu;
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "MainWindow";
+            this.Text = "MainWindow";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Move += new System.EventHandler(this.Form1_Move);
             this.contextMenuStrip1.ResumeLayout(false);
@@ -562,7 +563,6 @@
         private System.Windows.Forms.ColumnHeader savedKat;
         private System.Windows.Forms.ColumnHeader savedUsedTime;
         private System.Windows.Forms.ColumnHeader savedMaxTime;
-        private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
         private System.Windows.Forms.GroupBox detailBox;
         private System.Windows.Forms.TrackBar maxUseTimeTrackbar;
         private System.Windows.Forms.TextBox maxHourUseTimeTextBox;
