@@ -76,7 +76,8 @@
             this.maxUseTimeLabel = new System.Windows.Forms.Label();
             this.currentUseTimeTextBox = new System.Windows.Forms.TextBox();
             this.currentUseTimeLabel = new System.Windows.Forms.Label();
-            this.killTimer = new System.Windows.Forms.Timer(this.components);
+            this.update = new System.Windows.Forms.Timer(this.components);
+            this.saveProgButton = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -378,6 +379,7 @@
             this.detailBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.detailBox.Controls.Add(this.saveProgButton);
             this.detailBox.Controls.Add(this.maxMinuteUseTimeLabel);
             this.detailBox.Controls.Add(this.maxMinuteUseTimeTextBox);
             this.detailBox.Controls.Add(this.maxHourUseTimeLabel);
@@ -494,9 +496,19 @@
             this.currentUseTimeLabel.TabIndex = 0;
             this.currentUseTimeLabel.Text = "Aktuelle Nutzungszeit";
             // 
-            // killTimer
+            // update
             // 
-            this.killTimer.Tick += new System.EventHandler(this.KillTimer_Tick);
+            this.update.Tick += new System.EventHandler(this.Update_Tick);
+            // 
+            // saveProgButton
+            // 
+            this.saveProgButton.Location = new System.Drawing.Point(380, 629);
+            this.saveProgButton.Name = "saveProgButton";
+            this.saveProgButton.Size = new System.Drawing.Size(134, 23);
+            this.saveProgButton.TabIndex = 10;
+            this.saveProgButton.Text = "Einstellungen speichern";
+            this.saveProgButton.UseVisualStyleBackColor = true;
+            this.saveProgButton.Click += new System.EventHandler(this.saveProgButton_Click);
             // 
             // MainWindow
             // 
@@ -574,8 +586,9 @@
         private System.Windows.Forms.Label maxMinuteUseTimeLabel;
         private System.Windows.Forms.TextBox maxMinuteUseTimeTextBox;
         private System.Windows.Forms.Label maxHourUseTimeLabel;
-        private System.Windows.Forms.Timer killTimer;
+        private System.Windows.Forms.Timer update;
         private System.Windows.Forms.ToolStripMenuItem autostartToolStripMenuItem;
+        private System.Windows.Forms.Button saveProgButton;
     }
 }
 
