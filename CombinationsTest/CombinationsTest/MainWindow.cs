@@ -32,29 +32,31 @@ namespace CombinationsTest
          //   reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
             InitializeComponent();
             update.Start();
+            logKategorien = new List<Kategorie>();
+            logProgramme = new List<Programm>();
         }
         private void LoadLog()
         {
             if (!File.Exists("Log.txt"))
             {
-                using (StreamWriter sw = File.CreateText("Log.txt"))
+                using (StreamWriter writer = File.CreateText("Log.txt"))
                 {
-                    sw.WriteLine("[Programme]");
-                    sw.WriteLine("[Kategorien]");
+                    writer.WriteLine("[Programme]");
+                    writer.WriteLine("[Kategorien]");
                 }
             } else
             {
-                using (StreamReader sr = File.OpenText("Log.txt"))
+                using (StreamReader reader = File.OpenText("Log.txt"))
                 {
                     int i = 0;
-                    String s;
-                    String[] vs;
-                    List<Programm> p;
-                    Double ut;
+                    String s; //kann man das bitte klar benennen das jeder weiß was damit gemeint ist
+                    String[] vs;//hier genauso
+                    List<Programm> programs;
+                    Double usedTime;
                     bool newDay = false;
                     if (File.GetLastWriteTime("Log.txt").Date.CompareTo(DateTime.Today) < 0)
                         newDay = true;
-                    while ((s = sr.ReadLine()) != null)
+                    while ((s = reader.ReadLine()) != null)
                     {
                         if (s == "[Programme]")
                         {
@@ -75,21 +77,21 @@ namespace CombinationsTest
                             logProgramme.Add(new Programm(vs[0], vs[1], 0, Convert.ToDouble(vs[3])));
                         if (i == 2)
                         {
-                            p = new List<Programm>();
-                            ut = 0;
+                            programs = new List<Programm>();
+                            usedTime = 0;
                             foreach(String n in vs[3].Split(':'))
                             {
                                 foreach (Programm programm in logProgramme)
                                 {
                                     if (programm.getPath() == n)
                                     {
-                                        p.Add(programm);
+                                        programs.Add(programm);
                                         programm.setKategorie(vs[0]);
-                                        ut += programm.getUsedTime();
+                                        usedTime += programm.getUsedTime();
                                     }
                                 }
                             }
-                            logKategorien.Add(new Kategorie(vs[0], ut, Convert.ToInt64(vs[1]), p));
+                            logKategorien.Add(new Kategorie(vs[0], usedTime, Convert.ToInt64(vs[1]), programs));
                         }
                     }
                 }
@@ -103,17 +105,17 @@ namespace CombinationsTest
                 Programm saved = (Programm) item.Tag;
                 logProgramme.Add(saved);
             }
-            using (StreamWriter sw = File.CreateText("Log.txt"))
+            using (StreamWriter writer = File.CreateText("Log.txt"))
             {
-                sw.WriteLine("[Programme]");
-                foreach (Programm p in logProgramme)
+                writer.WriteLine("[Programme]");
+                foreach (Programm program in logProgramme)
                 {
-                    sw.WriteLine(p);
+                    writer.WriteLine(program);
                 }
-                sw.WriteLine("[Kategorien]");
-                foreach(Kategorie k in logKategorien)
+                writer.WriteLine("[Kategorien]");
+                foreach(Kategorie kategorie in logKategorien)
                 {
-                    sw.WriteLine(k);
+                    writer.WriteLine(kategorie);
                 }
             }
             fillSavedProgsListView();
@@ -175,8 +177,6 @@ namespace CombinationsTest
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            logKategorien = new List<Kategorie>();
-            logProgramme = new List<Programm>();
             LoadLog();
             fillCurrentProgsListView();
             fillInstalledProgsListView();
@@ -211,6 +211,7 @@ namespace CombinationsTest
         }
         private void fillSavedProgsListView()
         {
+            LoadLog();
             savedProgsListView.Items.Clear();
             foreach (Programm savedProgs in logProgramme)
             {
@@ -252,18 +253,18 @@ namespace CombinationsTest
         {
             var path = process.MainModule.FileName;
             Console.WriteLine(path);
-            bool b = true;
+            bool isUnique = true;
             foreach (ListViewItem item in savedProgsListView.Items)
             {
                 Programm p =(Programm) item.Tag;
                 if (path == p.getPath())
                 {
                     MessageBox.Show("Prozess ist bereits gespeichert!", "Error", MessageBoxButtons.OK);
-                    b = false;
+                    isUnique = false;
                     break;
                 }
             }
-            if (b)
+            if (isUnique)
             {
                 usage = DateTime.Now.Subtract(process.StartTime);
                 Console.WriteLine("hi there: " + usage.TotalMilliseconds);
