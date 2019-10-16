@@ -317,7 +317,6 @@ namespace CombinationsTest
         private void Update_Tick(object sender, EventArgs e)
         {
             ticks++;
-            this.Text = ticks.ToString();
             if (ticks % 10 == 0)
             {
                 for (int i = 0; i < currentProgsListView.Items.Count; i++)
@@ -340,7 +339,6 @@ namespace CombinationsTest
                     }
                 }
             }
-
         }
 
         private void MaxMinuteUseTimeTextBox_TextChanged(object sender, EventArgs e)

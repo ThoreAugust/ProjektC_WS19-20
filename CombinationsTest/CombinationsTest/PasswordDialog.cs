@@ -18,12 +18,13 @@ namespace CombinationsTest
         public PasswordDialog()
         {
             pwHandler = new PasswordHandler();
+            pwHandler.savePassToLog("test");
             InitializeComponent();
         }
       
         private void okButton_Click(object sender, EventArgs e)
         {
-            stayOpen = false;
+            stayOpen = !pwHandler.checkPass(passwordBox.Text);
             this.Close();
         }
 

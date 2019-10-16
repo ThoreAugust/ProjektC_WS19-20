@@ -10,12 +10,13 @@ namespace CombinationsTest
     class PasswordHandler
     {
         private Dictionary<string, string> passwordHashPair = new Dictionary<string, string>();
+        private string logHash;
 
         public PasswordHandler()
         {
         }
 
-        private void hashPassword(string password)
+        private string HashPassword(string password)
         {
             string pwHash;
             if (!String.IsNullOrEmpty(password))
@@ -25,30 +26,33 @@ namespace CombinationsTest
                     byte[] textData = System.Text.Encoding.UTF8.GetBytes(password);
                     byte[] hash = sha.ComputeHash(textData);
                     pwHash = BitConverter.ToString(hash).Replace("-", String.Empty);
-                    passwordHashPair.Add(password, pwHash);
                 }
+            return pwHash;
             }
-
+            else
+            {
+                return "Das Passwort darf nicht leer sein.";
+            }
         }
 
-        public void savePassToLog ()
+        public void savePassToLog (string password)
         {
-            Dictionary<string, string>.ValueCollection values= passwordHashPair.Values;
-            foreach (var value in values)
+            string hash = HashPassword(password);
+            if (!hash.Equals("Das Passwort darf nicht leer sein."))
             {
-
-            }
-            using (StreamWriter writer = File.CreateText("pwLog.txt"))
-            {
-                writer.WriteLine("[PassHash]");
-                foreach (string value in values)
+                passwordHashPair.Add(password, hash);
+                Dictionary<string, string>.ValueCollection values= passwordHashPair.Values;
+                using (StreamWriter writer = File.CreateText("pwLog.txt"))
                 {
-                    writer.WriteLine("cur:"+value);
+                    writer.WriteLine("[PassHash]");
+                    foreach (string value in values)
+                    {
+                        writer.WriteLine("cur:"+value);
+                    }
                 }
             }
-
         }
-        public void readPassFromLog()
+        private void readPassFromLog()
         {
             if (!File.Exists("pwLog.txt"))
             {
@@ -70,16 +74,22 @@ namespace CombinationsTest
                             if (line.Contains("cur:"))
                             {
                                 splitLine = line.Split(':');
-                                foreach (string item in splitLine)
-                                {
-                                    Console.WriteLine(item);
-                                }
-                                hash = splitLine[1];
+                                Console.WriteLine(splitLine[1]);
+                                logHash = splitLine[1];
                             }
                         }
                     }
                 }
             }
+        }
+        public bool checkPass(string password)
+        {
+            readPassFromLog();
+            string hashToTest = HashPassword(password);
+            Console.WriteLine(password);
+            Console.WriteLine(hashToTest);
+            Console.WriteLine(logHash.Equals(hashToTest));
+            return logHash.Equals(hashToTest);
         }
     }
 }
