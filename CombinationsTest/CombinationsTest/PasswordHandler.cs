@@ -15,7 +15,6 @@ namespace CombinationsTest
         public PasswordHandler()
         {
         }
-
         private string HashPassword(string password)
         {
             string pwHash;
@@ -34,7 +33,6 @@ namespace CombinationsTest
                 return "Das Passwort darf nicht leer sein.";
             }
         }
-
         public void savePassToLog (string password)
         {
             string hash = HashPassword(password);

@@ -21,13 +21,11 @@ namespace CombinationsTest
             pwHandler.savePassToLog("test");
             InitializeComponent();
         }
-      
         private void okButton_Click(object sender, EventArgs e)
         {
             stayOpen = !pwHandler.checkPass(passwordBox.Text);
             this.Close();
         }
-
         private void cancelButton_Click(object sender, EventArgs e)
         {
             stayOpen = true;

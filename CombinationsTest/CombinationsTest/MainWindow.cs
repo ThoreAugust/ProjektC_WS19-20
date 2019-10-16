@@ -25,7 +25,6 @@ namespace CombinationsTest
         private List<Kategorie> logKategorien;
         private List<Programm> logProgramme;
         private int ticks;
-        private PasswordHandler pwHandler;
         
         public MainWindow()
         {
@@ -174,7 +173,6 @@ namespace CombinationsTest
             }
             return programmNames;
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             LoadLog();
@@ -273,18 +271,15 @@ namespace CombinationsTest
                 MessageBox.Show("Eintrag gespeichert.", "Success", MessageBoxButtons.OK);
             }
         }
-
         private void ShowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Show();
         }
-
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveLogs();
             this.Close();
         }
-
         private void Form1_Move(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
@@ -293,13 +288,11 @@ namespace CombinationsTest
                 timerNotification.ShowBalloonTip(1000, "Important notice" , "You have xxx Seconds left for your CurrentApplication", ToolTipIcon.Info);
             }
         }
-
         private void ExitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             SaveLogs();
             this.Close();
         }
-
         private void MaxUseTimeTrackbar_Scroll(object sender, EventArgs e)
         {
             var selectedItem = (Process)currentProgsListView.FocusedItem.Tag;
@@ -313,7 +306,6 @@ namespace CombinationsTest
             maxHourUseTimeTextBox.Text = ""+maxHours;
             maxMinuteUseTimeTextBox.Text = ""+maxMinutes;   
         }
-
         private void Update_Tick(object sender, EventArgs e)
         {
             ticks++;
@@ -340,7 +332,6 @@ namespace CombinationsTest
                 }
             }
         }
-
         private void MaxMinuteUseTimeTextBox_TextChanged(object sender, EventArgs e)
         {
             if (maxMinuteUseTimeTextBox.Text != "")
@@ -374,7 +365,6 @@ namespace CombinationsTest
 
             }
         }
-
         private void MaxHourUseTimeTextBox_TextChanged(object sender, EventArgs e)
         {
             if (maxHourUseTimeTextBox.Text != "")
@@ -391,12 +381,10 @@ namespace CombinationsTest
                 }
             }
         }
-
         private void AutostartToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
-
         private bool confirmCloseWithPassword()
         {
             PasswordDialog pw = new PasswordDialog();
@@ -404,13 +392,11 @@ namespace CombinationsTest
 
             return pw.keepWindowOpen();
         }
-
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveLogs();
             e.Cancel = confirmCloseWithPassword();
         }
-
         private void saveProgButton_Click(object sender, EventArgs e)
         {
             Process p = (Process) currentProgsListView.SelectedItems[0].Tag;
