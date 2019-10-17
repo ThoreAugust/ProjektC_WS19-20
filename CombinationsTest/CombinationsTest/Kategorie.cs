@@ -9,11 +9,11 @@ namespace CombinationsTest
     class Kategorie
     {
         private String name;
-        private double usedTime;
-        private double maxTime;
+        private int usedTime;
+        private int maxTime;
         private List<Programm> programs;
 
-        public Kategorie(String n, double ut, double mt, List<Programm> p)
+        public Kategorie(String n, int ut, int mt, List<Programm> p)
         {
             name = n;
             usedTime = ut;
