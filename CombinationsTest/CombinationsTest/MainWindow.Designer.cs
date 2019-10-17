@@ -66,6 +66,7 @@
             this.savedUsedTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.savedMaxTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.detailBox = new System.Windows.Forms.GroupBox();
+            this.saveProgButton = new System.Windows.Forms.Button();
             this.maxMinuteUseTimeLabel = new System.Windows.Forms.Label();
             this.maxMinuteUseTimeTextBox = new System.Windows.Forms.TextBox();
             this.maxHourUseTimeLabel = new System.Windows.Forms.Label();
@@ -77,7 +78,7 @@
             this.currentUseTimeTextBox = new System.Windows.Forms.TextBox();
             this.currentUseTimeLabel = new System.Windows.Forms.Label();
             this.update = new System.Windows.Forms.Timer(this.components);
-            this.saveProgButton = new System.Windows.Forms.Button();
+            this.neueKategorieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -182,6 +183,7 @@
             // dateiToolStripMenuItem
             // 
             this.dateiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.neueKategorieToolStripMenuItem,
             this.toolStripSeparator2,
             this.exitToolStripMenuItem1});
             this.dateiToolStripMenuItem.Name = "dateiToolStripMenuItem";
@@ -191,12 +193,12 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(90, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(93, 22);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem1.Text = "Exit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.ExitToolStripMenuItem1_Click);
             // 
@@ -211,7 +213,7 @@
             // anzeigenMenuItem
             // 
             this.anzeigenMenuItem.Name = "anzeigenMenuItem";
-            this.anzeigenMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.anzeigenMenuItem.Size = new System.Drawing.Size(180, 22);
             this.anzeigenMenuItem.Text = "Anzeigen";
             // 
             // einstellungenToolStripMenuItem
@@ -229,27 +231,27 @@
             this.optionMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.autostartToolStripMenuItem});
             this.optionMenuItem.Name = "optionMenuItem";
-            this.optionMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.optionMenuItem.Size = new System.Drawing.Size(180, 22);
             this.optionMenuItem.Text = "Optionen";
             // 
             // autostartToolStripMenuItem
             // 
             this.autostartToolStripMenuItem.CheckOnClick = true;
             this.autostartToolStripMenuItem.Name = "autostartToolStripMenuItem";
-            this.autostartToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.autostartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.autostartToolStripMenuItem.Text = "Autostart";
             this.autostartToolStripMenuItem.Click += new System.EventHandler(this.AutostartToolStripMenuItem_Click);
             // 
             // importMenuItem
             // 
             this.importMenuItem.Name = "importMenuItem";
-            this.importMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.importMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importMenuItem.Text = "Import";
             // 
             // exportMenuItem
             // 
             this.exportMenuItem.Name = "exportMenuItem";
-            this.exportMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.exportMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportMenuItem.Text = "Export";
             // 
             // tableLayoutPanel1
@@ -399,6 +401,16 @@
             this.detailBox.Text = "detailBox";
             this.detailBox.Visible = false;
             // 
+            // saveProgButton
+            // 
+            this.saveProgButton.Location = new System.Drawing.Point(380, 629);
+            this.saveProgButton.Name = "saveProgButton";
+            this.saveProgButton.Size = new System.Drawing.Size(134, 23);
+            this.saveProgButton.TabIndex = 10;
+            this.saveProgButton.Text = "Einstellungen speichern";
+            this.saveProgButton.UseVisualStyleBackColor = true;
+            this.saveProgButton.Click += new System.EventHandler(this.saveProgButton_Click);
+            // 
             // maxMinuteUseTimeLabel
             // 
             this.maxMinuteUseTimeLabel.AutoSize = true;
@@ -500,15 +512,11 @@
             // 
             this.update.Tick += new System.EventHandler(this.Update_Tick);
             // 
-            // saveProgButton
+            // neueKategorieToolStripMenuItem
             // 
-            this.saveProgButton.Location = new System.Drawing.Point(380, 629);
-            this.saveProgButton.Name = "saveProgButton";
-            this.saveProgButton.Size = new System.Drawing.Size(134, 23);
-            this.saveProgButton.TabIndex = 10;
-            this.saveProgButton.Text = "Einstellungen speichern";
-            this.saveProgButton.UseVisualStyleBackColor = true;
-            this.saveProgButton.Click += new System.EventHandler(this.saveProgButton_Click);
+            this.neueKategorieToolStripMenuItem.Name = "neueKategorieToolStripMenuItem";
+            this.neueKategorieToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.neueKategorieToolStripMenuItem.Text = "Neue Kategorie";
             // 
             // MainWindow
             // 
@@ -589,6 +597,7 @@
         private System.Windows.Forms.Timer update;
         private System.Windows.Forms.ToolStripMenuItem autostartToolStripMenuItem;
         private System.Windows.Forms.Button saveProgButton;
+        private System.Windows.Forms.ToolStripMenuItem neueKategorieToolStripMenuItem;
     }
 }
 

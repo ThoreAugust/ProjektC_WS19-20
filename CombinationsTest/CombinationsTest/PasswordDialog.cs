@@ -18,13 +18,20 @@ namespace CombinationsTest
         public PasswordDialog()
         {
             pwHandler = new PasswordHandler();
-            pwHandler.savePassToLog("test");
+            pwHandler.savePassToLog("hund");
             InitializeComponent();
         }
         private void okButton_Click(object sender, EventArgs e)
         {
             stayOpen = !pwHandler.checkPass(passwordBox.Text);
+            if (pwHandler.checkPass(passwordBox.Text))
+            {
             this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Das eingegebene Passwort war Falsch! Versuche es erneut.", "Warnung", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
         private void cancelButton_Click(object sender, EventArgs e)
         {
@@ -34,6 +41,18 @@ namespace CombinationsTest
         public bool keepWindowOpen ()
         {
             return stayOpen;
+        }
+
+        private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                okButton_Click(sender,e);
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                cancelButton_Click(sender, e);
+            }
         }
     }
 }

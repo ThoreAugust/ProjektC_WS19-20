@@ -52,6 +52,7 @@
             this.passwordBox.Size = new System.Drawing.Size(280, 20);
             this.passwordBox.TabIndex = 4;
             this.passwordBox.UseSystemPasswordChar = true;
+            this.passwordBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PasswordBox_KeyDown);
             // 
             // enterPWLabel
             // 

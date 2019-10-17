@@ -98,12 +98,6 @@ namespace CombinationsTest
         }
         private void SaveLogs()
         {
-            logProgramme.Clear();
-            foreach(ListViewItem item in savedProgsListView.Items)
-            {
-                Programm saved = (Programm) item.Tag;
-                logProgramme.Add(saved);
-            }
             using (StreamWriter writer = File.CreateText("Log.txt"))
             {
                 writer.WriteLine("[Programme]");
@@ -117,7 +111,6 @@ namespace CombinationsTest
                     writer.WriteLine(kategorie);
                 }
             }
-            fillSavedProgsListView();
         }
         private List<String> getInstalledProgrammNames()
         {
@@ -188,7 +181,7 @@ namespace CombinationsTest
                 if (process.MainWindowTitle != "")
                 {
                     usage = DateTime.Now.Subtract(process.StartTime);
-                    var row = new String[] { "" + process.Id, process.ProcessName, process.MainWindowTitle, usage.ToString(@"hh\:mm\:ss") };
+                    string[] row = new String[] { "" + process.Id, process.ProcessName, process.MainWindowTitle, usage.ToString(@"hh\:mm\:ss") };
                     lvi = new ListViewItem(row);
                     lvi.Tag = process;
                     //aktuelle Programme
@@ -199,9 +192,9 @@ namespace CombinationsTest
         private void fillInstalledProgsListView()
         {
             installedProgsListView.Items.Clear();
-            foreach (var name in getInstalledProgrammNames())
+            foreach (string name in getInstalledProgrammNames())
             {
-                var row = new String[] { name };
+                string[] row = new String[] { name };
                 lvi = new ListViewItem(row);
                 // alle installierten Programme
                 installedProgsListView.Items.Add(lvi);
@@ -213,7 +206,7 @@ namespace CombinationsTest
             savedProgsListView.Items.Clear();
             foreach (Programm savedProgs in logProgramme)
             {
-                var row = new String[] { savedProgs.getName(), savedProgs.getPath(), savedProgs.getKategorie(), "" + savedProgs.getUsedTime(), "" + savedProgs.getMaxTime() };
+                string[] row = new string[] { savedProgs.getName(), savedProgs.getPath(), savedProgs.getKategorie(), "" + savedProgs.getUsedTime(), "" + savedProgs.getMaxTime() };
                 lvi = new ListViewItem(row);
                 lvi.Tag = savedProgs;
                 // alle gespeicherten Programme
@@ -267,7 +260,6 @@ namespace CombinationsTest
                 usage = DateTime.Now.Subtract(process.StartTime);
                 Console.WriteLine("hi there: " + usage.TotalMilliseconds);
                 savedProgsListView.Items.Add(new ListViewItem(new String[] { process.MainWindowTitle, process.MainModule.FileName, "", "" + usage.TotalMilliseconds, "" + maxTime }));
-                SaveLogs();
                 MessageBox.Show("Eintrag gespeichert.", "Success", MessageBoxButtons.OK);
             }
         }
@@ -321,14 +313,14 @@ namespace CombinationsTest
                         currentUseTimeTextBox.Text = usage.ToString(@"hh\:mm\:ss");
                     }
                    item.SubItems[3].Text = usage.ToString(@"hh\:mm\:ss");
-                    for (int j = 0; j < savedProgsListView.Items.Count; j++)
-                    { 
-                        Programm savedProg = (Programm) savedProgsListView.Items[j].Tag;
-                        if (process.MainModule.FileName.Equals(savedProg.getPath()))
-                        {
-                            savedProg.setUsedTime(usage.TotalMilliseconds);
-                        }
-                    }
+                    //for (int j = 0; j < savedProgsListView.Items.Count; j++)
+                    //{ 
+                    //    Programm savedProg = (Programm) savedProgsListView.Items[j].Tag;
+                    //    if (process.MainModule.FileName.Equals(savedProg.getPath()))
+                    //    {
+                    //        savedProg.setUsedTime(usage.TotalMilliseconds);
+                    //    }
+                    //}
                 }
             }
         }

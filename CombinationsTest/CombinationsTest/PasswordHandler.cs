@@ -9,7 +9,6 @@ namespace CombinationsTest
 {
     class PasswordHandler
     {
-        private Dictionary<string, string> passwordHashPair = new Dictionary<string, string>();
         private string logHash;
 
         public PasswordHandler()
@@ -38,15 +37,10 @@ namespace CombinationsTest
             string hash = HashPassword(password);
             if (!hash.Equals("Das Passwort darf nicht leer sein."))
             {
-                passwordHashPair.Add(password, hash);
-                Dictionary<string, string>.ValueCollection values= passwordHashPair.Values;
                 using (StreamWriter writer = File.CreateText("pwLog.txt"))
                 {
                     writer.WriteLine("[PassHash]");
-                    foreach (string value in values)
-                    {
-                        writer.WriteLine("cur:"+value);
-                    }
+                    writer.WriteLine(hash);
                 }
             }
         }
@@ -64,17 +58,11 @@ namespace CombinationsTest
                 using (StreamReader reader = File.OpenText("pwLog.txt"))
                 {
                     string line;
-                    string [] splitLine;
                     while ((line = reader.ReadLine()) != null)
                     {
                         if (line != "[PassHash]" && line != "")
                         {
-                            if (line.Contains("cur:"))
-                            {
-                                splitLine = line.Split(':');
-                                Console.WriteLine(splitLine[1]);
-                                logHash = splitLine[1];
-                            }
+                            logHash = line;
                         }
                     }
                 }
@@ -82,12 +70,22 @@ namespace CombinationsTest
         }
         public bool checkPass(string password)
         {
-            readPassFromLog();
+            if (String.IsNullOrEmpty(logHash))
+            {
+                readPassFromLog();
+            }
             string hashToTest = HashPassword(password);
             Console.WriteLine(password);
             Console.WriteLine(hashToTest);
             Console.WriteLine(logHash.Equals(hashToTest));
             return logHash.Equals(hashToTest);
+        }
+        public void changePass(string oldPass, string repeatOld, string newPass)
+        {
+            if (oldPass.Equals(repeatOld) && checkPass(oldPass) && checkPass(repeatOld))
+            {
+                savePassToLog(newPass);
+            }
         }
     }
 }
