@@ -20,11 +20,18 @@ namespace CombinationsTest
             maxTime = mt;
             programs = p;
         }
+        public string getName()
+        {
+            return name;
+        }
         override public String ToString()
         {
             String p = "";
-            foreach (Programm program in programs)
-                p += program.getPath() + ":";
+            if (programs != null)
+            {
+                foreach (Programm program in programs)
+                    p += program.getPath() + ":";
+            }
             return name + ";" + maxTime + ";" + p;
         }
     }

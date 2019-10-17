@@ -25,7 +25,7 @@ namespace CombinationsTest
         {
             usedTime = newUsedTime;
         }
-        public double getUsedTime()
+        public int getUsedTime()
         {
             return usedTime;
         }

@@ -16,12 +16,7 @@ namespace CombinationsTest
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            SetUpDialog setUp = new SetUpDialog();
-            Application.Run(setUp);
-            if (setUp.closingForm())
-            {
-                Application.Run(setUp.GetMainWindow());
-            }
+            Application.Run(new Form1());
         }
     }
 }

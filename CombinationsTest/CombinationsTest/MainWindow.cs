@@ -31,6 +31,8 @@ namespace CombinationsTest
          //   reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
             InitializeComponent();
             update.Start();
+            logKategorien = new List<Kategorie>();
+            logProgramme = new List<Programm>();
         }
         private void LoadLog()
         {
@@ -167,8 +169,6 @@ namespace CombinationsTest
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            logKategorien = new List<Kategorie>();
-            logProgramme = new List<Programm>();
             LoadLog();
             fillCurrentProgsListView();
             fillInstalledProgsListView();
@@ -258,7 +258,7 @@ namespace CombinationsTest
             {
                 usage = DateTime.Now.Subtract(process.StartTime);
                 Console.WriteLine("hi there: " + usage.TotalSeconds);
-                logProgramme.Add(new Programm(process.MainWindowTitle, process.MainModule.FileName, usage.TotalSeconds, maxTime ));
+                logProgramme.Add(new Programm(process.MainWindowTitle, process.MainModule.FileName, Convert.ToInt32(usage.TotalSeconds), maxTime ));
                 SaveLogs();
                 MessageBox.Show("Eintrag gespeichert.", "Success", MessageBoxButtons.OK);
             }
@@ -412,6 +412,25 @@ namespace CombinationsTest
             SaveLogs();
             savedProgsListView.Items.Clear();
             fillSavedProgsListView();
+        }
+        public void AddKategorie(string name)
+        {
+            bool isUnique = true;
+            if (logKategorien != null)
+            {
+                foreach(Kategorie kategorie in logKategorien)
+                {
+                    if (kategorie.getName() == name)
+                    {
+                        isUnique = false;
+                        break;
+                    }
+                }
+            }
+            if (isUnique)
+            {
+                logKategorien.Add(new Kategorie(name, 0, 0, null));
+            }
         }
     }   
 }
