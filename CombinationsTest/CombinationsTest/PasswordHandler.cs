@@ -44,7 +44,7 @@ namespace CombinationsTest
                 }
             }
         }
-        private void readPassFromLog()
+        public void readPassFromLog()
         {
             if (!File.Exists("pwLog.txt"))
             {
@@ -70,15 +70,38 @@ namespace CombinationsTest
         }
         public bool checkPass(string password)
         {
+            string hashToTest = null;
             if (String.IsNullOrEmpty(logHash))
             {
                 readPassFromLog();
             }
-            string hashToTest = HashPassword(password);
+            if (password != null)
+            {
+            hashToTest = HashPassword(password);
             Console.WriteLine(password);
             Console.WriteLine(hashToTest);
-            Console.WriteLine(logHash.Equals(hashToTest));
-            return logHash.Equals(hashToTest);
+                if(logHash != null && !password.Equals("Das Passwort darf nicht leer sein.") && hashToTest != null)
+                {
+                Console.WriteLine(logHash.Equals(hashToTest));
+                return logHash.Equals(hashToTest);
+                }
+                return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool hasLogHash()
+        {
+            if (!String.IsNullOrEmpty(logHash))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public void changePass(string oldPass, string repeatOld, string newPass)
         {

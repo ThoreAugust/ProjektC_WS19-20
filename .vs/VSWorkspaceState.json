@@ -1,10 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\CombinationsTest\\CombinationsTest",
-    "\\Nikita_Tutorials",
-    "\\Nikita_Tutorials\\CombinationsTest"
+    "\\CombinationsTest",
+    "\\CombinationsTest\\CombinationsTest"
   ],
-  "SelectedNode": "\\Nikita_Tutorials\\CombinationsTest\\CombinationsTest.sln",
+  "SelectedNode": "\\CombinationsTest\\CombinationsTest.sln",
   "PreviewInSolutionExplorer": false
 }

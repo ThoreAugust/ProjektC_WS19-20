@@ -15,11 +15,13 @@ namespace CombinationsTest
         PasswordHandler pwHandler;
         MainWindow mw;
         bool closing;
-        public SetUpDialog()
+        string pass;
+        public SetUpDialog(MainWindow main)
         {
             closing = false;
-            mw = new MainWindow();
+            mw = main;
             pwHandler = new PasswordHandler();
+            pwHandler.readPassFromLog();
             InitializeComponent();
         }
         private void OkButton_Click(object sender, EventArgs e)
@@ -28,22 +30,21 @@ namespace CombinationsTest
             if(masterPWBox.Text.Equals(masterPWRepeatBox.Text))
             {
                 pwHandler.savePassToLog(masterPWBox.Text);
-                foreach (string kategorie in kategorieBox.Text.Split(';'))
+                pass = masterPWBox.Text;
+                if (kategorieBox.Text != "")
                 {
-                    mw.AddKategorie(kategorie);
+                    foreach (string kategorie in kategorieBox.Text.Split(';'))
+                    {
+                        mw.AddKategorie(kategorie);
+                    }
                 }
-                closing = true;
                 this.Close();
             }
         }
-        public MainWindow GetMainWindow()
+        public bool passSet()
         {
-            return mw;
-        }
-        public bool closingForm()
-        {
-            mw.Show();
-            return closing;
+            pwHandler.readPassFromLog();
+            return pwHandler.hasLogHash();
         }
     }
 }

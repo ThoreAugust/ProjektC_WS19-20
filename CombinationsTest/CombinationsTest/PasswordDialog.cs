@@ -18,7 +18,6 @@ namespace CombinationsTest
         public PasswordDialog()
         {
             pwHandler = new PasswordHandler();
-            pwHandler.savePassToLog("hund");
             InitializeComponent();
         }
         private void okButton_Click(object sender, EventArgs e)

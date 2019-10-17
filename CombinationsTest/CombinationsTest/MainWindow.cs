@@ -25,11 +25,17 @@ namespace CombinationsTest
         private List<Kategorie> logKategorien;
         private List<Programm> logProgramme;
         private int ticks;
+        private SetUpDialog setUp;
         
         public MainWindow()
         {
+            setUp = new SetUpDialog(this);
          //   reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
             InitializeComponent();
+            if(!setUp.passSet())
+            {
+                setUp.Show();
+            }
             update.Start();
             logKategorien = new List<Kategorie>();
             logProgramme = new List<Programm>();
@@ -91,7 +97,7 @@ namespace CombinationsTest
                                     }
                                 }
                             }
-                            logKategorien.Add(new Kategorie(vs[0], ut, Convert.ToInt32(vs[1]), p));
+                            logKategorien.Add(new Kategorie(vs[0], 0, Convert.ToInt32(vs[1]), null));
                         }
                     }
                 }
