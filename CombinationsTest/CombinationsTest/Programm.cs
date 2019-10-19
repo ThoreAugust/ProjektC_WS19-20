@@ -10,22 +10,22 @@ namespace CombinationsTest
     {
         private string name;
         private string path;
-        private double usedTime;
-        private double maxTime;
+        private int usedTime;
+        private int maxTime;
         private string kategorie;
 
-        public Programm(String n, String p, double ut, double mt)
+        public Programm(String n, String p, int ut, int mt)
         {
             name = n;
             path = p;
             usedTime = ut;
             maxTime = mt;
         }
-        public void setUsedTime(double newUsedTime)
+        public void setUsedTime(int newUsedTime)
         {
             usedTime = newUsedTime;
         }
-        public double getUsedTime()
+        public int getUsedTime()
         {
             return usedTime;
         }
@@ -37,11 +37,11 @@ namespace CombinationsTest
         {
             return name;
         }
-        public double getMaxTime()
+        public int getMaxTime()
         {
             return maxTime;
         }
-        public void setMaxTime(double newMaxTime)
+        public void setMaxTime(int newMaxTime)
         {
             maxTime = newMaxTime;
         }
