@@ -66,6 +66,7 @@
             this.savedUsedTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.savedMaxTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.detailBox = new System.Windows.Forms.GroupBox();
+            this.saveProgButton = new System.Windows.Forms.Button();
             this.maxMinuteUseTimeLabel = new System.Windows.Forms.Label();
             this.maxMinuteUseTimeTextBox = new System.Windows.Forms.TextBox();
             this.maxHourUseTimeLabel = new System.Windows.Forms.Label();
@@ -77,7 +78,7 @@
             this.currentUseTimeTextBox = new System.Windows.Forms.TextBox();
             this.currentUseTimeLabel = new System.Windows.Forms.Label();
             this.update = new System.Windows.Forms.Timer(this.components);
-            this.saveProgButton = new System.Windows.Forms.Button();
+            this.killButton = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -191,12 +192,12 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(90, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(89, 6);
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(93, 22);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem1.Text = "Exit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.ExitToolStripMenuItem1_Click);
             // 
@@ -379,6 +380,7 @@
             this.detailBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.detailBox.Controls.Add(this.killButton);
             this.detailBox.Controls.Add(this.saveProgButton);
             this.detailBox.Controls.Add(this.maxMinuteUseTimeLabel);
             this.detailBox.Controls.Add(this.maxMinuteUseTimeTextBox);
@@ -398,6 +400,16 @@
             this.detailBox.TabStop = false;
             this.detailBox.Text = "detailBox";
             this.detailBox.Visible = false;
+            // 
+            // saveProgButton
+            // 
+            this.saveProgButton.Location = new System.Drawing.Point(380, 629);
+            this.saveProgButton.Name = "saveProgButton";
+            this.saveProgButton.Size = new System.Drawing.Size(134, 23);
+            this.saveProgButton.TabIndex = 10;
+            this.saveProgButton.Text = "Einstellungen speichern";
+            this.saveProgButton.UseVisualStyleBackColor = true;
+            this.saveProgButton.Click += new System.EventHandler(this.saveProgButton_Click);
             // 
             // maxMinuteUseTimeLabel
             // 
@@ -500,15 +512,15 @@
             // 
             this.update.Tick += new System.EventHandler(this.Update_Tick);
             // 
-            // saveProgButton
+            // killButton
             // 
-            this.saveProgButton.Location = new System.Drawing.Point(380, 629);
-            this.saveProgButton.Name = "saveProgButton";
-            this.saveProgButton.Size = new System.Drawing.Size(134, 23);
-            this.saveProgButton.TabIndex = 10;
-            this.saveProgButton.Text = "Einstellungen speichern";
-            this.saveProgButton.UseVisualStyleBackColor = true;
-            this.saveProgButton.Click += new System.EventHandler(this.saveProgButton_Click);
+            this.killButton.Location = new System.Drawing.Point(23, 242);
+            this.killButton.Name = "killButton";
+            this.killButton.Size = new System.Drawing.Size(75, 23);
+            this.killButton.TabIndex = 11;
+            this.killButton.Text = "Beenden";
+            this.killButton.UseVisualStyleBackColor = true;
+            this.killButton.Click += new System.EventHandler(this.KillButton_Click);
             // 
             // MainWindow
             // 
@@ -589,6 +601,7 @@
         private System.Windows.Forms.Timer update;
         private System.Windows.Forms.ToolStripMenuItem autostartToolStripMenuItem;
         private System.Windows.Forms.Button saveProgButton;
+        private System.Windows.Forms.Button killButton;
     }
 }
 
