@@ -43,7 +43,7 @@
             this.timerNotification = new System.Windows.Forms.NotifyIcon(this.components);
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.neueKategorieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.neueKategorieToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statistikToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,6 +53,7 @@
             this.autostartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.neueKategorieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.programmTabs = new System.Windows.Forms.TabControl();
             this.installedProgs = new System.Windows.Forms.TabPage();
@@ -67,6 +68,9 @@
             this.savedUsedTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.savedMaxTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.detailBox = new System.Windows.Forms.GroupBox();
+            this.kategorieDropDown = new System.Windows.Forms.ComboBox();
+            this.kategorieLabel = new System.Windows.Forms.Label();
+            this.killButton = new System.Windows.Forms.Button();
             this.saveProgButton = new System.Windows.Forms.Button();
             this.maxMinuteUseTimeLabel = new System.Windows.Forms.Label();
             this.maxMinuteUseTimeTextBox = new System.Windows.Forms.TextBox();
@@ -79,12 +83,9 @@
             this.currentUseTimeTextBox = new System.Windows.Forms.TextBox();
             this.currentUseTimeLabel = new System.Windows.Forms.Label();
             this.update = new System.Windows.Forms.Timer(this.components);
-<<<<<<< HEAD
-            this.kategorieLabel = new System.Windows.Forms.Label();
-            this.kategorieDropDown = new System.Windows.Forms.ComboBox();
-=======
-            this.killButton = new System.Windows.Forms.Button();
->>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.contextMenuStrip1.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -94,6 +95,7 @@
             this.savedProgs.SuspendLayout();
             this.detailBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.maxUseTimeTrackbar)).BeginInit();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // currentProgsListView
@@ -189,35 +191,28 @@
             // dateiToolStripMenuItem
             // 
             this.dateiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.neueKategorieToolStripMenuItem1,
             this.toolStripSeparator2,
             this.exitToolStripMenuItem1});
             this.dateiToolStripMenuItem.Name = "dateiToolStripMenuItem";
             this.dateiToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.dateiToolStripMenuItem.Text = "Datei";
             // 
-            // neueKategorieToolStripMenuItem
+            // neueKategorieToolStripMenuItem1
             // 
-            this.neueKategorieToolStripMenuItem.Name = "neueKategorieToolStripMenuItem";
-            this.neueKategorieToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.neueKategorieToolStripMenuItem.Text = "Neue Kategorie";
+            this.neueKategorieToolStripMenuItem1.Name = "neueKategorieToolStripMenuItem1";
+            this.neueKategorieToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.neueKategorieToolStripMenuItem1.Text = "Neue Kategorie";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-<<<<<<< HEAD
-            this.toolStripSeparator2.Size = new System.Drawing.Size(152, 6);
-=======
-            this.toolStripSeparator2.Size = new System.Drawing.Size(89, 6);
->>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-<<<<<<< HEAD
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(155, 22);
-=======
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(92, 22);
->>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem1.Text = "Exit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.ExitToolStripMenuItem1_Click);
             // 
@@ -272,6 +267,12 @@
             this.exportMenuItem.Name = "exportMenuItem";
             this.exportMenuItem.Size = new System.Drawing.Size(124, 22);
             this.exportMenuItem.Text = "Export";
+            // 
+            // neueKategorieToolStripMenuItem
+            // 
+            this.neueKategorieToolStripMenuItem.Name = "neueKategorieToolStripMenuItem";
+            this.neueKategorieToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.neueKategorieToolStripMenuItem.Text = "Neue Kategorie";
             // 
             // tableLayoutPanel1
             // 
@@ -400,12 +401,9 @@
             this.detailBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-<<<<<<< HEAD
             this.detailBox.Controls.Add(this.kategorieDropDown);
             this.detailBox.Controls.Add(this.kategorieLabel);
-=======
             this.detailBox.Controls.Add(this.killButton);
->>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
             this.detailBox.Controls.Add(this.saveProgButton);
             this.detailBox.Controls.Add(this.maxMinuteUseTimeLabel);
             this.detailBox.Controls.Add(this.maxMinuteUseTimeTextBox);
@@ -425,6 +423,34 @@
             this.detailBox.TabStop = false;
             this.detailBox.Text = "detailBox";
             this.detailBox.Visible = false;
+            // 
+            // kategorieDropDown
+            // 
+            this.kategorieDropDown.FormattingEnabled = true;
+            this.kategorieDropDown.Location = new System.Drawing.Point(166, 255);
+            this.kategorieDropDown.Name = "kategorieDropDown";
+            this.kategorieDropDown.Size = new System.Drawing.Size(186, 21);
+            this.kategorieDropDown.TabIndex = 12;
+            this.kategorieDropDown.Text = "Kategorie";
+            // 
+            // kategorieLabel
+            // 
+            this.kategorieLabel.AutoSize = true;
+            this.kategorieLabel.Location = new System.Drawing.Point(21, 255);
+            this.kategorieLabel.Name = "kategorieLabel";
+            this.kategorieLabel.Size = new System.Drawing.Size(106, 13);
+            this.kategorieLabel.TabIndex = 11;
+            this.kategorieLabel.Text = "Kategorie auswählen";
+            // 
+            // killButton
+            // 
+            this.killButton.Location = new System.Drawing.Point(21, 299);
+            this.killButton.Name = "killButton";
+            this.killButton.Size = new System.Drawing.Size(75, 23);
+            this.killButton.TabIndex = 11;
+            this.killButton.Text = "Beenden";
+            this.killButton.UseVisualStyleBackColor = true;
+            this.killButton.Click += new System.EventHandler(this.KillButton_Click);
             // 
             // saveProgButton
             // 
@@ -537,41 +563,42 @@
             // 
             this.update.Tick += new System.EventHandler(this.Update_Tick);
             // 
-<<<<<<< HEAD
-            // kategorieLabel
+            // tabControl1
             // 
-            this.kategorieLabel.AutoSize = true;
-            this.kategorieLabel.Location = new System.Drawing.Point(21, 255);
-            this.kategorieLabel.Name = "kategorieLabel";
-            this.kategorieLabel.Size = new System.Drawing.Size(106, 13);
-            this.kategorieLabel.TabIndex = 11;
-            this.kategorieLabel.Text = "Kategorie auswählen";
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(410, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(8, 8);
+            this.tabControl1.TabIndex = 3;
             // 
-            // kategorieDropDown
+            // tabPage1
             // 
-            this.kategorieDropDown.FormattingEnabled = true;
-            this.kategorieDropDown.Location = new System.Drawing.Point(166, 255);
-            this.kategorieDropDown.Name = "kategorieDropDown";
-            this.kategorieDropDown.Size = new System.Drawing.Size(186, 21);
-            this.kategorieDropDown.TabIndex = 12;
-            this.kategorieDropDown.Text = "Kategorie";
-=======
-            // killButton
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(0, 0);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            this.killButton.Location = new System.Drawing.Point(23, 242);
-            this.killButton.Name = "killButton";
-            this.killButton.Size = new System.Drawing.Size(75, 23);
-            this.killButton.TabIndex = 11;
-            this.killButton.Text = "Beenden";
-            this.killButton.UseVisualStyleBackColor = true;
-            this.killButton.Click += new System.EventHandler(this.KillButton_Click);
->>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(0, 0);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1164, 700);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.mainMenu);
             this.MainMenuStrip = this.mainMenu;
@@ -591,6 +618,7 @@
             this.detailBox.ResumeLayout(false);
             this.detailBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.maxUseTimeTrackbar)).EndInit();
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -646,13 +674,14 @@
         private System.Windows.Forms.Timer update;
         private System.Windows.Forms.ToolStripMenuItem autostartToolStripMenuItem;
         private System.Windows.Forms.Button saveProgButton;
-<<<<<<< HEAD
         private System.Windows.Forms.ToolStripMenuItem neueKategorieToolStripMenuItem;
         private System.Windows.Forms.ComboBox kategorieDropDown;
         private System.Windows.Forms.Label kategorieLabel;
-=======
         private System.Windows.Forms.Button killButton;
->>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
+        private System.Windows.Forms.ToolStripMenuItem neueKategorieToolStripMenuItem1;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }
 
