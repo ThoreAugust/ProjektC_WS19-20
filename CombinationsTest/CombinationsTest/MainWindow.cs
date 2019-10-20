@@ -24,80 +24,88 @@ namespace CombinationsTest
         private ListViewItem lvi;
         private List<Kategorie> logKategorien;
         private List<Programm> logProgramme;
+        private List<String> savedProgramme;    //Pfade der gespeicherten Programme
         private int ticks;
-        private SetUpDialog setUp;
         
         public MainWindow()
         {
-            setUp = new SetUpDialog(this);
          //   reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
             InitializeComponent();
-            if(!setUp.passSet())
-            {
-                setUp.Show();
-            }
             update.Start();
             logKategorien = new List<Kategorie>();
             logProgramme = new List<Programm>();
+            savedProgramme = new List<string>();
         }
         private void LoadLog()
         {
             if (!File.Exists("Log.txt"))
             {
-                using (StreamWriter sw = File.CreateText("Log.txt"))
+                using (StreamWriter writer = File.CreateText("Log.txt"))
                 {
-                    sw.WriteLine("[Programme]");
-                    sw.WriteLine("[Kategorien]");
+                    writer.WriteLine("[Programme]");
+                    writer.WriteLine("[Kategorien]");
                 }
             }
             else
             {
-                using (StreamReader sr = File.OpenText("Log.txt"))
+                using (StreamReader reader = File.OpenText("Log.txt"))
                 {
                     int i = 0;
-                    String s;
-                    String[] vs;
-                    List<Programm> p;
-                    int ut;
+                    String readLine;
+                    String[] splitLine;
+                    List<Programm> programs;
+                    Double usedTime;
                     bool newDay = false;
                     if (File.GetLastWriteTime("Log.txt").Date.CompareTo(DateTime.Today) < 0)
                         newDay = true;
-                    while ((s = sr.ReadLine()) != null)
+                    while ((readLine = reader.ReadLine()) != null)
                     {
-                        if (s == "[Programme]")
+                        if (readLine == "[Programme]")
                         {
                             i = 1;
                             continue;
                         }
-                        if (s == "[Kategorien]")
+                        if (readLine == "[Kategorien]")
                         {
                             i = 2;
                             continue;
                         }
-                        if (s == "")
+                        if (readLine == "")
                             break;
-                        vs = s.Split(';');
+                        splitLine = readLine.Split(';');
                         if (i == 1 && !newDay)
-                            logProgramme.Add(new Programm(vs[0], vs[1], Convert.ToInt32(vs[2]), Convert.ToInt32(vs[3])));
+                        {
+                            logProgramme.Add(new Programm(splitLine[0], splitLine[1], Convert.ToDouble(splitLine[2]), Convert.ToDouble(splitLine[3])));
+                            savedProgramme.Add(splitLine[1]);
+                        }
                         if (i == 1 && newDay)
-                            logProgramme.Add(new Programm(vs[0], vs[1], 0, Convert.ToInt32(vs[3])));
+                        {
+                            logProgramme.Add(new Programm(splitLine[0], splitLine[1], 0, Convert.ToDouble(splitLine[3])));
+                            savedProgramme.Add(splitLine[1]);
+                        }
                         if (i == 2)
                         {
+<<<<<<< HEAD
                             p = new List<Programm>();
                             ut = 0;
                             foreach (String n in vs[2].Split(':'))
+=======
+                            programs = new List<Programm>();
+                            usedTime = 0;
+                            foreach(String n in splitLine[3].Split(':'))
+>>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
                             {
                                 foreach (Programm programm in logProgramme)
                                 {
                                     if (programm.getPath() == n)
                                     {
-                                        p.Add(programm);
-                                        programm.setKategorie(vs[0]);
-                                        ut += programm.getUsedTime();
+                                        programs.Add(programm);
+                                        programm.setKategorie(splitLine[0]);
+                                        usedTime += programm.getUsedTime();
                                     }
                                 }
                             }
-                            logKategorien.Add(new Kategorie(vs[0], 0, Convert.ToInt32(vs[1]), null));
+                            logKategorien.Add(new Kategorie(splitLine[0], usedTime, Convert.ToInt64(splitLine[1]), programs));
                         }
                     }
                 }
@@ -105,17 +113,17 @@ namespace CombinationsTest
         }
         private void SaveLogs()
         {
-            using (StreamWriter sw = File.CreateText("Log.txt"))
+            using (StreamWriter writer = File.CreateText("Log.txt"))
             {
-                sw.WriteLine("[Programme]");
-                foreach (Programm p in logProgramme)
+                writer.WriteLine("[Programme]");
+                foreach (Programm program in logProgramme)
                 {
-                    sw.WriteLine(p);
+                    writer.WriteLine(program);
                 }
-                sw.WriteLine("[Kategorien]");
-                foreach (Kategorie k in logKategorien)
+                writer.WriteLine("[Kategorien]");
+                foreach(Kategorie kategorie in logKategorien)
                 {
-                    sw.WriteLine(k);
+                    writer.WriteLine(kategorie);
                 }
             }
         }
@@ -186,14 +194,21 @@ namespace CombinationsTest
             currentProgsListView.Items.Clear();
             foreach (Process process in Process.GetProcesses())
             {
-                if (process.MainWindowTitle != "")
+                try
                 {
-                    usage = DateTime.Now.Subtract(process.StartTime);
-                    string[] row = new String[] { "" + process.Id, process.ProcessName, process.MainWindowTitle, usage.ToString(@"hh\:mm\:ss") };
-                    lvi = new ListViewItem(row);
-                    lvi.Tag = process;
-                    //aktuelle Programme
-                    currentProgsListView.Items.Add(lvi);
+                    if (process.MainWindowTitle != "" || savedProgramme.Contains(process.MainModule.FileName))
+                    {
+                        usage = DateTime.Now.Subtract(process.StartTime);
+                        var row = new String[] { "" + process.Id, process.ProcessName, process.MainWindowTitle, usage.ToString(@"hh\:mm\:ss") };
+                        lvi = new ListViewItem(row);
+                        lvi.Tag = process;
+                        //aktuelle Programme
+                        currentProgsListView.Items.Add(lvi);
+                    }
+                }
+                catch (Exception)
+                {
+
                 }
             }
         }
@@ -211,9 +226,9 @@ namespace CombinationsTest
         private void fillInstalledProgsListView()
         {
             installedProgsListView.Items.Clear();
-            foreach (string name in getInstalledProgrammNames())
+            foreach (var name in getInstalledProgrammNames())
             {
-                string[] row = new String[] { name };
+                var row = new String[] { name };
                 lvi = new ListViewItem(row);
                 // alle installierten Programme
                 installedProgsListView.Items.Add(lvi);
@@ -224,7 +239,7 @@ namespace CombinationsTest
             savedProgsListView.Items.Clear();
             foreach (Programm savedProgs in logProgramme)
             {
-                string[] row = new string[] { savedProgs.getName(), savedProgs.getPath(), savedProgs.getKategorie(), "" + savedProgs.getUsedTime(), "" + savedProgs.getMaxTime() };
+                var row = new String[] { savedProgs.getName(), savedProgs.getPath(), savedProgs.getKategorie(), "" + savedProgs.getUsedTime(), "" + savedProgs.getMaxTime() };
                 lvi = new ListViewItem(row);
                 lvi.Tag = savedProgs;
                 // alle gespeicherten Programme
@@ -258,16 +273,20 @@ namespace CombinationsTest
                 Console.WriteLine(ex.Message);
             }
         }
+<<<<<<< HEAD
         private void AddProgram(Process process, int maxTime, string katName)
+=======
+        private void AddProgram(Process process, double maxTime)
+>>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
         {
             var path = process.MainModule.FileName;
-            Console.WriteLine(path);
+            Console.WriteLine(path);    //Debug-Hilfe
             bool isUnique = true;
-            foreach (ListViewItem item in savedProgsListView.Items)
+            foreach (Programm p in logProgramme)
             {
-                Programm p =(Programm) item.Tag;
                 if (path == p.getPath())
                 {
+                    MessageBox.Show("Prozess ist bereits gespeichert!", "Error", MessageBoxButtons.OK);
                     isUnique = false;
                     break;
                 }
@@ -275,6 +294,7 @@ namespace CombinationsTest
             if (isUnique)
             {
                 usage = DateTime.Now.Subtract(process.StartTime);
+<<<<<<< HEAD
                 Console.WriteLine("hi there: " + usage.TotalSeconds);
                 Programm temp = new Programm(process.MainWindowTitle, process.MainModule.FileName, Convert.ToInt32(usage.TotalSeconds), maxTime);
                 if (katName != "")
@@ -282,9 +302,17 @@ namespace CombinationsTest
                     temp.setKategorie(katName);
                 }
                 logProgramme.Add(temp);
+=======
+                Programm programm = new Programm(process.MainWindowTitle, path, usage.TotalMilliseconds, maxTime);
+                Console.WriteLine("hi there: " + usage.TotalMilliseconds);  //Debug-Hilfe
+                savedProgsListView.Items.Add(new ListViewItem(programm.ToString()));
+                logProgramme.Add(programm);
+>>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
                 SaveLogs();
+                fillSavedProgsListView();
                 MessageBox.Show("Eintrag gespeichert.", "Success", MessageBoxButtons.OK);
             }
+<<<<<<< HEAD
             else
             {
                 foreach (Programm p in logProgramme)
@@ -307,6 +335,8 @@ namespace CombinationsTest
                     }
                 }
             }
+=======
+>>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
         }
         private void ShowToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -314,7 +344,6 @@ namespace CombinationsTest
         }
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveLogs();
             this.Close();
         }
         private void Form1_Move(object sender, EventArgs e)
@@ -327,7 +356,6 @@ namespace CombinationsTest
         }
         private void ExitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            SaveLogs();
             this.Close();
         }
         private void MaxUseTimeTrackbar_Scroll(object sender, EventArgs e)
@@ -348,25 +376,60 @@ namespace CombinationsTest
             ticks++;
             if (ticks % 10 == 0)
             {
-                for (int i = 0; i < currentProgsListView.Items.Count; i++)
+                int counter = 0;
+                foreach (Process process in Process.GetProcesses())
                 {
-                   var item = currentProgsListView.Items[i];
-                   Process process = (Process) item.Tag;
-                   usage = DateTime.Now.Subtract(process.StartTime);
-                    if (item.Selected)
+                    try
                     {
-                        currentUseTimeTextBox.Text = usage.ToString(@"hh\:mm\:ss");
-                    }
-                   item.SubItems[3].Text = usage.ToString(@"hh\:mm\:ss");
-                    //for (int j = 0; j < savedProgsListView.Items.Count; j++)
-                    //{ 
-                    //    Programm savedProg = (Programm) savedProgsListView.Items[j].Tag;
-                    //    if (process.MainModule.FileName.Equals(savedProg.getPath()))
-                    //    {
-                    //        savedProg.setUsedTime(usage.TotalMilliseconds);
-                    //    }
-                    //}
+                        if (process.MainWindowTitle != "" || savedProgramme.Contains(process.MainModule.FileName))
+                        {
+                            counter++;
+                        }
+                    }catch(Exception) { }
                 }
+                if (counter != currentProgsListView.Items.Count)
+                {
+                    fillCurrentProgsListView();
+                }
+                else
+                {
+                    for (int i = 0; i < currentProgsListView.Items.Count; i++)
+                    {
+                        var item = currentProgsListView.Items[i];
+                        Process process = (Process)item.Tag;
+                        usage = DateTime.Now.Subtract(process.StartTime);
+                        if (item.Selected)
+                        {
+                            currentUseTimeTextBox.Text = usage.ToString(@"hh\:mm\:ss");
+                        }
+                        item.SubItems[3].Text = usage.ToString(@"hh\:mm\:ss");
+                        for (int j = 0; j < savedProgsListView.Items.Count; j++)
+                        {
+                            Programm savedProg = (Programm)savedProgsListView.Items[j].Tag;
+                            try
+                            {
+                                if (process.MainModule.FileName.Equals(savedProg.getPath()))
+                                {
+                                    savedProg.setUsedTime(usage.TotalMilliseconds);
+                                    //Maximale Nutzungszeit überschritten
+                                    if (savedProg.getUsedTime() >= savedProg.getMaxTime())
+                                    {
+                                        CloseProgram(process);
+                                    }
+                                }
+                            }
+                            catch (Exception) { }
+                        }
+                    }
+                }
+            }
+        }
+        private void CloseProgram(Process process)
+        {
+            process.CloseMainWindow();
+            if (!process.WaitForExit(10000))
+            {
+                process.Kill();
             }
         }
         private void MaxMinuteUseTimeTextBox_TextChanged(object sender, EventArgs e)
@@ -437,6 +500,7 @@ namespace CombinationsTest
         private void saveProgButton_Click(object sender, EventArgs e)
         {
             Process p = (Process) currentProgsListView.SelectedItems[0].Tag;
+<<<<<<< HEAD
             int maxUseTime = maxUseTimeTrackbar.Value;
             string katName = (string) kategorieDropDown.SelectedItem;
             AddProgram(p, maxUseTime,katName);
@@ -444,9 +508,14 @@ namespace CombinationsTest
             savedProgsListView.Items.Clear();
             fillSavedProgsListView();
             Console.WriteLine(kategorieDropDown.Text + "" + katName);
+=======
+            double maxUseTime = maxUseTimeTrackbar.Value * 1000;
+            AddProgram(p, maxUseTime);
+>>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
         }
-        public void AddKategorie(string name)
+        private void KillButton_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             Programm test;
             List<Programm> testList = new List<Programm>();
             bool isUnique = true;
@@ -471,6 +540,10 @@ namespace CombinationsTest
                 fillKategorieDropDown();
                 SaveLogs();
             }
+=======
+            Process p = (Process)currentProgsListView.SelectedItems[0].Tag;
+            CloseProgram(p);
+>>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
         }
     }   
 }

@@ -79,8 +79,12 @@
             this.currentUseTimeTextBox = new System.Windows.Forms.TextBox();
             this.currentUseTimeLabel = new System.Windows.Forms.Label();
             this.update = new System.Windows.Forms.Timer(this.components);
+<<<<<<< HEAD
             this.kategorieLabel = new System.Windows.Forms.Label();
             this.kategorieDropDown = new System.Windows.Forms.ComboBox();
+=======
+            this.killButton = new System.Windows.Forms.Button();
+>>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
             this.contextMenuStrip1.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -185,7 +189,6 @@
             // dateiToolStripMenuItem
             // 
             this.dateiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.neueKategorieToolStripMenuItem,
             this.toolStripSeparator2,
             this.exitToolStripMenuItem1});
             this.dateiToolStripMenuItem.Name = "dateiToolStripMenuItem";
@@ -201,12 +204,20 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
+<<<<<<< HEAD
             this.toolStripSeparator2.Size = new System.Drawing.Size(152, 6);
+=======
+            this.toolStripSeparator2.Size = new System.Drawing.Size(89, 6);
+>>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
+<<<<<<< HEAD
             this.exitToolStripMenuItem1.Size = new System.Drawing.Size(155, 22);
+=======
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(92, 22);
+>>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
             this.exitToolStripMenuItem1.Text = "Exit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.ExitToolStripMenuItem1_Click);
             // 
@@ -389,8 +400,12 @@
             this.detailBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+<<<<<<< HEAD
             this.detailBox.Controls.Add(this.kategorieDropDown);
             this.detailBox.Controls.Add(this.kategorieLabel);
+=======
+            this.detailBox.Controls.Add(this.killButton);
+>>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
             this.detailBox.Controls.Add(this.saveProgButton);
             this.detailBox.Controls.Add(this.maxMinuteUseTimeLabel);
             this.detailBox.Controls.Add(this.maxMinuteUseTimeTextBox);
@@ -522,6 +537,7 @@
             // 
             this.update.Tick += new System.EventHandler(this.Update_Tick);
             // 
+<<<<<<< HEAD
             // kategorieLabel
             // 
             this.kategorieLabel.AutoSize = true;
@@ -539,6 +555,17 @@
             this.kategorieDropDown.Size = new System.Drawing.Size(186, 21);
             this.kategorieDropDown.TabIndex = 12;
             this.kategorieDropDown.Text = "Kategorie";
+=======
+            // killButton
+            // 
+            this.killButton.Location = new System.Drawing.Point(23, 242);
+            this.killButton.Name = "killButton";
+            this.killButton.Size = new System.Drawing.Size(75, 23);
+            this.killButton.TabIndex = 11;
+            this.killButton.Text = "Beenden";
+            this.killButton.UseVisualStyleBackColor = true;
+            this.killButton.Click += new System.EventHandler(this.KillButton_Click);
+>>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
             // 
             // MainWindow
             // 
@@ -619,9 +646,13 @@
         private System.Windows.Forms.Timer update;
         private System.Windows.Forms.ToolStripMenuItem autostartToolStripMenuItem;
         private System.Windows.Forms.Button saveProgButton;
+<<<<<<< HEAD
         private System.Windows.Forms.ToolStripMenuItem neueKategorieToolStripMenuItem;
         private System.Windows.Forms.ComboBox kategorieDropDown;
         private System.Windows.Forms.Label kategorieLabel;
+=======
+        private System.Windows.Forms.Button killButton;
+>>>>>>> 34630a1bbc0ae1c0eb37ee04cbc57b3d16f5427e
     }
 }
 
