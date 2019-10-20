@@ -52,3 +52,15 @@ Steht auch im Code ab Zeile 264 der Form1 über der betreffenden Zeile.
 
 Weiß leider nicht wo die liste "aktuelle Programme" erstellt wird oder wie ich drauf zugreife, da die comments fehlen ^^
 - Autostart + Timer + reset läuft sonst
+
+
+Fortschritt 10.10.19 - 24.10.19
+__________________________________________________
+
+mehrere Versuche und Tutorials ausgeführt DragDrop-Funktion zu implementieren, bisher leider immer fehlgeschlagen
+
+https://www.codeproject.com/script/Articles/ViewDownloads.aspx?aid=9017&zep=Form1.cs&rzp=%2fKB%2fcs%2fdandtutorial%2f%2fimageviewer.zip
+https://docs.microsoft.com/de-de/dotnet/api/system.windows.forms.control.dodragdrop?view=netframework-4.8
+https://www.youtube.com/watch?v=arkT9zg1jHc
+https://www.codeproject.com/Articles/17266/Drag-and-Drop-Items-in-a-WPF-ListView
+https://stackoverflow.com/questions/21131157/drag-and-drop-cell-from-datagridview-to-another
