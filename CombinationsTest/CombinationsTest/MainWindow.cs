@@ -85,7 +85,7 @@ namespace CombinationsTest
                         {
                             p = new List<Programm>();
                             ut = 0;
-                            foreach (String n in vs[3].Split(':'))
+                            foreach (String n in vs[2].Split(':'))
                             {
                                 foreach (Programm programm in logProgramme)
                                 {
@@ -179,6 +179,7 @@ namespace CombinationsTest
             fillCurrentProgsListView();
             fillInstalledProgsListView();
             fillSavedProgsListView();
+            fillKategorieDropDown();
         }
         private void fillCurrentProgsListView()
         {
@@ -193,6 +194,17 @@ namespace CombinationsTest
                     lvi.Tag = process;
                     //aktuelle Programme
                     currentProgsListView.Items.Add(lvi);
+                }
+            }
+        }
+        private void fillKategorieDropDown()
+        {
+            if(logKategorien.Count != 0)
+            {
+                foreach (Kategorie item in logKategorien)
+                {
+                    kategorieDropDown.Items.Add(item.getName());
+                    kategorieDropDown.Tag = item;
                 }
             }
         }
@@ -246,7 +258,7 @@ namespace CombinationsTest
                 Console.WriteLine(ex.Message);
             }
         }
-        private void AddProgram(Process process, int maxTime)
+        private void AddProgram(Process process, int maxTime, string katName)
         {
             var path = process.MainModule.FileName;
             Console.WriteLine(path);
@@ -264,7 +276,12 @@ namespace CombinationsTest
             {
                 usage = DateTime.Now.Subtract(process.StartTime);
                 Console.WriteLine("hi there: " + usage.TotalSeconds);
-                logProgramme.Add(new Programm(process.MainWindowTitle, process.MainModule.FileName, Convert.ToInt32(usage.TotalSeconds), maxTime ));
+                Programm temp = new Programm(process.MainWindowTitle, process.MainModule.FileName, Convert.ToInt32(usage.TotalSeconds), maxTime);
+                if (katName != "")
+                {
+                    temp.setKategorie(katName);
+                }
+                logProgramme.Add(temp);
                 SaveLogs();
                 MessageBox.Show("Eintrag gespeichert.", "Success", MessageBoxButtons.OK);
             }
@@ -276,6 +293,13 @@ namespace CombinationsTest
                     {
                         p.setMaxTime(maxTime);
                         MessageBox.Show("Maximale Nutzungszeit gespeichert!", "Success", MessageBoxButtons.OK);
+                        SaveLogs();
+                    }
+                    else if(path == p.getPath() && katName != "")
+                    {
+                        p.setKategorie(katName);
+                        MessageBox.Show("Kategorie gespeichert!", "Success", MessageBoxButtons.OK);
+                        SaveLogs();
                     }
                     else if(path == p.getPath())
                     {
@@ -414,13 +438,17 @@ namespace CombinationsTest
         {
             Process p = (Process) currentProgsListView.SelectedItems[0].Tag;
             int maxUseTime = maxUseTimeTrackbar.Value;
-            AddProgram(p, maxUseTime);
+            string katName = (string) kategorieDropDown.SelectedItem;
+            AddProgram(p, maxUseTime,katName);
             SaveLogs();
             savedProgsListView.Items.Clear();
             fillSavedProgsListView();
+            Console.WriteLine(kategorieDropDown.Text + "" + katName);
         }
         public void AddKategorie(string name)
         {
+            Programm test;
+            List<Programm> testList = new List<Programm>();
             bool isUnique = true;
             if (logKategorien != null)
             {
@@ -435,7 +463,13 @@ namespace CombinationsTest
             }
             if (isUnique)
             {
-                logKategorien.Add(new Kategorie(name, 0, 0, null));
+                test = new Programm("test", "X://test.exe", 120, 18000);
+                test.setKategorie(name);
+                testList.Add(test);
+                logKategorien.Add(new Kategorie(name, 0, 0, testList));
+                kategorieDropDown.Items.Clear();
+                fillKategorieDropDown();
+                SaveLogs();
             }
         }
     }   
