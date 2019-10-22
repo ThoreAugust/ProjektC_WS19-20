@@ -62,7 +62,7 @@
             this.masterPWBox.Name = "masterPWBox";
             this.masterPWBox.PasswordChar = '*';
             this.masterPWBox.Size = new System.Drawing.Size(165, 20);
-            this.masterPWBox.TabIndex = 2;
+            this.masterPWBox.TabIndex = 1;
             this.masterPWBox.UseSystemPasswordChar = true;
             // 
             // kategorieBox
@@ -89,7 +89,7 @@
             this.masterPWRepeatBox.Name = "masterPWRepeatBox";
             this.masterPWRepeatBox.PasswordChar = '*';
             this.masterPWRepeatBox.Size = new System.Drawing.Size(165, 20);
-            this.masterPWRepeatBox.TabIndex = 5;
+            this.masterPWRepeatBox.TabIndex = 2;
             this.masterPWRepeatBox.UseSystemPasswordChar = true;
             // 
             // masterPWRepeatLabel

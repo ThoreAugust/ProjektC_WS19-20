@@ -30,15 +30,15 @@ namespace CombinationsTest
         public MainWindow()
         {
             setUp = new SetUpDialog(this);
+            logKategorien = new List<Kategorie>();
+            logProgramme = new List<Programm>();
          //   reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
             InitializeComponent();
             if(!setUp.passSet())
             {
-                setUp.Show();
+                setUp.ShowDialog();
             }
             update.Start();
-            logKategorien = new List<Kategorie>();
-            logProgramme = new List<Programm>();
         }
         private void LoadLog()
         {
