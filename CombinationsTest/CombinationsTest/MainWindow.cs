@@ -126,55 +126,35 @@ namespace CombinationsTest
         private List<String> getInstalledProgrammNames()
         {
             List<String> programmNames = new List<String>();
-            string displayName;
             RegistryKey key;
+            void addNamesForKey(RegistryKey regKey) 
+            {
+                string displayName;
+                foreach (String keyName in regKey.GetSubKeyNames())
+                {
+                    RegistryKey subkey = key.OpenSubKey(keyName);
+                    displayName = subkey.GetValue("DisplayName") as string;
+                    if (displayName != null && !displayName.Contains("Microsoft") && !displayName.Contains("Windows"))
+                    {
+                        if (!programmNames.Contains(displayName))
+                        {
+                            programmNames.Add(displayName);
+                        }
+                    }
+                }
+            }
 
             // search in: CurrentUser
             key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
-            foreach (String keyName in key.GetSubKeyNames())
-            {
-                RegistryKey subkey = key.OpenSubKey(keyName);
-                displayName = subkey.GetValue("DisplayName") as string;
-                if (displayName != null && !displayName.Contains("Microsoft") && !displayName.Contains("Windows"))
-                {
-                    if (!programmNames.Contains(displayName))
-                    {
-                        programmNames.Add(displayName);
-                    }
-                }
-                
-
-            }
+            addNamesForKey(key);
 
             // search in: LocalMachine_32
             key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
-            foreach (String keyName in key.GetSubKeyNames())
-            {
-                RegistryKey subkey = key.OpenSubKey(keyName);
-                displayName = subkey.GetValue("DisplayName") as string;
-                if (displayName != null && !displayName.Contains("Microsoft") && !displayName.Contains("Windows"))
-                {
-                    if (!programmNames.Contains(displayName))
-                    {
-                        programmNames.Add(displayName);
-                    }
-                }
-            }
+            addNamesForKey(key);
 
             // search in: LocalMachine_64
             key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall");
-            foreach (String keyName in key.GetSubKeyNames())
-            {
-                RegistryKey subkey = key.OpenSubKey(keyName);
-                displayName = subkey.GetValue("DisplayName") as string;
-                if (displayName != null && !displayName.Contains("Microsoft") && !displayName.Contains("Windows"))
-                {
-                    if (!programmNames.Contains(displayName))
-                    {
-                        programmNames.Add(displayName);
-                    }
-                }
-            }
+            addNamesForKey(key);
             return programmNames;
         }
         private void Form1_Load(object sender, EventArgs e)
