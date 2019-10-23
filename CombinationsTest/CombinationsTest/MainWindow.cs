@@ -358,7 +358,19 @@ namespace CombinationsTest
                     }
 
                 }
-                fillCurrentProgsListView();
+                if(currentProgsListView.SelectedItems.Count > 0)
+                {
+                    string id = currentProgsListView.SelectedItems[0].SubItems[0].Text;
+                    fillCurrentProgsListView();
+                    foreach(ListViewItem lvi in currentProgsListView.Items)
+                    {
+                        if (id.Equals(lvi.SubItems[0].Text))
+                        {
+                            lvi.Selected = true;
+                        }
+                    }
+                }else
+                    fillCurrentProgsListView();
             }
  
         }
