@@ -3,23 +3,29 @@ Projekttitel: (Anti-)Distraction-Manager, Balance, TimeIsUp, UpTime,
 (Done)WPA oder WPF?
 (Done)Autostart
 (Done)Vorhandene Funktionen kombinieren
--Zeitwarnungen als Popup
 (Done)Liste zu regulierender Programme erstellen und speichern
--Programme in Kategorien zusammen fassen
+(Done)Programme in Kategorien zusammen fassen
 -Zeitgrenzen für individuelle Programme und Kategorien erstellen
-!Tabview Installierte Programme | Aktive Programme | Gespeicherte Programme
+(Done)Tabview Installierte Programme | Aktive Programme | Gespeicherte Programme
 	Aktiv: 			Prozess | Kategorie | Maximale Zeit | Button "Hinzufügen"
 	Gespeichert: 	Prozess | Kategorie | Maximale Zeit | Verbleibende Zeit
-!Menüleiste
+(Done)Menüleiste
 	Datei: Schliessen
 	Statistik: Anzeigen
 	Einstellungen: Optionen | Import | Export
-!Zeit/Timer
-!Prozesse beenden / killen
+(Done)Zeit/Timer
+(Done)Prozesse beenden / killen
 -Kategorien: Liste enthaltener Programme, UsedTime = UsedTime aller enthaltener Programme
-!Tägliches Resetten der Timer
-!Statistik speichern
-!Passwort um schließen des Programms zuverhindern
+-Tägliches Resetten der Timer
+(Done)Passwort um schließen des Programms zuverhindern
+!Installierte Programme mit Pfad als Programm Objekt erstellen
+-AddProgramm() erweitern, siehe Kommentar
+-Bug bei speichern von Kategorien: Enthaltene Programme werden nicht gespeichert
+-Passwort in log.txt speichern
+
+Geringe Priorität:
+!Abgelaufene Nutzungszeit ProgressBar mit Funktion
+-Zeitwarnungen als Popup
 
 Bonus:
 Statistik aktiver Programme
