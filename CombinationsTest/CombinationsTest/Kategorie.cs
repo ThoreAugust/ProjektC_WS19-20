@@ -30,7 +30,7 @@ namespace CombinationsTest
             if (programs != null)
             {
                 foreach (Programm program in programs)
-                    p += program.getPath() + ":";
+                    p += program.getPath() + ",";
             }
             return name + ";" + maxTime + ";" + p;
         }

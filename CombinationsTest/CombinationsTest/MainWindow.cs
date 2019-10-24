@@ -89,7 +89,7 @@ namespace CombinationsTest
                         {
                             programs = new List<Programm>();
                             usedTime = 0;
-                            foreach(String n in splitLine[2].Split(':'))
+                            foreach(String n in splitLine[2].Split(','))
                             {
                                 foreach (Programm programm in logProgramme)
                                 {
@@ -184,12 +184,13 @@ namespace CombinationsTest
         }
         private void fillKategorieDropDown()
         {
+            kategorieDropDown.Items.Clear();
             if(logKategorien.Count != 0)
             {
                 foreach (Kategorie item in logKategorien)
                 {
                     kategorieDropDown.Items.Add(item.getName());
-                    kategorieDropDown.Tag = item;
+                    //kategorieDropDown.Tag = item;
                 }
             }
         }
@@ -223,15 +224,6 @@ namespace CombinationsTest
                 var selectedItem = (Process)currentProgsListView.SelectedItems[0].Tag;
                 if (selectedItem != null)
                 {
-                    //usage = DateTime.Now.Subtract(selectedItem.StartTime);
-                    //DialogResult result;
-                    //result = MessageBox.Show(
-                    //    "Id: " + selectedItem.Id + "\n Name: " + selectedItem.ProcessName + "\n Title: " + selectedItem.MainWindowTitle + "\n Laufzeit: "
-                    //    + usage.ToString(@"hh\:mm\:ss") + "\n\n Prozess hinzufügen?", "Process details", MessageBoxButtons.YesNo, MessageBoxIcon.Information
-                    //    );
-                    //if (result == DialogResult.Yes)
-                    //    AddProgram(selectedItem);
-                    detailBox.Visible = false;
                     detailBox.Text = selectedItem.ProcessName + ", "+ selectedItem.MainWindowTitle;
                     detailBox.Visible = true;
 
@@ -252,7 +244,6 @@ namespace CombinationsTest
             {
                 if (path == p.getPath())
                 {
-                    MessageBox.Show("Prozess ist bereits gespeichert!", "Error", MessageBoxButtons.OK);
                     isUnique = false;
                     break;
                 }
@@ -264,6 +255,7 @@ namespace CombinationsTest
                 Programm temp = new Programm(process.MainWindowTitle, path, Convert.ToInt32(usage.TotalSeconds), maxTime);
                 if (katName != "")
                 {
+                    //TODO: Programm muss auch der Kategorie hinzugefügt werden
                     temp.setKategorie(katName);
                 }
                 logProgramme.Add(temp);
@@ -453,17 +445,15 @@ namespace CombinationsTest
             int maxUseTime = maxUseTimeTrackbar.Value;
             string katName = (string) kategorieDropDown.SelectedItem;
             AddProgram(p, maxUseTime,katName);
-            SaveLogs();
             savedProgsListView.Items.Clear();
             fillSavedProgsListView();
-            Console.WriteLine(kategorieDropDown.Text + "" + katName);
         }
         public void AddKategorie(string name)
         {
             Programm test;
             List<Programm> testList = new List<Programm>();
             bool isUnique = true;
-            if (logKategorien != null)
+            if (logKategorien.Count != 0 )
             {
                 foreach (Kategorie kategorie in logKategorien)
                 {
@@ -480,8 +470,6 @@ namespace CombinationsTest
                 test.setKategorie(name);
                 testList.Add(test);
                 logKategorien.Add(new Kategorie(name, 0, 0, testList));
-                kategorieDropDown.Items.Clear();
-                fillKategorieDropDown();
                 SaveLogs();
             }
         }

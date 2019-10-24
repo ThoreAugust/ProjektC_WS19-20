@@ -56,7 +56,7 @@ namespace CombinationsTest
         }
         public override string ToString()
         {
-            return name + ";" + path + ";" + usedTime + ";" + maxTime;
+            return name + ";" + path + ";" + usedTime + ";" + maxTime + ";" + kategorie;
         }
     }
 }
