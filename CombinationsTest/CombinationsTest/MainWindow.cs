@@ -123,9 +123,10 @@ namespace CombinationsTest
                 }
             }
         }
-        private List<String> getInstalledProgrammNames()
+        private List<Programm> getInstalledProgramms()
         {
             List<String> programmNames = new List<String>();
+            List<Programm> installedProgs = new List<Programm>();
             RegistryKey key;
             void addNamesForKey(RegistryKey regKey) 
             {
@@ -143,19 +144,51 @@ namespace CombinationsTest
                     }
                 }
             }
-
+            void addPathByDisplayName(RegistryKey regKey)
+            {
+                string displayName;
+                string path;
+                foreach (String keyName in regKey.GetSubKeyNames())
+                {
+                    RegistryKey subKey = key.OpenSubKey(keyName);
+                    displayName = subKey.GetValue("DisplayName") as string;
+                    try
+                    {
+                        foreach  (string name in programmNames)
+                        {
+                            if (displayName == name)
+                            {
+                                path = subKey.GetValue("InstallLocation") as string;
+                                Programm temp = new Programm(name,path,0,0);
+                                if (!installedProgs.Contains(temp))
+                                {
+                                    installedProgs.Add(temp);
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
             // search in: CurrentUser
             key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
             addNamesForKey(key);
+            addPathByDisplayName(key);
 
             // search in: LocalMachine_32
             key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
             addNamesForKey(key);
+            addPathByDisplayName(key);
 
             // search in: LocalMachine_64
             key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall");
             addNamesForKey(key);
-            return programmNames;
+            addPathByDisplayName(key);
+
+            return installedProgs;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -197,12 +230,17 @@ namespace CombinationsTest
         private void fillInstalledProgsListView()
         {
             installedProgsListView.Items.Clear();
-            foreach (string name in getInstalledProgrammNames())
+            foreach (Programm prog in getInstalledProgramms())
             {
-                string[] row = new string[] { name };
-                lvi = new ListViewItem(row);
-                // alle installierten Programme
-                installedProgsListView.Items.Add(lvi);
+                if (prog.getPath() != null && prog.getPath().Length != 0 )
+                {
+                    Console.WriteLine(prog.ToString());
+                    string[] row = new string[] { prog.getName(), prog.getPath() };
+                    lvi = new ListViewItem(row);
+                    lvi.Tag = prog;
+                    // alle installierten Programme
+                    installedProgsListView.Items.Add(lvi);
+                }
             }
         }
         private void fillSavedProgsListView()
@@ -255,8 +293,14 @@ namespace CombinationsTest
                 Programm temp = new Programm(process.MainWindowTitle, path, Convert.ToInt32(usage.TotalSeconds), maxTime);
                 if (katName != "")
                 {
-                    //TODO: Programm muss auch der Kategorie hinzugefügt werden
                     temp.setKategorie(katName);
+                    foreach  (Kategorie kat in logKategorien)
+                    {
+                        if(kat.getName() == katName)
+                        {
+                            kat.AddProgramm(temp);
+                        }
+                    }
                 }
                 logProgramme.Add(temp);
                 Console.WriteLine("hi there: " + usage.TotalSeconds);  //Debug-Hilfe
@@ -309,7 +353,7 @@ namespace CombinationsTest
         }
         private void MaxUseTimeTrackbar_Scroll(object sender, EventArgs e)
         {
-            var selectedItem = (Process)currentProgsListView.FocusedItem.Tag;
+            var selectedItem = (Process)currentProgsListView.SelectedItems[0].Tag;
             int maxHours =  maxUseTimeTrackbar.Value / 60 / 60;
             int maxMinutes = maxUseTimeTrackbar.Value / 60;
             if (maxMinutes >= 60)

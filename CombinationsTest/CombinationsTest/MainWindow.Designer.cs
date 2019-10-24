@@ -86,6 +86,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.installedPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -201,18 +202,18 @@
             // neueKategorieToolStripMenuItem1
             // 
             this.neueKategorieToolStripMenuItem1.Name = "neueKategorieToolStripMenuItem1";
-            this.neueKategorieToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.neueKategorieToolStripMenuItem1.Size = new System.Drawing.Size(155, 22);
             this.neueKategorieToolStripMenuItem1.Text = "Neue Kategorie";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(152, 6);
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(155, 22);
             this.exitToolStripMenuItem1.Text = "Exit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.ExitToolStripMenuItem1_Click);
             // 
@@ -315,7 +316,8 @@
             // installedProgsListView
             // 
             this.installedProgsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.installedName});
+            this.installedName,
+            this.installedPath});
             this.installedProgsListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.installedProgsListView.GridLines = true;
             this.installedProgsListView.HideSelection = false;
@@ -593,6 +595,11 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // installedPath
+            // 
+            this.installedPath.Text = "Dateipfad";
+            this.installedPath.Width = 200;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -682,6 +689,7 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.ColumnHeader installedPath;
     }
 }
 

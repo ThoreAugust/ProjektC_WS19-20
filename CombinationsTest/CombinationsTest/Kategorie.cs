@@ -20,6 +20,13 @@ namespace CombinationsTest
             maxTime = mt;
             programs = p;
         }
+        public void AddProgramm(Programm prog)
+        {
+            if (!programs.Contains(prog))
+            {
+                programs.Add(prog);
+            }
+        }
         public string getName()
         {
             return name;
