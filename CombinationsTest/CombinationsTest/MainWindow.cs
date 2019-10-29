@@ -255,17 +255,22 @@ namespace CombinationsTest
                 savedProgsListView.Items.Add(lvi);
             }
         }
-        private void ListViewProcesses_SelectedIndexChanged(object sender, EventArgs e)
+        private void installedProgsListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                var selectedItem = (Process)currentProgsListView.SelectedItems[0].Tag;
+                int usedHours;
+                int usedMinutes;
+                int usedSeconds;
+                var selectedItem = (Programm)installedProgsListView.SelectedItems[0].Tag;
                 if (selectedItem != null)
                 {
-                    detailBox.Text = selectedItem.ProcessName + ", "+ selectedItem.MainWindowTitle;
+                    detailBox.Text = selectedItem.getName();
                     detailBox.Visible = true;
-
-                    currentUseTimeTextBox.Text = DateTime.Now.Subtract(selectedItem.StartTime).ToString(@"hh\:mm\:ss");
+                    usedHours = selectedItem.getUsedTime() / 3600;
+                    usedMinutes = (selectedItem.getUsedTime() % 3600) / 60;
+                    usedSeconds = selectedItem.getUsedTime() % 60;
+                    currentUseTimeTextBox.Text = usedHours.ToString("00") +":"+usedMinutes.ToString("00")+":"+usedSeconds.ToString("00");
                 }
             }
             catch (Exception ex)
@@ -273,14 +278,12 @@ namespace CombinationsTest
                 Console.WriteLine(ex.Message);
             }
         }
-        private void AddProgram(Process process, int maxTime, string katName)
+        private void AddProgram(Programm programm, int maxTime, string katName)
         {
-            var path = process.MainModule.FileName;
-            Console.WriteLine(path);    //Debug-Hilfe
             bool isUnique = true;
             foreach (Programm p in logProgramme)
             {
-                if (path == p.getPath())
+                if (programm.getPath() == p.getPath())
                 {
                     isUnique = false;
                     break;
@@ -288,22 +291,19 @@ namespace CombinationsTest
             }
             if (isUnique)
             {
-                usage = DateTime.Now.Subtract(process.StartTime);
-                Console.WriteLine("hi there: " + usage.TotalSeconds);
-                Programm temp = new Programm(process.MainWindowTitle, path, Convert.ToInt32(usage.TotalSeconds), maxTime);
+                programm.setMaxTime(maxTime);
                 if (katName != "")
                 {
-                    temp.setKategorie(katName);
+                    programm.setKategorie(katName);
                     foreach  (Kategorie kat in logKategorien)
                     {
                         if(kat.getName() == katName)
                         {
-                            kat.AddProgramm(temp);
+                            kat.AddProgramm(programm);
                         }
                     }
                 }
-                logProgramme.Add(temp);
-                Console.WriteLine("hi there: " + usage.TotalSeconds);  //Debug-Hilfe
+                logProgramme.Add(programm);
                 SaveLogs();
                 fillSavedProgsListView();
                 MessageBox.Show("Eintrag gespeichert.", "Success", MessageBoxButtons.OK);
@@ -312,21 +312,21 @@ namespace CombinationsTest
             {
                 foreach (Programm p in logProgramme)
                 {
-                    if (path == p.getPath() && p.getMaxTime() == 0 && maxTime != 0)
+                    if (programm.getPath() == p.getPath() && p.getMaxTime() == 0 && maxTime != 0)
                     {
                         p.setMaxTime(maxTime);
                         MessageBox.Show("Maximale Nutzungszeit gespeichert!", "Success", MessageBoxButtons.OK);
                         SaveLogs();
                     }
-                    else if(path == p.getPath() && katName != "")
+                    else if(programm.getPath() == p.getPath() && katName != "")
                     {
                         p.setKategorie(katName);
                         MessageBox.Show("Kategorie gespeichert!", "Success", MessageBoxButtons.OK);
                         SaveLogs();
                     }
-                    else if(path == p.getPath())
+                    else if(programm.getPath() == p.getPath())
                     {
-                        MessageBox.Show("Prozess ist bereits gespeichert!", "Error", MessageBoxButtons.OK);
+                        MessageBox.Show("Programm ist bereits gespeichert!", "Error", MessageBoxButtons.OK);
                     }
                 }
             }
@@ -353,7 +353,6 @@ namespace CombinationsTest
         }
         private void MaxUseTimeTrackbar_Scroll(object sender, EventArgs e)
         {
-            var selectedItem = (Process)currentProgsListView.SelectedItems[0].Tag;
             int maxHours =  maxUseTimeTrackbar.Value / 60 / 60;
             int maxMinutes = maxUseTimeTrackbar.Value / 60;
             if (maxMinutes >= 60)
@@ -485,7 +484,7 @@ namespace CombinationsTest
         }
         private void saveProgButton_Click(object sender, EventArgs e)
         {
-            Process p = (Process) currentProgsListView.SelectedItems[0].Tag;
+            Programm p = (Programm) installedProgsListView.SelectedItems[0].Tag;
             int maxUseTime = maxUseTimeTrackbar.Value;
             string katName = (string) kategorieDropDown.SelectedItem;
             AddProgram(p, maxUseTime,katName);
@@ -523,5 +522,6 @@ namespace CombinationsTest
             CloseProgram(p);
             fillCurrentProgsListView();
         }
+
     }   
 }

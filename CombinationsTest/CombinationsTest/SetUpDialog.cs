@@ -14,11 +14,9 @@ namespace CombinationsTest
     {
         PasswordHandler pwHandler;
         MainWindow mw;
-        bool closing;
         string pass;
         public SetUpDialog(MainWindow main)
         {
-            closing = false;
             mw = main;
             pwHandler = new PasswordHandler();
             pwHandler.readPassFromLog();

@@ -59,6 +59,7 @@
             this.installedProgs = new System.Windows.Forms.TabPage();
             this.installedProgsListView = new System.Windows.Forms.ListView();
             this.installedName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.installedPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.currentProgs = new System.Windows.Forms.TabPage();
             this.savedProgs = new System.Windows.Forms.TabPage();
             this.savedProgsListView = new System.Windows.Forms.ListView();
@@ -86,7 +87,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.installedPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -117,7 +117,6 @@
             this.currentProgsListView.TabIndex = 0;
             this.currentProgsListView.UseCompatibleStateImageBehavior = false;
             this.currentProgsListView.View = System.Windows.Forms.View.Details;
-            this.currentProgsListView.SelectedIndexChanged += new System.EventHandler(this.ListViewProcesses_SelectedIndexChanged);
             // 
             // processID
             // 
@@ -327,11 +326,17 @@
             this.installedProgsListView.TabIndex = 0;
             this.installedProgsListView.UseCompatibleStateImageBehavior = false;
             this.installedProgsListView.View = System.Windows.Forms.View.Details;
+            this.installedProgsListView.SelectedIndexChanged += new System.EventHandler(this.installedProgsListView_SelectedIndexChanged);
             // 
             // installedName
             // 
             this.installedName.Text = "Name";
             this.installedName.Width = 200;
+            // 
+            // installedPath
+            // 
+            this.installedPath.Text = "Dateipfad";
+            this.installedPath.Width = 200;
             // 
             // currentProgs
             // 
@@ -594,11 +599,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // installedPath
-            // 
-            this.installedPath.Text = "Dateipfad";
-            this.installedPath.Width = 200;
             // 
             // MainWindow
             // 
