@@ -64,3 +64,12 @@ https://docs.microsoft.com/de-de/dotnet/api/system.windows.forms.control.dodragd
 https://www.youtube.com/watch?v=arkT9zg1jHc
 https://www.codeproject.com/Articles/17266/Drag-and-Drop-Items-in-a-WPF-ListView
 https://stackoverflow.com/questions/21131157/drag-and-drop-cell-from-datagridview-to-another
+
+Fortschritt 24.10.19 - 07.11.19
+__________________________________________________
+
+Kategorie Einstellungen Form erstellt und Funktionen bearbeitet, 
+Kategorien und Max. Nutzungszeit eingeben und Liste hinzufügen funktioniert.
+
+https://stackoverflow.com/questions/9951704/add-item-to-listview-control
+https://stackoverflow.com/questions/20250311/how-to-send-date-from-a-textbox-to-listview-of-another-form
