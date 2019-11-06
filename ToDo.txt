@@ -1,4 +1,4 @@
-Projekttitel: (Anti-)Distraction-Manager, Balance, TimeIsUp, UpTime,
+﻿Projekttitel: (Anti-)Distraction-Manager, Balance, TimeIsUp, UpTime,
 
 (Done)WPA oder WPF?
 (Done)Autostart
@@ -16,7 +16,7 @@ Projekttitel: (Anti-)Distraction-Manager, Balance, TimeIsUp, UpTime,
 (Done)Zeit/Timer
 (Done)Prozesse beenden / killen
 -Kategorien: Liste enthaltener Programme, UsedTime = UsedTime aller enthaltener Programme
--Tägliches Resetten der Timer
+(Done)Tägliches Resetten der Timer
 (Done)Passwort um schließen des Programms zuverhindern
 !Installierte Programme mit Pfad als Programm Objekt erstellen
 -AddProgramm() erweitern, siehe Kommentar

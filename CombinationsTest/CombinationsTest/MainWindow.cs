@@ -26,12 +26,14 @@ namespace CombinationsTest
         private List<Programm> logProgramme;
         private int ticks;
         private SetUpDialog setUp;
+        private DateTime resetTime;
         
         public MainWindow()
         {
             setUp = new SetUpDialog(this);
             logKategorien = new List<Kategorie>();
             logProgramme = new List<Programm>();
+            resetTime = DateTime.Now;
          //   reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
             InitializeComponent();
             if(!setUp.passSet())
@@ -206,7 +208,14 @@ namespace CombinationsTest
 
                 if (process.MainWindowTitle != "")
                 {
-                    usage = DateTime.Now.Subtract(process.StartTime);
+                    if (process.StartTime.Date == resetTime.Date)
+                    {
+                        usage = DateTime.Now.Subtract(process.StartTime);
+                    }
+                    else
+                    {
+                        usage = DateTime.Now.Subtract(resetTime);
+                    }
                     var row = new String[] { "" + process.Id, process.ProcessName, process.MainWindowTitle, usage.ToString(@"hh\:mm\:ss") };
                     lvi = new ListViewItem(row);
                     lvi.Tag = process;
@@ -368,11 +377,26 @@ namespace CombinationsTest
             ticks++;
             if (ticks % 10 == 0)
             {
+                if(resetTime.Date != DateTime.Now.Date)
+                {
+                    resetTime = DateTime.Now;
+                    foreach(Programm p in logProgramme)
+                    {
+                        p.setUsedTime(0);
+                    }
+                }
                 for (int i = 0; i < currentProgsListView.Items.Count; i++)
                 {
                     var item = currentProgsListView.Items[i];
                     Process process = (Process)item.Tag;
-                    usage = DateTime.Now.Subtract(process.StartTime);
+                    if(process.StartTime.Date == resetTime.Date)
+                    {
+                        usage = DateTime.Now.Subtract(process.StartTime);
+                    }
+                    else
+                    {
+                        usage = DateTime.Now.Subtract(resetTime);
+                    }
                     if (item.Selected)
                     {
                         currentUseTimeTextBox.Text = usage.ToString(@"hh\:mm\:ss");
