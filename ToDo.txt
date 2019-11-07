@@ -14,18 +14,23 @@
 	Statistik: Anzeigen
 	Einstellungen: Optionen | Import | Export
 (Done)Zeit/Timer
-(Done)Prozesse beenden / killen
--Kategorien: Liste enthaltener Programme, UsedTime = UsedTime aller enthaltener Programme
 (Done)Tägliches Resetten der Timer
 (Done)Passwort um schließen des Programms zuverhindern
-!Installierte Programme mit Pfad als Programm Objekt erstellen
--AddProgramm() erweitern, siehe Kommentar
+(Done)Installierte Programme mit Pfad als Programm Objekt erstellen
+(Done)AddProgramm() erweitern, siehe Kommentar
+(Done)Listview sortieren
+!Prozesse beenden / killen
+-Kategorien: Liste enthaltener Programme, UsedTime = UsedTime aller enthaltener Programme
 -Bug bei speichern von Kategorien: Enthaltene Programme werden nicht gespeichert
--Passwort in log.txt speichern
+!DetailBox an ausgewählten Tab binden
+!Programme über Name statt Pfad identifizieren
+-Neu Kategorie überarbeiten
+-Bug: Doppelte Kategorien in Dropdown
 
 Geringe Priorität:
 !Abgelaufene Nutzungszeit ProgressBar mit Funktion
 -Zeitwarnungen als Popup
+-Passwort in log.txt speichern
 
 Bonus:
 Statistik aktiver Programme
