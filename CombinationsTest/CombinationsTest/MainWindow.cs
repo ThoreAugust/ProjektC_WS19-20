@@ -401,9 +401,38 @@ namespace CombinationsTest
                         currentUseTimeTextBox.Text = usage.ToString(@"hh\:mm\:ss");
                     }
                     item.SubItems[3].Text = usage.ToString(@"hh\:mm\:ss");
+                    for (int j = 0; j < savedProgsListView.Items.Count; j++)
+                    {
+                        Programm savedProg = (Programm)savedProgsListView.Items[j].Tag;
+                        if (process.MainModule.FileName.Equals(savedProg.getPath()))
+                        {
+                            savedProg.setUsedTime(Convert.ToInt32(usage.TotalSeconds));
+                            //Maximale Nutzungszeit überschritten
+                            if (savedProg.getUsedTime() >= savedProg.getMaxTime())
+                            {
+                                CloseProgram(process);
+                            }
+                        }
+                    }
+                }
+                if (currentProgsListView.SelectedItems.Count > 0)
+                {
+                    string id = currentProgsListView.SelectedItems[0].SubItems[0].Text;
+                    fillCurrentProgsListView();
+                    foreach (ListViewItem lvi in currentProgsListView.Items)
+                    {
+                        if (id.Equals(lvi.SubItems[0].Text))
+                        {
+                            lvi.Selected = true;
+                        }
+                    }
+                }
+                else
+                {
+                    fillCurrentProgsListView();
                 }
             }
- 
+
         }
         private void CloseProgram(Process process)
         {
@@ -512,12 +541,5 @@ namespace CombinationsTest
                 SaveLogs();
             }
         }
-        private void KillButton_Click(object sender, EventArgs e)
-        {
-            Process p = (Process)currentProgsListView.SelectedItems[0].Tag;
-            CloseProgram(p);
-            fillCurrentProgsListView();
-        }
-
     }   
 }

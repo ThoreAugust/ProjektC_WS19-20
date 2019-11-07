@@ -71,7 +71,6 @@
             this.detailBox = new System.Windows.Forms.GroupBox();
             this.kategorieDropDown = new System.Windows.Forms.ComboBox();
             this.kategorieLabel = new System.Windows.Forms.Label();
-            this.killButton = new System.Windows.Forms.Button();
             this.saveProgButton = new System.Windows.Forms.Button();
             this.maxMinuteUseTimeLabel = new System.Windows.Forms.Label();
             this.maxMinuteUseTimeTextBox = new System.Windows.Forms.TextBox();
@@ -318,6 +317,7 @@
             this.installedName,
             this.installedPath});
             this.installedProgsListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.installedProgsListView.FullRowSelect = true;
             this.installedProgsListView.GridLines = true;
             this.installedProgsListView.HideSelection = false;
             this.installedProgsListView.Location = new System.Drawing.Point(3, 3);
@@ -410,7 +410,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.detailBox.Controls.Add(this.kategorieDropDown);
             this.detailBox.Controls.Add(this.kategorieLabel);
-            this.detailBox.Controls.Add(this.killButton);
             this.detailBox.Controls.Add(this.saveProgButton);
             this.detailBox.Controls.Add(this.maxMinuteUseTimeLabel);
             this.detailBox.Controls.Add(this.maxMinuteUseTimeTextBox);
@@ -448,16 +447,6 @@
             this.kategorieLabel.Size = new System.Drawing.Size(106, 13);
             this.kategorieLabel.TabIndex = 11;
             this.kategorieLabel.Text = "Kategorie auswählen";
-            // 
-            // killButton
-            // 
-            this.killButton.Location = new System.Drawing.Point(21, 299);
-            this.killButton.Name = "killButton";
-            this.killButton.Size = new System.Drawing.Size(75, 23);
-            this.killButton.TabIndex = 11;
-            this.killButton.Text = "Beenden";
-            this.killButton.UseVisualStyleBackColor = true;
-            this.killButton.Click += new System.EventHandler(this.KillButton_Click);
             // 
             // saveProgButton
             // 
@@ -684,7 +673,6 @@
         private System.Windows.Forms.ToolStripMenuItem neueKategorieToolStripMenuItem;
         private System.Windows.Forms.ComboBox kategorieDropDown;
         private System.Windows.Forms.Label kategorieLabel;
-        private System.Windows.Forms.Button killButton;
         private System.Windows.Forms.ToolStripMenuItem neueKategorieToolStripMenuItem1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
