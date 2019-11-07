@@ -25,7 +25,9 @@ namespace CombinationsTest
         private int ticks;
         private SetUpDialog setUp;
         private DateTime resetTime;
-        
+        private ListViewComparer lvwColumnSorter;
+
+
         public MainWindow()
         {
             setUp = new SetUpDialog(this);
@@ -39,6 +41,10 @@ namespace CombinationsTest
                 setUp.ShowDialog();
             }
             update.Start();
+            lvwColumnSorter = new ListViewComparer();
+            installedProgsListView.ListViewItemSorter = lvwColumnSorter;
+            currentProgsListView.ListViewItemSorter = lvwColumnSorter;
+            savedProgsListView.ListViewItemSorter = lvwColumnSorter;
         }
         private void LoadLog()
         {
@@ -128,12 +134,12 @@ namespace CombinationsTest
             List<String> programmNames = new List<String>();
             List<Programm> installedProgs = new List<Programm>();
             RegistryKey key;
-            void addNamesForKey(RegistryKey regKey) 
+            void addNamesForKey(RegistryKey regKey)
             {
                 string displayName;
                 foreach (String keyName in regKey.GetSubKeyNames())
                 {
-                    RegistryKey subkey = key.OpenSubKey(keyName);
+                    RegistryKey subkey = regKey.OpenSubKey(keyName);
                     displayName = subkey.GetValue("DisplayName") as string;
                     if (displayName != null && !displayName.Contains("Microsoft") && !displayName.Contains("Windows"))
                     {
@@ -178,15 +184,18 @@ namespace CombinationsTest
             addNamesForKey(key);
             addPathByDisplayName(key);
 
+
             // search in: LocalMachine_32
             key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
             addNamesForKey(key);
             addPathByDisplayName(key);
 
+
             // search in: LocalMachine_64
             key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall");
             addNamesForKey(key);
             addPathByDisplayName(key);
+
 
             return installedProgs;
         }
@@ -239,15 +248,12 @@ namespace CombinationsTest
             installedProgsListView.Items.Clear();
             foreach (Programm prog in getInstalledProgramms())
             {
-                if (prog.getPath() != null && prog.getPath().Length != 0 )
-                {
                     Console.WriteLine(prog.ToString());
                     string[] row = new string[] { prog.getName(), prog.getPath() };
                     lvi = new ListViewItem(row);
                     lvi.Tag = prog;
                     // alle installierten Programme
                     installedProgsListView.Items.Add(lvi);
-                }
             }
         }
         private void fillSavedProgsListView()
@@ -401,18 +407,25 @@ namespace CombinationsTest
                         currentUseTimeTextBox.Text = usage.ToString(@"hh\:mm\:ss");
                     }
                     item.SubItems[3].Text = usage.ToString(@"hh\:mm\:ss");
-                    for (int j = 0; j < savedProgsListView.Items.Count; j++)
+                    try
                     {
-                        Programm savedProg = (Programm)savedProgsListView.Items[j].Tag;
-                        if (process.MainModule.FileName.Equals(savedProg.getPath()))
+                        for (int j = 0; j < savedProgsListView.Items.Count; j++)
                         {
-                            savedProg.setUsedTime(Convert.ToInt32(usage.TotalSeconds));
-                            //Maximale Nutzungszeit überschritten
-                            if (savedProg.getUsedTime() >= savedProg.getMaxTime())
+                            Programm savedProg = (Programm)savedProgsListView.Items[j].Tag;
+                            if (process.MainWindowTitle.Contains(savedProg.getName()))
                             {
-                                CloseProgram(process);
+                                savedProg.setUsedTime(Convert.ToInt32(usage.TotalSeconds));
+                                //Maximale Nutzungszeit überschritten
+                                if (savedProg.getUsedTime() >= savedProg.getMaxTime())
+                                {
+                                    CloseProgram(process);
+                                }
                             }
                         }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
                     }
                 }
                 if (currentProgsListView.SelectedItems.Count > 0)
@@ -540,6 +553,84 @@ namespace CombinationsTest
                 logKategorien.Add(new Kategorie(name, 0, 0, testList));
                 SaveLogs();
             }
+        }
+
+        private void installedProgsListView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            // Determine if clicked column is already the column that is being sorted.
+            if (e.Column == lvwColumnSorter.SortColumn)
+            {
+                // Reverse the current sort direction for this column.
+                if (lvwColumnSorter.Order == SortOrder.Ascending)
+                {
+                    lvwColumnSorter.Order = SortOrder.Descending;
+                }
+                else
+                {
+                    lvwColumnSorter.Order = SortOrder.Ascending;
+                }
+            }
+            else
+            {
+                // Set the column number that is to be sorted; default to ascending.
+                lvwColumnSorter.SortColumn = e.Column;
+                lvwColumnSorter.Order = SortOrder.Ascending;
+            }
+
+            // Perform the sort with these new sort options.
+            installedProgsListView.Sort();
+        }
+
+        private void currentProgsListView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            // Determine if clicked column is already the column that is being sorted.
+            if (e.Column == lvwColumnSorter.SortColumn)
+            {
+                // Reverse the current sort direction for this column.
+                if (lvwColumnSorter.Order == SortOrder.Ascending)
+                {
+                    lvwColumnSorter.Order = SortOrder.Descending;
+                }
+                else
+                {
+                    lvwColumnSorter.Order = SortOrder.Ascending;
+                }
+            }
+            else
+            {
+                // Set the column number that is to be sorted; default to ascending.
+                lvwColumnSorter.SortColumn = e.Column;
+                lvwColumnSorter.Order = SortOrder.Ascending;
+            }
+
+            // Perform the sort with these new sort options.
+            currentProgsListView.Sort();
+        }
+
+        private void savedProgsListView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            // Determine if clicked column is already the column that is being sorted.
+            if (e.Column == lvwColumnSorter.SortColumn)
+            {
+                // Reverse the current sort direction for this column.
+                if (lvwColumnSorter.Order == SortOrder.Ascending)
+                {
+                    lvwColumnSorter.Order = SortOrder.Descending;
+                }
+                else
+                {
+                    lvwColumnSorter.Order = SortOrder.Ascending;
+                }
+            }
+            else
+            {
+                // Set the column number that is to be sorted; default to ascending.
+                lvwColumnSorter.SortColumn = e.Column;
+                lvwColumnSorter.Order = SortOrder.Ascending;
+            }
+
+            // Perform the sort with these new sort options.
+            savedProgsListView.Sort();
         }
     }   
 }

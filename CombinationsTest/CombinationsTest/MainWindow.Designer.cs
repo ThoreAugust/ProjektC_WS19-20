@@ -116,6 +116,7 @@
             this.currentProgsListView.TabIndex = 0;
             this.currentProgsListView.UseCompatibleStateImageBehavior = false;
             this.currentProgsListView.View = System.Windows.Forms.View.Details;
+            this.currentProgsListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.currentProgsListView_ColumnClick);
             // 
             // processID
             // 
@@ -326,6 +327,7 @@
             this.installedProgsListView.TabIndex = 0;
             this.installedProgsListView.UseCompatibleStateImageBehavior = false;
             this.installedProgsListView.View = System.Windows.Forms.View.Details;
+            this.installedProgsListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.installedProgsListView_ColumnClick);
             this.installedProgsListView.SelectedIndexChanged += new System.EventHandler(this.installedProgsListView_SelectedIndexChanged);
             // 
             // installedName
@@ -377,6 +379,7 @@
             this.savedProgsListView.TabIndex = 0;
             this.savedProgsListView.UseCompatibleStateImageBehavior = false;
             this.savedProgsListView.View = System.Windows.Forms.View.Details;
+            this.savedProgsListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.savedProgsListView_ColumnClick);
             // 
             // savedName
             // 
