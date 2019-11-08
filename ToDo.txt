@@ -19,11 +19,12 @@
 (Done)Installierte Programme mit Pfad als Programm Objekt erstellen
 (Done)AddProgramm() erweitern, siehe Kommentar
 (Done)Listview sortieren
-!Prozesse beenden / killen
+(Done)Prozesse beenden / killen
 -Kategorien: Liste enthaltener Programme, UsedTime = UsedTime aller enthaltener Programme
 -Bug bei speichern von Kategorien: Enthaltene Programme werden nicht gespeichert
 (Done)DetailBox an ausgewählten Tab binden
-!Programme über Name statt Pfad identifizieren
+-/-Programme über Name statt Pfad identifizieren
+	->Funktioniert wieder per Pfad, solang nicht mehrere Programme im gleichen Ordner installiert sind
 -Neu Kategorie überarbeiten
 -Bug: Doppelte Kategorien in Dropdown
 
