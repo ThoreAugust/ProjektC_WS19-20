@@ -111,12 +111,14 @@
             this.currentProgsListView.GridLines = true;
             this.currentProgsListView.HideSelection = false;
             this.currentProgsListView.Location = new System.Drawing.Point(3, 3);
+            this.currentProgsListView.MultiSelect = false;
             this.currentProgsListView.Name = "currentProgsListView";
             this.currentProgsListView.Size = new System.Drawing.Size(606, 638);
             this.currentProgsListView.TabIndex = 0;
             this.currentProgsListView.UseCompatibleStateImageBehavior = false;
             this.currentProgsListView.View = System.Windows.Forms.View.Details;
             this.currentProgsListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.currentProgsListView_ColumnClick);
+            this.currentProgsListView.SelectedIndexChanged += new System.EventHandler(this.CurrentProgsListView_SelectedIndexChanged);
             // 
             // processID
             // 
@@ -300,6 +302,7 @@
             this.programmTabs.SelectedIndex = 0;
             this.programmTabs.Size = new System.Drawing.Size(620, 670);
             this.programmTabs.TabIndex = 1;
+            this.programmTabs.Selected += new System.Windows.Forms.TabControlEventHandler(this.ProgrammTabs_Selected);
             // 
             // installedProgs
             // 
@@ -322,6 +325,7 @@
             this.installedProgsListView.GridLines = true;
             this.installedProgsListView.HideSelection = false;
             this.installedProgsListView.Location = new System.Drawing.Point(3, 3);
+            this.installedProgsListView.MultiSelect = false;
             this.installedProgsListView.Name = "installedProgsListView";
             this.installedProgsListView.Size = new System.Drawing.Size(606, 638);
             this.installedProgsListView.TabIndex = 0;
@@ -374,12 +378,14 @@
             this.savedProgsListView.GridLines = true;
             this.savedProgsListView.HideSelection = false;
             this.savedProgsListView.Location = new System.Drawing.Point(3, 3);
+            this.savedProgsListView.MultiSelect = false;
             this.savedProgsListView.Name = "savedProgsListView";
             this.savedProgsListView.Size = new System.Drawing.Size(606, 638);
             this.savedProgsListView.TabIndex = 0;
             this.savedProgsListView.UseCompatibleStateImageBehavior = false;
             this.savedProgsListView.View = System.Windows.Forms.View.Details;
             this.savedProgsListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.savedProgsListView_ColumnClick);
+            this.savedProgsListView.SelectedIndexChanged += new System.EventHandler(this.SavedProgsListView_SelectedIndexChanged);
             // 
             // savedName
             // 

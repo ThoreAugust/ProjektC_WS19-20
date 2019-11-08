@@ -22,7 +22,7 @@
 !Prozesse beenden / killen
 -Kategorien: Liste enthaltener Programme, UsedTime = UsedTime aller enthaltener Programme
 -Bug bei speichern von Kategorien: Enthaltene Programme werden nicht gespeichert
-!DetailBox an ausgewählten Tab binden
+(Done)DetailBox an ausgewählten Tab binden
 !Programme über Name statt Pfad identifizieren
 -Neu Kategorie überarbeiten
 -Bug: Doppelte Kategorien in Dropdown

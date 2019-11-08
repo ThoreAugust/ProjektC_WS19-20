@@ -268,29 +268,6 @@ namespace CombinationsTest
                 savedProgsListView.Items.Add(lvi);
             }
         }
-        private void installedProgsListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                int usedHours;
-                int usedMinutes;
-                int usedSeconds;
-                var selectedItem = (Programm)installedProgsListView.SelectedItems[0].Tag;
-                if (selectedItem != null)
-                {
-                    detailBox.Text = selectedItem.getName();
-                    detailBox.Visible = true;
-                    usedHours = selectedItem.getUsedTime() / 3600;
-                    usedMinutes = (selectedItem.getUsedTime() % 3600) / 60;
-                    usedSeconds = selectedItem.getUsedTime() % 60;
-                    currentUseTimeTextBox.Text = usedHours.ToString("00") +":"+usedMinutes.ToString("00")+":"+usedSeconds.ToString("00");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
         private void AddProgram(Programm programm, int maxTime, string katName)
         {
             bool isUnique = true;
@@ -393,7 +370,6 @@ namespace CombinationsTest
                 {
                     var item = currentProgsListView.Items[i];
                     Process process = (Process)item.Tag;
-                    usage = DateTime.Now.Subtract(process.StartTime);
                     if(process.StartTime.Date == resetTime.Date)
                     {
                         usage = DateTime.Now.Subtract(process.StartTime);
@@ -401,10 +377,6 @@ namespace CombinationsTest
                     else
                     {
                         usage = DateTime.Now.Subtract(resetTime);
-                    }
-                    if (item.Selected)
-                    {
-                        currentUseTimeTextBox.Text = usage.ToString(@"hh\:mm\:ss");
                     }
                     item.SubItems[3].Text = usage.ToString(@"hh\:mm\:ss");
                     try
@@ -444,6 +416,7 @@ namespace CombinationsTest
                 {
                     fillCurrentProgsListView();
                 }
+                updateDetailBox();
             }
 
         }
@@ -554,7 +527,6 @@ namespace CombinationsTest
                 SaveLogs();
             }
         }
-
         private void installedProgsListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             // Determine if clicked column is already the column that is being sorted.
@@ -580,7 +552,6 @@ namespace CombinationsTest
             // Perform the sort with these new sort options.
             installedProgsListView.Sort();
         }
-
         private void currentProgsListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             // Determine if clicked column is already the column that is being sorted.
@@ -606,7 +577,6 @@ namespace CombinationsTest
             // Perform the sort with these new sort options.
             currentProgsListView.Sort();
         }
-
         private void savedProgsListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             // Determine if clicked column is already the column that is being sorted.
@@ -631,6 +601,85 @@ namespace CombinationsTest
 
             // Perform the sort with these new sort options.
             savedProgsListView.Sort();
+        }
+        private void updateDetailBox()
+        {
+            if (programmTabs.SelectedTab == installedProgs)
+            {
+                if(installedProgsListView.SelectedItems.Count > 0)
+                {
+                    updateDBox(installedProgsListView);
+                }
+                else
+                {
+                    detailBox.Visible = false;
+                }
+            }
+            if (programmTabs.SelectedTab == savedProgs)
+            {
+                if (savedProgsListView.SelectedItems.Count > 0)
+                {
+                    updateDBox(savedProgsListView);
+                }
+                else
+                {
+                    detailBox.Visible = false;
+                }
+            }
+            if (programmTabs.SelectedTab == currentProgs)
+            {
+                if (currentProgsListView.SelectedItems.Count > 0)
+                {
+                    Process process = (Process)currentProgsListView.SelectedItems[0].Tag;
+                    if (process.StartTime.Date == resetTime.Date)
+                    {
+                        usage = DateTime.Now.Subtract(process.StartTime);
+                    }
+                    else
+                    {
+                        usage = DateTime.Now.Subtract(resetTime);
+                    }
+                    detailBox.Text = process.ProcessName;
+                    detailBox.Visible = true;
+                    currentUseTimeTextBox.Text = usage.ToString(@"hh\:mm\:ss");
+                }
+                else
+                {
+                    detailBox.Visible = false;
+                }
+            }
+            void updateDBox(ListView listView)
+            {
+                int usedHours;
+                int usedMinutes;
+                int usedSeconds;
+                var selectedItem = (Programm)listView.SelectedItems[0].Tag;
+                if (selectedItem != null)
+                {
+                    detailBox.Text = selectedItem.getName();
+                    detailBox.Visible = true;
+                    usedHours = selectedItem.getUsedTime() / 3600;
+                    usedMinutes = (selectedItem.getUsedTime() % 3600) / 60;
+                    usedSeconds = selectedItem.getUsedTime() % 60;
+                    currentUseTimeTextBox.Text = usedHours.ToString("00") + ":" + usedMinutes.ToString("00") + ":" + usedSeconds.ToString("00");
+                }
+            }
+        }
+        private void ProgrammTabs_Selected(object sender, TabControlEventArgs e)
+        {
+            updateDetailBox();
+        }
+        private void installedProgsListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            updateDetailBox();
+        }
+        private void CurrentProgsListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            updateDetailBox();
+        }
+        private void SavedProgsListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            updateDetailBox();
         }
     }   
 }
