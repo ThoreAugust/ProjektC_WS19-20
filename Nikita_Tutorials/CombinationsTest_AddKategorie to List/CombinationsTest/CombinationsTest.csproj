@@ -62,13 +62,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Edit_Category.cs">
+    <Compile Include="EditCategory.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Edit_Category.Designer.cs">
-      <DependentUpon>Edit_Category.cs</DependentUpon>
+    <Compile Include="EditCategory.Designer.cs">
+      <DependentUpon>EditCategory.cs</DependentUpon>
     </Compile>
     <Compile Include="Kategorie.cs" />
+    <Compile Include="ListViewItemComparer.cs" />
     <Compile Include="PasswordHandler.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
@@ -91,8 +92,8 @@
     <Compile Include="SetUpDialog.Designer.cs">
       <DependentUpon>SetUpDialog.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Edit_Category.resx">
-      <DependentUpon>Edit_Category.cs</DependentUpon>
+    <EmbeddedResource Include="EditCategory.resx">
+      <DependentUpon>EditCategory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>

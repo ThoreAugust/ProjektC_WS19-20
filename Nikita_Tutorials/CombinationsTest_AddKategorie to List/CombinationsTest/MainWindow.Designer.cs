@@ -71,7 +71,6 @@
             this.detailBox = new System.Windows.Forms.GroupBox();
             this.kategorieDropDown = new System.Windows.Forms.ComboBox();
             this.kategorieLabel = new System.Windows.Forms.Label();
-            this.killButton = new System.Windows.Forms.Button();
             this.saveProgButton = new System.Windows.Forms.Button();
             this.maxMinuteUseTimeLabel = new System.Windows.Forms.Label();
             this.maxMinuteUseTimeTextBox = new System.Windows.Forms.TextBox();
@@ -112,11 +111,14 @@
             this.currentProgsListView.GridLines = true;
             this.currentProgsListView.HideSelection = false;
             this.currentProgsListView.Location = new System.Drawing.Point(3, 3);
+            this.currentProgsListView.MultiSelect = false;
             this.currentProgsListView.Name = "currentProgsListView";
             this.currentProgsListView.Size = new System.Drawing.Size(606, 638);
             this.currentProgsListView.TabIndex = 0;
             this.currentProgsListView.UseCompatibleStateImageBehavior = false;
             this.currentProgsListView.View = System.Windows.Forms.View.Details;
+            this.currentProgsListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.currentProgsListView_ColumnClick);
+            this.currentProgsListView.SelectedIndexChanged += new System.EventHandler(this.CurrentProgsListView_SelectedIndexChanged);
             // 
             // processID
             // 
@@ -203,7 +205,7 @@
             this.neueKategorieToolStripMenuItem1.Name = "neueKategorieToolStripMenuItem1";
             this.neueKategorieToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.neueKategorieToolStripMenuItem1.Text = "Neue Kategorie";
-            this.neueKategorieToolStripMenuItem1.Click += new System.EventHandler(this.NeueKategorieToolStripMenuItem1_Click);
+            this.neueKategorieToolStripMenuItem1.Click += new System.EventHandler(this.ShowCategory_Click);
             // 
             // toolStripSeparator2
             // 
@@ -246,7 +248,7 @@
             this.optionMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.autostartToolStripMenuItem});
             this.optionMenuItem.Name = "optionMenuItem";
-            this.optionMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.optionMenuItem.Size = new System.Drawing.Size(180, 22);
             this.optionMenuItem.Text = "Optionen";
             // 
             // autostartToolStripMenuItem
@@ -260,13 +262,13 @@
             // importMenuItem
             // 
             this.importMenuItem.Name = "importMenuItem";
-            this.importMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.importMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importMenuItem.Text = "Import";
             // 
             // exportMenuItem
             // 
             this.exportMenuItem.Name = "exportMenuItem";
-            this.exportMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.exportMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportMenuItem.Text = "Export";
             // 
             // neueKategorieToolStripMenuItem
@@ -301,6 +303,7 @@
             this.programmTabs.SelectedIndex = 0;
             this.programmTabs.Size = new System.Drawing.Size(620, 670);
             this.programmTabs.TabIndex = 1;
+            this.programmTabs.Selected += new System.Windows.Forms.TabControlEventHandler(this.ProgrammTabs_Selected);
             // 
             // installedProgs
             // 
@@ -319,14 +322,17 @@
             this.installedName,
             this.installedPath});
             this.installedProgsListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.installedProgsListView.FullRowSelect = true;
             this.installedProgsListView.GridLines = true;
             this.installedProgsListView.HideSelection = false;
             this.installedProgsListView.Location = new System.Drawing.Point(3, 3);
+            this.installedProgsListView.MultiSelect = false;
             this.installedProgsListView.Name = "installedProgsListView";
             this.installedProgsListView.Size = new System.Drawing.Size(606, 638);
             this.installedProgsListView.TabIndex = 0;
             this.installedProgsListView.UseCompatibleStateImageBehavior = false;
             this.installedProgsListView.View = System.Windows.Forms.View.Details;
+            this.installedProgsListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.installedProgsListView_ColumnClick);
             this.installedProgsListView.SelectedIndexChanged += new System.EventHandler(this.installedProgsListView_SelectedIndexChanged);
             // 
             // installedName
@@ -373,11 +379,14 @@
             this.savedProgsListView.GridLines = true;
             this.savedProgsListView.HideSelection = false;
             this.savedProgsListView.Location = new System.Drawing.Point(3, 3);
+            this.savedProgsListView.MultiSelect = false;
             this.savedProgsListView.Name = "savedProgsListView";
             this.savedProgsListView.Size = new System.Drawing.Size(606, 638);
             this.savedProgsListView.TabIndex = 0;
             this.savedProgsListView.UseCompatibleStateImageBehavior = false;
             this.savedProgsListView.View = System.Windows.Forms.View.Details;
+            this.savedProgsListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.savedProgsListView_ColumnClick);
+            this.savedProgsListView.SelectedIndexChanged += new System.EventHandler(this.SavedProgsListView_SelectedIndexChanged);
             // 
             // savedName
             // 
@@ -411,7 +420,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.detailBox.Controls.Add(this.kategorieDropDown);
             this.detailBox.Controls.Add(this.kategorieLabel);
-            this.detailBox.Controls.Add(this.killButton);
             this.detailBox.Controls.Add(this.saveProgButton);
             this.detailBox.Controls.Add(this.maxMinuteUseTimeLabel);
             this.detailBox.Controls.Add(this.maxMinuteUseTimeTextBox);
@@ -449,16 +457,6 @@
             this.kategorieLabel.Size = new System.Drawing.Size(106, 13);
             this.kategorieLabel.TabIndex = 11;
             this.kategorieLabel.Text = "Kategorie auswählen";
-            // 
-            // killButton
-            // 
-            this.killButton.Location = new System.Drawing.Point(21, 299);
-            this.killButton.Name = "killButton";
-            this.killButton.Size = new System.Drawing.Size(75, 23);
-            this.killButton.TabIndex = 11;
-            this.killButton.Text = "Beenden";
-            this.killButton.UseVisualStyleBackColor = true;
-            this.killButton.Click += new System.EventHandler(this.KillButton_Click);
             // 
             // saveProgButton
             // 
@@ -685,7 +683,6 @@
         private System.Windows.Forms.ToolStripMenuItem neueKategorieToolStripMenuItem;
         private System.Windows.Forms.ComboBox kategorieDropDown;
         private System.Windows.Forms.Label kategorieLabel;
-        private System.Windows.Forms.Button killButton;
         private System.Windows.Forms.ToolStripMenuItem neueKategorieToolStripMenuItem1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;

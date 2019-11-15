@@ -20,7 +20,7 @@ namespace CombinationsTest
             path = p;
             usedTime = ut;
             maxTime = mt;
-            kategorie = "Keine Kategorie";
+            kategorie = "";
         }
         public void setUsedTime(int newUsedTime)
         {
