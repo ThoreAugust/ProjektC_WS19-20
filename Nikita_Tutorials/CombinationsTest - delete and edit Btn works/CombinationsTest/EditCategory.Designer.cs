@@ -32,10 +32,12 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.addCategory = new System.Windows.Forms.Button();
             this.categoryList = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.deleteCategory = new System.Windows.Forms.Button();
+            this.editCategory = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBox1
@@ -70,15 +72,15 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "maximale Nutzungszeit";
             // 
-            // button1
+            // addCategory
             // 
-            this.button1.Location = new System.Drawing.Point(220, 170);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 34);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Kategorie hinzufügen";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.AddCategory_Click);
+            this.addCategory.Location = new System.Drawing.Point(220, 170);
+            this.addCategory.Name = "addCategory";
+            this.addCategory.Size = new System.Drawing.Size(75, 34);
+            this.addCategory.TabIndex = 4;
+            this.addCategory.Text = "Kategorie hinzufügen";
+            this.addCategory.UseVisualStyleBackColor = true;
+            this.addCategory.Click += new System.EventHandler(this.AddCategory_Click);
             // 
             // categoryList
             // 
@@ -103,20 +105,42 @@
             this.columnHeader2.Text = "maximale Nutzungszeit";
             this.columnHeader2.Width = 120;
             // 
+            // deleteCategory
+            // 
+            this.deleteCategory.Location = new System.Drawing.Point(120, 170);
+            this.deleteCategory.Name = "deleteCategory";
+            this.deleteCategory.Size = new System.Drawing.Size(75, 34);
+            this.deleteCategory.TabIndex = 6;
+            this.deleteCategory.Text = "Kategorie entfernen";
+            this.deleteCategory.UseVisualStyleBackColor = true;
+            this.deleteCategory.Click += new System.EventHandler(this.DeleteCategory_Click);
+            // 
+            // editCategory
+            // 
+            this.editCategory.Location = new System.Drawing.Point(19, 170);
+            this.editCategory.Name = "editCategory";
+            this.editCategory.Size = new System.Drawing.Size(75, 34);
+            this.editCategory.TabIndex = 7;
+            this.editCategory.Text = "Kategorie bearbeiten";
+            this.editCategory.UseVisualStyleBackColor = true;
+            this.editCategory.Click += new System.EventHandler(this.EditCategory_Click);
+            // 
             // Edit_Category
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(306, 477);
+            this.Controls.Add(this.editCategory);
+            this.Controls.Add(this.deleteCategory);
             this.Controls.Add(this.categoryList);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.addCategory);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.MaximizeBox = false;
             this.Name = "Edit_Category";
-            this.Text = "EditCategory";
+            this.Text = "Edit Category";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -128,9 +152,11 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button addCategory;
         private System.Windows.Forms.ListView categoryList;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.Button deleteCategory;
+        private System.Windows.Forms.Button editCategory;
     }
 }
