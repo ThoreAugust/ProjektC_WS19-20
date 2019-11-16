@@ -32,7 +32,6 @@ namespace CombinationsTest
 
         public MainWindow()
         {
-            ed_cat = new Edit_Category(this);
             setUp = new SetUpDialog(this);
             logKategorien = new List<Kategorie>();
             logProgramme = new List<Programm>();
@@ -711,6 +710,7 @@ namespace CombinationsTest
         private void ShowCategory_Click(object sender, EventArgs e)
         {
             //ed_cat.EditCategory_Load();
+            ed_cat = new Edit_Category(this);
             ed_cat.Show();
            
         }
