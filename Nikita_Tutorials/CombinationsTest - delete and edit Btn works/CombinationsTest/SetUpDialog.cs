@@ -16,14 +16,11 @@ namespace CombinationsTest
     {
         PasswordHandler pwHandler;
         MainWindow mw;
-        Edit_Category ed;
         string pass;
-        private Edit_Category edit_Category;
 
         public SetUpDialog(MainWindow main)
         {
             mw = main;
-            ed = new Edit_Category(this);
             pwHandler = new PasswordHandler();
             pwHandler.readPassFromLog();
             InitializeComponent();
@@ -41,16 +38,7 @@ namespace CombinationsTest
                 {
                     foreach (string kategorie in kategorieBox.Text.Split(';'))
                     {
-                        mw.AddKategorie(kategorie);
-
-                        //to add the data to CategoryView- Form
-                      
-                        ed.MdiParent = this.MdiParent; // sets CategoryView as 'parent window'
-                        ed.value = kategorie; // sets variable 'value' in form2 equal to yourTextBox value after button is clicked
-                        ed.EditCategory_Load();
-                        ed.Show(); //shows from textbox to CategoryView
-                        
-                        
+                        mw.AddKategorie(kategorie, 0);
                     }
                 }
                 this.Close();

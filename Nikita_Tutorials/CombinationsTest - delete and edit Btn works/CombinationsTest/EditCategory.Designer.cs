@@ -49,7 +49,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(173, 95);
+            this.textBox2.Location = new System.Drawing.Point(173, 53);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(122, 20);
             this.textBox2.TabIndex = 1;
@@ -66,7 +66,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 95);
+            this.label2.Location = new System.Drawing.Point(16, 53);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(114, 13);
             this.label2.TabIndex = 3;
@@ -74,7 +74,7 @@
             // 
             // addCategory
             // 
-            this.addCategory.Location = new System.Drawing.Point(220, 170);
+            this.addCategory.Location = new System.Drawing.Point(19, 92);
             this.addCategory.Name = "addCategory";
             this.addCategory.Size = new System.Drawing.Size(75, 34);
             this.addCategory.TabIndex = 4;
@@ -88,9 +88,10 @@
             this.columnHeader1,
             this.columnHeader2});
             this.categoryList.GridLines = true;
-            this.categoryList.Location = new System.Drawing.Point(19, 231);
+            this.categoryList.HideSelection = false;
+            this.categoryList.Location = new System.Drawing.Point(19, 145);
             this.categoryList.Name = "categoryList";
-            this.categoryList.Size = new System.Drawing.Size(276, 237);
+            this.categoryList.Size = new System.Drawing.Size(276, 323);
             this.categoryList.TabIndex = 5;
             this.categoryList.UseCompatibleStateImageBehavior = false;
             this.categoryList.View = System.Windows.Forms.View.Details;
@@ -107,7 +108,7 @@
             // 
             // deleteCategory
             // 
-            this.deleteCategory.Location = new System.Drawing.Point(120, 170);
+            this.deleteCategory.Location = new System.Drawing.Point(220, 92);
             this.deleteCategory.Name = "deleteCategory";
             this.deleteCategory.Size = new System.Drawing.Size(75, 34);
             this.deleteCategory.TabIndex = 6;
@@ -117,7 +118,7 @@
             // 
             // editCategory
             // 
-            this.editCategory.Location = new System.Drawing.Point(19, 170);
+            this.editCategory.Location = new System.Drawing.Point(120, 92);
             this.editCategory.Name = "editCategory";
             this.editCategory.Size = new System.Drawing.Size(75, 34);
             this.editCategory.TabIndex = 7;

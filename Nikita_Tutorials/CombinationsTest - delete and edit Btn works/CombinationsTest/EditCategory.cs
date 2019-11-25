@@ -14,66 +14,95 @@ namespace CombinationsTest
     {
 
         MainWindow mw;
-        SetUpDialog sd;
 
-        
-        public Edit_Category(SetUpDialog setUpDialog)
-
-        {
-            sd = setUpDialog;
-            InitializeComponent();
-        }
 
         public Edit_Category(MainWindow main)
         {
             InitializeComponent();
-            main = mw;
+            mw = main;
+            FillListView();
         }
-
-        public string value { get; internal set; }
    
-   
-        public void EditCategory_Load()
+        public void FillListView()
         {
-            ListViewItem newList = new ListViewItem(value);
-            newList.SubItems.Add(value);
-            categoryList.Items.Add(newList);
-            
+            categoryList.Clear();
+            List<String[]> list = mw.GetKategorien();
+            ListViewItem lvi;
+            foreach (String[] item in list)
+            {
+                lvi = new ListViewItem(item);
+                categoryList.Items.Add(lvi);
+            }
         }
 
         private void DeleteCategory_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < categoryList.Items.Count; i++)
+            if (categoryList.SelectedItems.Count > 0)
             {
-                if (categoryList.Items[i].Selected)
+                for (int i = 0; i < categoryList.SelectedItems.Count; i++)
                 {
-                    categoryList.Items[i].Remove();
+                    mw.DeleteKategorie(categoryList.SelectedItems[i].SubItems[0].Text);
                 }
+                FillListView();
             }
         }
 
         private void AddCategory_Click(object sender, EventArgs e)
         {
-            ListViewItem newList = new ListViewItem(textBox1.Text);
-            newList.SubItems.Add(textBox2.Text);
-            //newList.SubItems.Add(DateTime.Now.ToLongTimeString());
-
-            categoryList.Items.Add(newList);
-
-            textBox1.Clear();
-            textBox2.Clear();
+            if(textBox1.Text != "")
+            {
+                int maxTime;
+                if(textBox2.Text == "")
+                {
+                    maxTime = 0;
+                }
+                else
+                {
+                    try
+                    {
+                        maxTime = Convert.ToInt32(textBox2.Text);
+                    }
+                    catch
+                    {
+                        maxTime = 0;
+                    }
+                }
+                mw.AddKategorie(textBox1.Text, maxTime);
+                textBox1.Clear();
+                textBox2.Clear();
+                FillListView();
+            }
         }
 
         private void EditCategory_Click(object sender, EventArgs e)
         {
-            try
+            if(categoryList.SelectedItems.Count > 0)
             {
-                categoryList.SelectedItems[0].SubItems[0].Text = textBox1.Text;
-                categoryList.SelectedItems[0].SubItems[1].Text = textBox2.Text;
-               // categoryList.SelectedItems[0].SubItems[2].Text = txtCarName.Text;
+                int maxTime;
+                try
+                {
+                    maxTime = Convert.ToInt32(textBox2.Text);
+                }
+                catch
+                {
+                    maxTime = 0;
+                }
+                if (textBox1.Text != "")
+                {
+                    mw.EditKategorie(categoryList.SelectedItems[0].SubItems[0].Text, textBox1.Text, maxTime);
+                }
+                else
+                {
+                    for(int i = 0; i < categoryList.SelectedItems.Count; i++)
+                    {
+                        var name = categoryList.SelectedItems[i].SubItems[0].Text;
+                        mw.EditKategorie(name, name, maxTime);
+                    }
+                }
+                textBox1.Clear();
+                textBox2.Clear();
+                FillListView();
             }
-            catch { }
-
         }
     }
 
