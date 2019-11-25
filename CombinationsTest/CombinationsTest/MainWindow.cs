@@ -37,7 +37,8 @@ namespace CombinationsTest
             resetTime = DateTime.Now;
          //   reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
             InitializeComponent();
-            if(!setUp.passSet())
+            LoadLog();
+            if (!setUp.passSet())
             {
                 setUp.ShowDialog();
             }
@@ -202,7 +203,6 @@ namespace CombinationsTest
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            LoadLog();
             fillCurrentProgsListView();
             fillInstalledProgsListView();
             fillSavedProgsListView();
@@ -546,6 +546,7 @@ namespace CombinationsTest
                 test.setKategorie(name);
                 testList.Add(test);
                 logKategorien.Add(new Kategorie(name, 0, maxTime, testList));
+                fillKategorieDropDown();
                 SaveLogs();
             }
         }
@@ -559,6 +560,8 @@ namespace CombinationsTest
                         logKategorien[i].setName(newName);
                     if (maxTime != 0)
                         logKategorien[i].setMaxTime(maxTime);
+                    fillKategorieDropDown();
+                    SaveLogs();
                     break;
                 }
             }
@@ -570,6 +573,8 @@ namespace CombinationsTest
                 if (logKategorien[i].getName() == name)
                 {
                     logKategorien.RemoveAt(i);
+                    fillKategorieDropDown();
+                    SaveLogs();
                     break;
                 }
             }
