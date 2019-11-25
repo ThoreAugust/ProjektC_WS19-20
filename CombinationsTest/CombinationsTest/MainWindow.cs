@@ -26,6 +26,7 @@ namespace CombinationsTest
         private SetUpDialog setUp;
         private DateTime resetTime;
         private ListViewComparer lvwColumnSorter;
+        private EditCategory editKats;
 
 
         public MainWindow()
@@ -523,7 +524,7 @@ namespace CombinationsTest
             AddProgram(p, maxUseTime,katName);
             fillSavedProgsListView();
         }
-        public void AddKategorie(string name)
+        public void AddKategorie(string name, int maxTime)
         {
             Programm test;
             List<Programm> testList = new List<Programm>();
@@ -544,9 +545,43 @@ namespace CombinationsTest
                 test = new Programm("test", "X://test.exe", 120, 18000);
                 test.setKategorie(name);
                 testList.Add(test);
-                logKategorien.Add(new Kategorie(name, 0, 0, testList));
+                logKategorien.Add(new Kategorie(name, 0, maxTime, testList));
                 SaveLogs();
             }
+        }
+        public void EditKategorie(string name, string newName, int maxTime)
+        {
+            for (int i = 0; i < logKategorien.Count; i++)
+            {
+                if (logKategorien[i].getName() == name)
+                {
+                    if (newName != "")
+                        logKategorien[i].setName(newName);
+                    if (maxTime != 0)
+                        logKategorien[i].setMaxTime(maxTime);
+                    break;
+                }
+            }
+        }
+        public void DeleteKategorie(string name)
+        {
+            for (int i = 0; i < logKategorien.Count; i++)
+            {
+                if (logKategorien[i].getName() == name)
+                {
+                    logKategorien.RemoveAt(i);
+                    break;
+                }
+            }
+        }
+        public List<String[]> GetKategorien()
+        {
+            List<String[]> list = new List<String[]>();
+            foreach (Kategorie k in logKategorien)
+            {
+                list.Add(new String[] { k.getName(), "" + k.getMaxTime() });
+            }
+            return list;
         }
         private void installedProgsListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -701,6 +736,11 @@ namespace CombinationsTest
         private void SavedProgsListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             updateDetailBox();
+        }
+        private void NeueKategorieToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            editKats = new EditCategory(this);
+            editKats.Show();
         }
     }   
 }
