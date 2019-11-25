@@ -25,7 +25,7 @@ namespace CombinationsTest
    
         public void FillListView()
         {
-            categoryList.Clear();
+            categoryList.Items.Clear();
             List<String[]> list = mw.GetKategorien();
             ListViewItem lvi;
             foreach (String[] item in list)
