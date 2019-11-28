@@ -25,7 +25,6 @@
 (Done)DetailBox an ausgewählten Tab binden
 -/-Programme über Name statt Pfad identifizieren
 	->Funktioniert wieder per Pfad, solang nicht mehrere Programme im gleichen Ordner installiert sind
-	prüfen ob Pfad.split("/").length übereinstimmt um Programme in unterliegenden Ordnern zu ignorieren
 (Done)Neu Kategorie überarbeiten
 (Done)Bug: Doppelte Kategorien in Dropdown
 !Autostart Einstellung speichern

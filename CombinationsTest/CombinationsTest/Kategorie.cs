@@ -53,5 +53,9 @@ namespace CombinationsTest
             }
             return name + ";" + maxTime + ";" + p;
         }
+        public void RemoveProgramm(Programm programm)
+        {
+            programs.Remove(programm);
+        }
     }
 }
