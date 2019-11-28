@@ -279,7 +279,8 @@ namespace CombinationsTest
             bool isUnique = true;
             foreach (Programm p in logProgramme)
             {
-                if ((programm.getPath().Contains(p.getPath()) || p.getPath().Contains(programm.getPath())))
+                if ((programm.getPath().Contains(p.getPath()) || p.getPath().Contains(programm.getPath()))
+                    && programm.getName() == p.getName())
                 {
                     isUnique = false;
                     programm = p;
