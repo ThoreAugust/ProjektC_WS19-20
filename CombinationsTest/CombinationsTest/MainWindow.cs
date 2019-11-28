@@ -214,7 +214,7 @@ namespace CombinationsTest
             foreach (Process process in Process.GetProcesses())
             {
 
-                if (process.MainWindowTitle != "")
+                if (process.MainWindowTitle != "" && !process.MainModule.FileName.Contains(Directory.GetCurrentDirectory()))
                 {
                     if (process.StartTime.Date == resetTime.Date)
                     {
