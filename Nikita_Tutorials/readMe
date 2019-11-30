@@ -69,7 +69,31 @@ Fortschritt 24.10.19 - 07.11.19
 __________________________________________________
 
 Kategorie Einstellungen Form erstellt und Funktionen bearbeitet, 
-Kategorien und Max. Nutzungszeit eingeben und Liste hinzufügen funktioniert.
+Kategorien und Max. Nutzungszeit eingeben und Liste hinzufügen funktioniert - läuft aber noch nicht über die Logfiles.
 
 https://stackoverflow.com/questions/9951704/add-item-to-listview-control
 https://stackoverflow.com/questions/20250311/how-to-send-date-from-a-textbox-to-listview-of-another-form
+
+Fortschritt 07.11.19 - 21.11.19
+__________________________________________________
+Recherche bezüglich Funktionen der Buttons
+Buttons zu Kategorieeinstellungen hinzugefügt, um Liste zu bearbeiten
+Delete-Button - entfernt ausgewählte Zeile
+Edit-Button - überschreibt ausgewählte Zeile
+Add-Button - Fügt neue Zeile hinzu
+
+Recherche bezüglich dem Zugriff und Eintrag der Logfiles in der Listview einer anderen Form
+https://stackoverflow.com/questions/15264740/listview-as-a-log-file
+https://www.codeproject.com/Questions/1238029/Add-items-in-listview-from-another-form
+https://www.codeproject.com/Questions/1040882/csharp-pass-listview-items-from-form-to-listview-i
+- relativ erfolglos
+
+Fortschritt 21.11.19 - 05.12.19
+__________________________________________________
+- Dank Chris funktioniert das Eintragen der Kategorie-LogFiles in die ListView von Edit_Category über SetUpDialog
+
+- Recherche zum verschlüsseln von Daten für die Export/Import-Funktion
+https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rijndaelmanaged?redirectedfrom=MSDN&view=netframework-4.8
+
+
+

@@ -26,6 +26,7 @@ namespace CombinationsTest
         private SetUpDialog setUp;
         private DateTime resetTime;
         private ListViewComparer lvwColumnSorter;
+        private EditCategory editKats;
 
 
         public MainWindow()
@@ -36,7 +37,8 @@ namespace CombinationsTest
             resetTime = DateTime.Now;
          //   reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
             InitializeComponent();
-            if(!setUp.passSet())
+            LoadLog();
+            if (!setUp.passSet())
             {
                 setUp.ShowDialog();
             }
@@ -157,43 +159,48 @@ namespace CombinationsTest
                 foreach (String keyName in regKey.GetSubKeyNames())
                 {
                     RegistryKey subKey = key.OpenSubKey(keyName);
-                    displayName = subKey.GetValue("DisplayName") as string;
-                    try
+                    if (IsProgramVisible(subKey))
                     {
-                        foreach  (string name in programmNames)
+                        displayName = subKey.GetValue("DisplayName") as string;
+                        path = subKey.GetValue("InstallLocation") as string;
+                        Programm temp = new Programm(displayName, path, 0, 0);
+                        if (!installedProgs.Contains(temp))
                         {
-                            if (displayName == name)
-                            {
-                                path = subKey.GetValue("InstallLocation") as string;
-                                Programm temp = new Programm(name,path,0,0);
-                                if (!installedProgs.Contains(temp))
-                                {
-                                    installedProgs.Add(temp);
-                                }
-                            }
+                            installedProgs.Add(temp);
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
                     }
                 }
             }
+            bool IsProgramVisible(RegistryKey subkey)
+            {
+                var name = (string)subkey.GetValue("DisplayName");
+                var path = (string)subkey.GetValue("InstallLocation");
+                var releaseType = (string)subkey.GetValue("ReleaseType");
+                var systemComponent = subkey.GetValue("SystemComponent");
+                var parentName = (string)subkey.GetValue("ParentDisplayName");
+
+                return
+                    !string.IsNullOrEmpty(name)
+                    && !string.IsNullOrEmpty(path)
+                    && string.IsNullOrEmpty(releaseType)
+                    && string.IsNullOrEmpty(parentName)
+                    && (systemComponent == null || (int)systemComponent == 0);
+            }
             // search in: CurrentUser
             key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
-            addNamesForKey(key);
+            //addNamesForKey(key);
             addPathByDisplayName(key);
 
 
             // search in: LocalMachine_32
             key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
-            addNamesForKey(key);
+            //addNamesForKey(key);
             addPathByDisplayName(key);
 
 
             // search in: LocalMachine_64
             key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall");
-            addNamesForKey(key);
+            //addNamesForKey(key);
             addPathByDisplayName(key);
 
 
@@ -201,7 +208,6 @@ namespace CombinationsTest
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            LoadLog();
             fillCurrentProgsListView();
             fillInstalledProgsListView();
             fillSavedProgsListView();
@@ -213,7 +219,7 @@ namespace CombinationsTest
             foreach (Process process in Process.GetProcesses())
             {
 
-                if (process.MainWindowTitle != "")
+                if (process.MainWindowTitle != "" && !process.MainModule.FileName.Contains(Directory.GetCurrentDirectory()))
                 {
                     if (process.StartTime.Date == resetTime.Date)
                     {
@@ -273,7 +279,8 @@ namespace CombinationsTest
             bool isUnique = true;
             foreach (Programm p in logProgramme)
             {
-                if (programm.getPath().Contains(p.getPath()) || p.getPath().Contains(programm.getPath()))
+                if ((programm.getPath().Contains(p.getPath()) || p.getPath().Contains(programm.getPath()))
+                    && programm.getName() == p.getName())
                 {
                     isUnique = false;
                     programm = p;
@@ -303,29 +310,55 @@ namespace CombinationsTest
             {
                 foreach (Programm p in logProgramme)
                 {
-                    if (programm == p && p.getMaxTime() != maxTime)
+                    if (programm == p)
                     {
-                        String message = "Maximale Nutzungszeit gespeichert!";
-                        if (p.getKategorie() != katName)
+                        if (p.getMaxTime() != maxTime)
                         {
-                            message = "Änderungen gespeichert!.";
+                            String message = "Maximale Nutzungszeit gespeichert!";
+                            if (p.getKategorie() != katName)
+                            {
+                                foreach(Kategorie k in logKategorien)
+                                {
+                                    if(k.getName() == p.getKategorie())
+                                    {
+                                        k.RemoveProgramm(p);
+                                    }
+                                    if(k.getName() == katName)
+                                    {
+                                        k.AddProgramm(p);
+                                    }
+                                }
+                                p.setKategorie(katName);
+                                message = "Änderungen gespeichert!.";
+                            }
+                            p.setMaxTime(maxTime);
+                            MessageBox.Show(message, "Success", MessageBoxButtons.OK);
+                            SaveLogs();
+                            break;
                         }
-                        p.setMaxTime(maxTime);
-                        MessageBox.Show(message, "Success", MessageBoxButtons.OK);
-                        SaveLogs();
-                        break;
-                    }
-                    else if(programm == p && katName != "")
-                    {
-                        p.setKategorie(katName);
-                        MessageBox.Show("Kategorie gespeichert!", "Success", MessageBoxButtons.OK);
-                        SaveLogs();
-                        break;
-                    }
-                    else if(programm == p)
-                    {
-                        MessageBox.Show("Programm ist bereits gespeichert!", "Error", MessageBoxButtons.OK);
-                        break;
+                        else if(katName != "")
+                        {
+                            foreach (Kategorie k in logKategorien)
+                            {
+                                if (k.getName() == p.getKategorie())
+                                {
+                                    k.RemoveProgramm(p);
+                                }
+                                if (k.getName() == katName)
+                                {
+                                    k.AddProgramm(p);
+                                }
+                            }
+                            p.setKategorie(katName);
+                            MessageBox.Show("Kategorie gespeichert!", "Success", MessageBoxButtons.OK);
+                            SaveLogs();
+                            break;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Programm ist bereits gespeichert!", "Error", MessageBoxButtons.OK);
+                            break;
+                        }
                     }
                 }
             }
@@ -523,7 +556,7 @@ namespace CombinationsTest
             AddProgram(p, maxUseTime,katName);
             fillSavedProgsListView();
         }
-        public void AddKategorie(string name)
+        public void AddKategorie(string name, int maxTime)
         {
             Programm test;
             List<Programm> testList = new List<Programm>();
@@ -544,9 +577,48 @@ namespace CombinationsTest
                 test = new Programm("test", "X://test.exe", 120, 18000);
                 test.setKategorie(name);
                 testList.Add(test);
-                logKategorien.Add(new Kategorie(name, 0, 0, testList));
+                logKategorien.Add(new Kategorie(name, 0, maxTime, testList));
+                fillKategorieDropDown();
                 SaveLogs();
             }
+        }
+        public void EditKategorie(string name, string newName, int maxTime)
+        {
+            for (int i = 0; i < logKategorien.Count; i++)
+            {
+                if (logKategorien[i].getName() == name)
+                {
+                    if (newName != "")
+                        logKategorien[i].setName(newName);
+                    if (maxTime != 0)
+                        logKategorien[i].setMaxTime(maxTime);
+                    fillKategorieDropDown();
+                    SaveLogs();
+                    break;
+                }
+            }
+        }
+        public void DeleteKategorie(string name)
+        {
+            for (int i = 0; i < logKategorien.Count; i++)
+            {
+                if (logKategorien[i].getName() == name)
+                {
+                    logKategorien.RemoveAt(i);
+                    fillKategorieDropDown();
+                    SaveLogs();
+                    break;
+                }
+            }
+        }
+        public List<String[]> GetKategorien()
+        {
+            List<String[]> list = new List<String[]>();
+            foreach (Kategorie k in logKategorien)
+            {
+                list.Add(new String[] { k.getName(), "" + k.getMaxTime() });
+            }
+            return list;
         }
         private void installedProgsListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -701,6 +773,11 @@ namespace CombinationsTest
         private void SavedProgsListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             updateDetailBox();
+        }
+        private void NeueKategorieToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            editKats = new EditCategory(this);
+            editKats.Show();
         }
     }   
 }

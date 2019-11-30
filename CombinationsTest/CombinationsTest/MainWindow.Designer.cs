@@ -203,18 +203,19 @@
             // neueKategorieToolStripMenuItem1
             // 
             this.neueKategorieToolStripMenuItem1.Name = "neueKategorieToolStripMenuItem1";
-            this.neueKategorieToolStripMenuItem1.Size = new System.Drawing.Size(155, 22);
+            this.neueKategorieToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.neueKategorieToolStripMenuItem1.Text = "Neue Kategorie";
+            this.neueKategorieToolStripMenuItem1.Click += new System.EventHandler(this.NeueKategorieToolStripMenuItem1_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(152, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(155, 22);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem1.Text = "Exit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.ExitToolStripMenuItem1_Click);
             // 

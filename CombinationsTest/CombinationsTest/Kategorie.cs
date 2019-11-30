@@ -31,6 +31,18 @@ namespace CombinationsTest
         {
             return name;
         }
+        public void setName(string n)
+        {
+            name = n;
+        }
+        public int getMaxTime()
+        {
+            return maxTime;
+        }
+        public void setMaxTime(int mt)
+        {
+            maxTime = mt;
+        }
         override public String ToString()
         {
             String p = "";
@@ -40,6 +52,10 @@ namespace CombinationsTest
                     p += program.getPath() + ",";
             }
             return name + ";" + maxTime + ";" + p;
+        }
+        public void RemoveProgramm(Programm programm)
+        {
+            programs.Remove(programm);
         }
     }
 }

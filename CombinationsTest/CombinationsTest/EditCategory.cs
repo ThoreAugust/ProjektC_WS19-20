@@ -10,19 +10,18 @@ using System.Windows.Forms;
 
 namespace CombinationsTest
 {
-    public partial class Edit_Category : Form
+    public partial class EditCategory : Form
     {
 
         MainWindow mw;
 
 
-        public Edit_Category(MainWindow main)
+        public EditCategory(MainWindow main)
         {
             InitializeComponent();
             mw = main;
             FillListView();
         }
-   
         public void FillListView()
         {
             categoryList.Items.Clear();
@@ -34,7 +33,6 @@ namespace CombinationsTest
                 categoryList.Items.Add(lvi);
             }
         }
-
         private void DeleteCategory_Click(object sender, EventArgs e)
         {
             if (categoryList.SelectedItems.Count > 0)
@@ -46,7 +44,6 @@ namespace CombinationsTest
                 FillListView();
             }
         }
-
         private void AddCategory_Click(object sender, EventArgs e)
         {
             if(textBox1.Text != "")
@@ -73,7 +70,6 @@ namespace CombinationsTest
                 FillListView();
             }
         }
-
         private void EditCategory_Click(object sender, EventArgs e)
         {
             if(categoryList.SelectedItems.Count > 0)

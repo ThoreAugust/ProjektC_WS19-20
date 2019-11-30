@@ -1,6 +1,6 @@
 ﻿namespace CombinationsTest
 {
-    partial class Edit_Category
+    partial class EditCategory
     {
         /// <summary>
         /// Required designer variable.

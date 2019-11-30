@@ -25,14 +25,22 @@
 (Done)DetailBox an ausgewählten Tab binden
 -/-Programme über Name statt Pfad identifizieren
 	->Funktioniert wieder per Pfad, solang nicht mehrere Programme im gleichen Ordner installiert sind
--Neu Kategorie überarbeiten
--Bug: Doppelte Kategorien in Dropdown
+(Done)Neu Kategorie überarbeiten
+(Done)Bug: Doppelte Kategorien in Dropdown
+!Autostart Einstellung speichern
+(Done)Sich selbst nicht in aktuellen Programmen anzeigen
+!Log.txt oder kompletten Ordner Zugriffsrechte anheben
 
 Geringe Priorität:
 !Abgelaufene Nutzungszeit ProgressBar mit Funktion
 -Zeitwarnungen als Popup
 -Passwort in log.txt speichern
+!Import/Export
+!Infofenster
 
 Bonus:
 Statistik aktiver Programme
 Online Einstellungen & Liste synchronisieren
+Sprachauswahl
+Tägliches/wöchentliches einstellen und resetten der Nutzungszeit
+

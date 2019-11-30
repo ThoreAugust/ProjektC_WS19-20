@@ -33,7 +33,7 @@ namespace CombinationsTest
                 {
                     foreach (string kategorie in kategorieBox.Text.Split(';'))
                     {
-                        mw.AddKategorie(kategorie);
+                        mw.AddKategorie(kategorie, 0);
                     }
                 }
                 this.Close();
