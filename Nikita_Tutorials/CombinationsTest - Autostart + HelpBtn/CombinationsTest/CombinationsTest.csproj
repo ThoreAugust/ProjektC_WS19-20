@@ -68,9 +68,6 @@
     <Compile Include="EditCategory.designer.cs">
       <DependentUpon>EditCategory.cs</DependentUpon>
     </Compile>
-    <Compile Include="Encoding_Logs.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Kategorie.cs" />
     <Compile Include="ListViewItemComparer.cs" />
     <Compile Include="PasswordHandler.cs" />

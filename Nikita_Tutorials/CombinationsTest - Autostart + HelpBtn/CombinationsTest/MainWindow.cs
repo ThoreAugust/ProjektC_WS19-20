@@ -13,13 +13,11 @@ using System.Windows;
 using System.Windows.Input;
 using System.Diagnostics;
 using Microsoft.Win32;
-
-
 namespace CombinationsTest
 {
     public partial class MainWindow : Form
     {
-
+        private RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run",true);
         private TimeSpan usage;
         private ListViewItem lvi;
         private List<Kategorie> logKategorien;
@@ -37,6 +35,7 @@ namespace CombinationsTest
             logKategorien = new List<Kategorie>();
             logProgramme = new List<Programm>();
             resetTime = DateTime.Now;
+         //   reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
             InitializeComponent();
             LoadLog();
             if (!setUp.passSet())
@@ -98,7 +97,7 @@ namespace CombinationsTest
                         {
                             programs = new List<Programm>();
                             usedTime = 0;
-                            foreach (String n in splitLine[2].Split(','))
+                            foreach(String n in splitLine[2].Split(','))
                             {
                                 foreach (Programm programm in logProgramme)
                                 {
@@ -126,7 +125,7 @@ namespace CombinationsTest
                     writer.WriteLine(program);
                 }
                 writer.WriteLine("[Kategorien]");
-                foreach (Kategorie kategorie in logKategorien)
+                foreach(Kategorie kategorie in logKategorien)
                 {
                     writer.WriteLine(kategorie);
                 }
@@ -160,43 +159,48 @@ namespace CombinationsTest
                 foreach (String keyName in regKey.GetSubKeyNames())
                 {
                     RegistryKey subKey = key.OpenSubKey(keyName);
-                    displayName = subKey.GetValue("DisplayName") as string;
-                    try
+                    if (IsProgramVisible(subKey))
                     {
-                        foreach (string name in programmNames)
+                        displayName = subKey.GetValue("DisplayName") as string;
+                        path = subKey.GetValue("InstallLocation") as string;
+                        Programm temp = new Programm(displayName, path, 0, 0);
+                        if (!installedProgs.Contains(temp))
                         {
-                            if (displayName == name)
-                            {
-                                path = subKey.GetValue("InstallLocation") as string;
-                                Programm temp = new Programm(name, path, 0, 0);
-                                if (!installedProgs.Contains(temp))
-                                {
-                                    installedProgs.Add(temp);
-                                }
-                            }
+                            installedProgs.Add(temp);
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
                     }
                 }
             }
+            bool IsProgramVisible(RegistryKey subkey)
+            {
+                var name = (string)subkey.GetValue("DisplayName");
+                var path = (string)subkey.GetValue("InstallLocation");
+                var releaseType = (string)subkey.GetValue("ReleaseType");
+                var systemComponent = subkey.GetValue("SystemComponent");
+                var parentName = (string)subkey.GetValue("ParentDisplayName");
+
+                return
+                    !string.IsNullOrEmpty(name)
+                    && !string.IsNullOrEmpty(path)
+                    && string.IsNullOrEmpty(releaseType)
+                    && string.IsNullOrEmpty(parentName)
+                    && (systemComponent == null || (int)systemComponent == 0);
+            }
             // search in: CurrentUser
             key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
-            addNamesForKey(key);
+            //addNamesForKey(key);
             addPathByDisplayName(key);
 
 
             // search in: LocalMachine_32
             key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
-            addNamesForKey(key);
+            //addNamesForKey(key);
             addPathByDisplayName(key);
 
 
             // search in: LocalMachine_64
             key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall");
-            addNamesForKey(key);
+            //addNamesForKey(key);
             addPathByDisplayName(key);
 
 
@@ -236,7 +240,7 @@ namespace CombinationsTest
         private void fillKategorieDropDown()
         {
             kategorieDropDown.Items.Clear();
-            if (logKategorien.Count != 0)
+            if(logKategorien.Count != 0)
             {
                 foreach (Kategorie item in logKategorien)
                 {
@@ -250,12 +254,12 @@ namespace CombinationsTest
             installedProgsListView.Items.Clear();
             foreach (Programm prog in getInstalledProgramms())
             {
-                Console.WriteLine(prog.ToString());
-                string[] row = new string[] { prog.getName(), prog.getPath() };
-                lvi = new ListViewItem(row);
-                lvi.Tag = prog;
-                // alle installierten Programme
-                installedProgsListView.Items.Add(lvi);
+                    Console.WriteLine(prog.ToString());
+                    string[] row = new string[] { prog.getName(), prog.getPath() };
+                    lvi = new ListViewItem(row);
+                    lvi.Tag = prog;
+                    // alle installierten Programme
+                    installedProgsListView.Items.Add(lvi);
             }
         }
         private void fillSavedProgsListView()
@@ -275,7 +279,8 @@ namespace CombinationsTest
             bool isUnique = true;
             foreach (Programm p in logProgramme)
             {
-                if (programm.getPath().Contains(p.getPath()) || p.getPath().Contains(programm.getPath()))
+                if ((programm.getPath().Contains(p.getPath()) || p.getPath().Contains(programm.getPath()))
+                    && programm.getName() == p.getName())
                 {
                     isUnique = false;
                     programm = p;
@@ -288,9 +293,9 @@ namespace CombinationsTest
                 if (katName != "")
                 {
                     programm.setKategorie(katName);
-                    foreach (Kategorie kat in logKategorien)
+                    foreach  (Kategorie kat in logKategorien)
                     {
-                        if (kat.getName() == katName)
+                        if(kat.getName() == katName)
                         {
                             kat.AddProgramm(programm);
                         }
@@ -305,29 +310,55 @@ namespace CombinationsTest
             {
                 foreach (Programm p in logProgramme)
                 {
-                    if (programm == p && p.getMaxTime() != maxTime)
+                    if (programm == p)
                     {
-                        String message = "Maximale Nutzungszeit gespeichert!";
-                        if (p.getKategorie() != katName)
+                        if (p.getMaxTime() != maxTime)
                         {
-                            message = "Änderungen gespeichert!.";
+                            String message = "Maximale Nutzungszeit gespeichert!";
+                            if (p.getKategorie() != katName)
+                            {
+                                foreach(Kategorie k in logKategorien)
+                                {
+                                    if(k.getName() == p.getKategorie())
+                                    {
+                                        k.RemoveProgramm(p);
+                                    }
+                                    if(k.getName() == katName)
+                                    {
+                                        k.AddProgramm(p);
+                                    }
+                                }
+                                p.setKategorie(katName);
+                                message = "Änderungen gespeichert!.";
+                            }
+                            p.setMaxTime(maxTime);
+                            MessageBox.Show(message, "Success", MessageBoxButtons.OK);
+                            SaveLogs();
+                            break;
                         }
-                        p.setMaxTime(maxTime);
-                        MessageBox.Show(message, "Success", MessageBoxButtons.OK);
-                        SaveLogs();
-                        break;
-                    }
-                    else if (programm == p && katName != "")
-                    {
-                        p.setKategorie(katName);
-                        MessageBox.Show("Kategorie gespeichert!", "Success", MessageBoxButtons.OK);
-                        SaveLogs();
-                        break;
-                    }
-                    else if (programm == p)
-                    {
-                        MessageBox.Show("Programm ist bereits gespeichert!", "Error", MessageBoxButtons.OK);
-                        break;
+                        else if(katName != "")
+                        {
+                            foreach (Kategorie k in logKategorien)
+                            {
+                                if (k.getName() == p.getKategorie())
+                                {
+                                    k.RemoveProgramm(p);
+                                }
+                                if (k.getName() == katName)
+                                {
+                                    k.AddProgramm(p);
+                                }
+                            }
+                            p.setKategorie(katName);
+                            MessageBox.Show("Kategorie gespeichert!", "Success", MessageBoxButtons.OK);
+                            SaveLogs();
+                            break;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Programm ist bereits gespeichert!", "Error", MessageBoxButtons.OK);
+                            break;
+                        }
                     }
                 }
             }
@@ -345,7 +376,7 @@ namespace CombinationsTest
             if (this.WindowState == FormWindowState.Minimized)
             {
                 this.Hide();
-                timerNotification.ShowBalloonTip(1000, "Important notice", "You have xxx Seconds left for your CurrentApplication", ToolTipIcon.Info);
+                timerNotification.ShowBalloonTip(1000, "Important notice" , "You have xxx Seconds left for your CurrentApplication", ToolTipIcon.Info);
             }
         }
         private void ExitToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -354,25 +385,25 @@ namespace CombinationsTest
         }
         private void MaxUseTimeTrackbar_Scroll(object sender, EventArgs e)
         {
-            int maxHours = maxUseTimeTrackbar.Value / 60 / 60;
+            int maxHours =  maxUseTimeTrackbar.Value / 60 / 60;
             int maxMinutes = maxUseTimeTrackbar.Value / 60;
             if (maxMinutes >= 60)
             {
                 maxMinutes -= maxHours * 60;
             }
 
-            maxHourUseTimeTextBox.Text = "" + maxHours;
-            maxMinuteUseTimeTextBox.Text = "" + maxMinutes;
+            maxHourUseTimeTextBox.Text = ""+maxHours;
+            maxMinuteUseTimeTextBox.Text = ""+maxMinutes;   
         }
         private void Update_Tick(object sender, EventArgs e)
         {
             ticks++;
             if (ticks % 10 == 0)
             {
-                if (resetTime.Date != DateTime.Now.Date)
+                if(resetTime.Date != DateTime.Now.Date)
                 {
                     resetTime = DateTime.Now;
-                    foreach (Programm p in logProgramme)
+                    foreach(Programm p in logProgramme)
                     {
                         p.setUsedTime(0);
                     }
@@ -381,7 +412,7 @@ namespace CombinationsTest
                 {
                     var item = currentProgsListView.Items[i];
                     Process process = (Process)item.Tag;
-                    if (process.StartTime.Date == resetTime.Date)
+                    if(process.StartTime.Date == resetTime.Date)
                     {
                         usage = DateTime.Now.Subtract(process.StartTime);
                     }
@@ -451,7 +482,7 @@ namespace CombinationsTest
                     maxMinutes -= 60;
                     if (maxHours < 5)
                     {
-                        maxHours += 1;
+                    maxHours += 1;
                     }
                 }
                 if (maxHours >= 5)
@@ -461,7 +492,7 @@ namespace CombinationsTest
                 }
                 maxMinuteUseTimeTextBox.Text = "" + maxMinutes;
                 maxHourUseTimeTextBox.Text = "" + maxHours;
-                if (maxHours < 5 * 3600)
+                if (maxHours < 5* 3600)
                 {
                     maxUseTimeTrackbar.Value = (maxHours * 3600) + (maxMinutes * 60);
                 }
@@ -488,7 +519,6 @@ namespace CombinationsTest
                 }
             }
         }
-           
         private bool confirmCloseWithPassword()
         {
             PasswordDialog pw = new PasswordDialog();
@@ -746,45 +776,35 @@ namespace CombinationsTest
             editKats.Show();
         }
 
+        //Program Info/ Help
         private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Balance-Tech soll Ihnen dabei helfen die Kontrolle über Ihre Nutzungszeit an Ihrem Computer zu regulieren." +
-                "Sie könen sich selbst ein Limit über die Kategorie-Einstellungen setzen und bestimmen wie lange Sie Ihren PC zur Arbeit, " +
-                "Freizeit oder sonstigem nutzen möchten." + " Zur Sicherheit können Sie das Passwort auch an Freunde oder Familie geben, " +
-                "die Sie ggf. dabei unterstüzen, sich an Ihre eigenen Regeln zu halten." +
-                "Befolgen Sie einfach die Anweisungen beim Start des Programms, um das Tool sinngemäß zu nutzen." +
-                "Wir wünschen Ihnen viel Erfolg und Spaß mit Ihrer neu gewonnen Zeit."
-                , "Help?", MessageBoxButtons.OK);
+               "Sie könen sich selbst ein Limit über die Kategorie-Einstellungen setzen und bestimmen wie lange Sie Ihren PC zur Arbeit, " +
+               "Freizeit oder sonstigem nutzen möchten." + " Zur Sicherheit können Sie das Passwort auch an Freunde oder Familie geben, " +
+               "die Sie ggf. dabei unterstüzen, sich an Ihre eigenen Regeln zu halten." +
+               "Befolgen Sie einfach die Anweisungen beim Start des Programms, um das Tool sinngemäß zu nutzen." +
+               "Wir wünschen Ihnen viel Erfolg und Spaß mit Ihrer neu gewonnen Zeit."
+               , "Help?", MessageBoxButtons.OK);
         }
-
-        public bool Checked { get; set; }
 
         private void AutostartToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
-            CheckBox enable = new CheckBox();
-            enable.AutoCheck = false;
-
-            if (!enable.ThreeState)
-                {
-                    //Autostart on
-                    RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
-                    reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
-                    MessageBox.Show("Autostart aktiviert.", "Notification", MessageBoxButtons.OK);
-                    reg.Close();
-                    enable.ThreeState = true;
-
+            //Autostart on
+            if (autostartToolStripMenuItem.Checked == true)
+            {
+                RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+                reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
+                MessageBox.Show("Autostart aktiviert.", "Notification", MessageBoxButtons.OK);
             }
-                else
-                {
-                    //Autostart off
-                    RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
-                    reg.DeleteValue("CombinationsTest", false);
-                    MessageBox.Show("Autostart deaktiviert.", "Notification", MessageBoxButtons.OK);
-                    reg.Close();
-                    enable.ThreeState = false;
-                }
 
+            //Autostart off
+            if (autostartToolStripMenuItem.Checked == false)
+            {
+                RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+                reg.SetValue("CombinationTest", false);
+                MessageBox.Show("Autostart deaktiviert.", "Notification", MessageBoxButtons.OK);
+            }
         }
-
-    }
-}   
+    }   
+}
