@@ -43,15 +43,27 @@ namespace CombinationsTest
         {
             maxTime = mt;
         }
+        public int getUsedTime()
+        {
+            return usedTime;
+        }
+        public void setUsedTime(int ut)
+        {
+            usedTime = ut;
+        }
+        public List<Programm> GetProgramme()
+        {
+            return programs;
+        }
         override public String ToString()
         {
             String p = "";
             if (programs != null)
             {
                 foreach (Programm program in programs)
-                    p += program.getPath() + ",";
+                    p += ";" + program.getName() + "," + program.getPath();
             }
-            return name + ";" + maxTime + ";" + p;
+            return name + ";" + maxTime + p;
         }
         public void RemoveProgramm(Programm programm)
         {

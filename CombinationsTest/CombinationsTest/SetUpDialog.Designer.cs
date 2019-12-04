@@ -35,12 +35,14 @@
             this.okButton = new System.Windows.Forms.Button();
             this.masterPWRepeatBox = new System.Windows.Forms.TextBox();
             this.masterPWRepeatLabel = new System.Windows.Forms.Label();
+            this.AutostartLabel = new System.Windows.Forms.Label();
+            this.AutostartCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // masterPWLabel
             // 
             this.masterPWLabel.AutoSize = true;
-            this.masterPWLabel.Location = new System.Drawing.Point(12, 9);
+            this.masterPWLabel.Location = new System.Drawing.Point(12, 5);
             this.masterPWLabel.Name = "masterPWLabel";
             this.masterPWLabel.Size = new System.Drawing.Size(157, 13);
             this.masterPWLabel.TabIndex = 0;
@@ -49,7 +51,7 @@
             // kategorieLabel
             // 
             this.kategorieLabel.AutoSize = true;
-            this.kategorieLabel.Location = new System.Drawing.Point(65, 72);
+            this.kategorieLabel.Location = new System.Drawing.Point(65, 88);
             this.kategorieLabel.Name = "kategorieLabel";
             this.kategorieLabel.Size = new System.Drawing.Size(233, 26);
             this.kategorieLabel.TabIndex = 1;
@@ -58,7 +60,7 @@
             // 
             // masterPWBox
             // 
-            this.masterPWBox.Location = new System.Drawing.Point(182, 2);
+            this.masterPWBox.Location = new System.Drawing.Point(182, 5);
             this.masterPWBox.Name = "masterPWBox";
             this.masterPWBox.PasswordChar = '*';
             this.masterPWBox.Size = new System.Drawing.Size(165, 20);
@@ -67,7 +69,7 @@
             // 
             // kategorieBox
             // 
-            this.kategorieBox.Location = new System.Drawing.Point(12, 114);
+            this.kategorieBox.Location = new System.Drawing.Point(12, 130);
             this.kategorieBox.Multiline = true;
             this.kategorieBox.Name = "kategorieBox";
             this.kategorieBox.Size = new System.Drawing.Size(335, 67);
@@ -75,7 +77,7 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(141, 190);
+            this.okButton.Location = new System.Drawing.Point(141, 206);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(80, 23);
             this.okButton.TabIndex = 4;
@@ -85,7 +87,7 @@
             // 
             // masterPWRepeatBox
             // 
-            this.masterPWRepeatBox.Location = new System.Drawing.Point(182, 29);
+            this.masterPWRepeatBox.Location = new System.Drawing.Point(182, 30);
             this.masterPWRepeatBox.Name = "masterPWRepeatBox";
             this.masterPWRepeatBox.PasswordChar = '*';
             this.masterPWRepeatBox.Size = new System.Drawing.Size(165, 20);
@@ -95,17 +97,37 @@
             // masterPWRepeatLabel
             // 
             this.masterPWRepeatLabel.AutoSize = true;
-            this.masterPWRepeatLabel.Location = new System.Drawing.Point(12, 36);
+            this.masterPWRepeatLabel.Location = new System.Drawing.Point(12, 30);
             this.masterPWRepeatLabel.Name = "masterPWRepeatLabel";
             this.masterPWRepeatLabel.Size = new System.Drawing.Size(161, 13);
             this.masterPWRepeatLabel.TabIndex = 6;
             this.masterPWRepeatLabel.Text = "Wiederhole das Masterpasswort.";
             // 
+            // AutostartLabel
+            // 
+            this.AutostartLabel.AutoSize = true;
+            this.AutostartLabel.Location = new System.Drawing.Point(12, 55);
+            this.AutostartLabel.Name = "AutostartLabel";
+            this.AutostartLabel.Size = new System.Drawing.Size(115, 13);
+            this.AutostartLabel.TabIndex = 7;
+            this.AutostartLabel.Text = "Autostart mit Windows.";
+            // 
+            // AutostartCheckBox
+            // 
+            this.AutostartCheckBox.AutoSize = true;
+            this.AutostartCheckBox.Location = new System.Drawing.Point(182, 55);
+            this.AutostartCheckBox.Name = "AutostartCheckBox";
+            this.AutostartCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.AutostartCheckBox.TabIndex = 8;
+            this.AutostartCheckBox.UseVisualStyleBackColor = true;
+            // 
             // SetUpDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(359, 225);
+            this.ClientSize = new System.Drawing.Size(359, 244);
+            this.Controls.Add(this.AutostartCheckBox);
+            this.Controls.Add(this.AutostartLabel);
             this.Controls.Add(this.masterPWRepeatLabel);
             this.Controls.Add(this.masterPWRepeatBox);
             this.Controls.Add(this.okButton);
@@ -129,5 +151,7 @@
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.TextBox masterPWRepeatBox;
         private System.Windows.Forms.Label masterPWRepeatLabel;
+        private System.Windows.Forms.Label AutostartLabel;
+        private System.Windows.Forms.CheckBox AutostartCheckBox;
     }
 }

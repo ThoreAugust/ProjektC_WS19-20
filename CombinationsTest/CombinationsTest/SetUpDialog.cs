@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -35,6 +36,11 @@ namespace CombinationsTest
                     {
                         mw.AddKategorie(kategorie, 0);
                     }
+                }
+                if (AutostartCheckBox.Checked)
+                {
+                    RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+                    reg.SetValue(mw.getProjectName(), Application.ExecutablePath.ToString());
                 }
                 this.Close();
             }

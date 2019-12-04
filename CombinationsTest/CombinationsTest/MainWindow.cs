@@ -101,15 +101,18 @@ namespace CombinationsTest
                         {
                             programs = new List<Programm>();
                             usedTime = 0;
-                            foreach(String n in splitLine[2].Split(','))
+                            for(int j = 2; j < splitLine.Length; j++)
                             {
+                                String name = splitLine[j].Split(',')[0];
+                                String path = splitLine[j].Split(',')[1];
                                 foreach (Programm programm in logProgramme)
                                 {
-                                    if (programm.getPath() == n)
+                                    if (programm.getName() == name && programm.getPath() == path)
                                     {
                                         programs.Add(programm);
                                         programm.setKategorie(splitLine[0]);
                                         usedTime += programm.getUsedTime();
+                                        break;
                                     }
                                 }
                             }
@@ -404,6 +407,7 @@ namespace CombinationsTest
             ticks++;
             if (ticks % 10 == 0)
             {
+                //Täglicher Reset der Nutzungszeiten
                 if(resetTime.Date != DateTime.Now.Date)
                 {
                     resetTime = DateTime.Now;
@@ -411,11 +415,45 @@ namespace CombinationsTest
                     {
                         p.setUsedTime(0);
                     }
+                    foreach(Kategorie k in logKategorien)
+                    {
+                        k.setUsedTime(0);
+                    }
+                }
+                //Nutzungszeiten der Kategorien updaten
+                foreach(Kategorie kategorie in logKategorien)
+                {
+                    bool foundOne = false;
+                    for (int i = 0; i < currentProgsListView.Items.Count; i++)
+                    {
+                        var item = currentProgsListView.Items[i];
+                        Process process = (Process)item.Tag;
+                        foreach(Programm programm in kategorie.GetProgramme())
+                        {
+                            try
+                            {
+                                if (process.MainModule.FileName.Contains(programm.getPath()) && process.ProcessName == programm.getName())
+                                {
+                                    foundOne = true;
+                                    break;
+                                }
+                            }
+                            catch { }
+                        }
+                        if (foundOne)
+                        {
+                            kategorie.setUsedTime(kategorie.getUsedTime() + 1);
+                            break;
+                        }
+                    }
+                    //DEBUG
+                    Console.WriteLine(kategorie.getName() + ": " + kategorie.getUsedTime() + " / " + kategorie.getMaxTime());
                 }
                 for (int i = 0; i < currentProgsListView.Items.Count; i++)
                 {
                     var item = currentProgsListView.Items[i];
                     Process process = (Process)item.Tag;
+                    //usage = Nutzungszeit seit letztem Reset
                     if(process.StartTime.Date == resetTime.Date)
                     {
                         usage = DateTime.Now.Subtract(process.StartTime);
@@ -425,18 +463,28 @@ namespace CombinationsTest
                         usage = DateTime.Now.Subtract(resetTime);
                     }
                     item.SubItems[3].Text = usage.ToString(@"hh\:mm\:ss");
+                    //Prüfe ob ein zu regulierendes Programm läuft
                     for (int j = 0; j < savedProgsListView.Items.Count; j++)
                     {
                         try
                         {
                             Programm savedProg = (Programm)savedProgsListView.Items[j].Tag;
-                            if (process.MainModule.FileName.Contains(savedProg.getPath()))
+                            if (process.MainModule.FileName.Contains(savedProg.getPath()) && process.ProcessName == savedProg.getName())
                             {
                                 savedProg.setUsedTime(Convert.ToInt32(usage.TotalSeconds));
-                                //Maximale Nutzungszeit überschritten
+                                //Maximale Nutzungszeit des Programms überschritten
                                 if (savedProg.getUsedTime() >= savedProg.getMaxTime())
                                 {
                                     CloseProgram(process);
+                                }
+                                //Maximale Nutzungszeit der Kategorie überschritten
+                                if (savedProg.getKategorie() != "")
+                                {
+                                    Kategorie kat = logKategorien.Find(k => k.getName().Equals(savedProg.getKategorie()));
+                                    if (kat.getUsedTime() >= kat.getMaxTime())
+                                    {
+                                        CloseProgram(process);
+                                    }
                                 }
                             }
                         }
@@ -446,6 +494,7 @@ namespace CombinationsTest
                         }
                     }
                 }
+                //Ausgewählten Eintrag beibehalten
                 if (currentProgsListView.SelectedItems.Count > 0)
                 {
                     string id = currentProgsListView.SelectedItems[0].SubItems[0].Text;
@@ -461,6 +510,23 @@ namespace CombinationsTest
                 else
                 {
                     fillCurrentProgsListView();
+                }
+                if (savedProgsListView.SelectedItems.Count > 0)
+                {
+                    string name = savedProgsListView.SelectedItems[0].SubItems[0].Text;
+                    string path = savedProgsListView.SelectedItems[0].SubItems[1].Text;
+                    fillSavedProgsListView();
+                    foreach (ListViewItem lvi in savedProgsListView.Items)
+                    {
+                        if (name.Equals(lvi.SubItems[0].Text) && path.Equals(lvi.SubItems[1].Text))
+                        {
+                            lvi.Selected = true;
+                        }
+                    }
+                }
+                else
+                {
+                    fillSavedProgsListView();
                 }
                 updateDetailBox();
             }
@@ -590,9 +656,9 @@ namespace CombinationsTest
             }
             if (isUnique)
             {
-                test = new Programm("test", "X://test.exe", 120, 18000);
-                test.setKategorie(name);
-                testList.Add(test);
+                //test = new Programm("test", "X://test.exe", 120, 18000);
+                //test.setKategorie(name);
+                //testList.Add(test);
                 logKategorien.Add(new Kategorie(name, 0, maxTime, testList));
                 fillKategorieDropDown();
                 SaveLogs();
@@ -605,7 +671,14 @@ namespace CombinationsTest
                 if (logKategorien[i].getName() == name)
                 {
                     if (newName != "")
+                    {
+                        foreach(Programm programm in logProgramme)
+                        {
+                            if (programm.getKategorie() == logKategorien[i].getName())
+                                programm.setKategorie(newName);
+                        }
                         logKategorien[i].setName(newName);
+                    }
                     if (maxTime != 0)
                         logKategorien[i].setMaxTime(maxTime);
                     fillKategorieDropDown();
@@ -804,6 +877,10 @@ namespace CombinationsTest
                "Befolgen Sie einfach die Anweisungen beim Start des Programms, um das Tool sinngemäß zu nutzen." +
                "\nWir wünschen Ihnen viel Erfolg und Spaß mit Ihrer neu gewonnen Zeit."
                , "Hilfe", MessageBoxButtons.OK);
+        }
+        public String getProjectName()
+        {
+            return projectName;
         }
     }   
 }
