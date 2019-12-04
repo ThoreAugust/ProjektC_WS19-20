@@ -17,7 +17,6 @@ namespace CombinationsTest
 {
     public partial class MainWindow : Form
     {
-        private RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run",true);
         private TimeSpan usage;
         private ListViewItem lvi;
         private List<Kategorie> logKategorien;
@@ -27,6 +26,7 @@ namespace CombinationsTest
         private DateTime resetTime;
         private ListViewComparer lvwColumnSorter;
         private EditCategory editKats;
+        private String projectName = "CombinationsTest";
 
 
         public MainWindow()
@@ -35,12 +35,16 @@ namespace CombinationsTest
             logKategorien = new List<Kategorie>();
             logProgramme = new List<Programm>();
             resetTime = DateTime.Now;
-         //   reg.SetValue("CombinationTest", Application.ExecutablePath.ToString());
             InitializeComponent();
             LoadLog();
             if (!setUp.passSet())
             {
                 setUp.ShowDialog();
+            }
+            RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+            if (reg.GetValue(projectName) != null)
+            {
+                autostartToolStripMenuItem.Checked = true;
             }
             update.Start();
             lvwColumnSorter = new ListViewComparer();
@@ -521,7 +525,19 @@ namespace CombinationsTest
         }
         private void AutostartToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+            //Autostart on
+            if (autostartToolStripMenuItem.Checked == true)
+            {
+                reg.SetValue(projectName, Application.ExecutablePath.ToString());
+                MessageBox.Show("Autostart aktiviert.", "Notification", MessageBoxButtons.OK);
+            }
+            //Autostart off
+            else
+            {
+                reg.DeleteValue(projectName);
+                MessageBox.Show("Autostart deaktiviert.", "Notification", MessageBoxButtons.OK);
+            }
         }
         private bool confirmCloseWithPassword()
         {
@@ -778,6 +794,16 @@ namespace CombinationsTest
         {
             editKats = new EditCategory(this);
             editKats.Show();
+        }
+        private void HilfeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(projectName + " soll Ihnen dabei helfen die Kontrolle über Ihre Nutzungszeit an Ihrem Computer zu regulieren." +
+               "Sie können sich selbst ein Limit über die Kategorie-Einstellungen setzen und bestimmen, wie lange Sie Ihren PC zur Arbeit, " +
+               "Freizeit oder sonstigem nutzen möchten." + "\nZur Sicherheit können Sie das Passwort auch an Freunde oder Familie geben, " +
+               "die Sie ggf. dabei unterstützen, sich an Ihre eigenen Regeln zu halten." +
+               "Befolgen Sie einfach die Anweisungen beim Start des Programms, um das Tool sinngemäß zu nutzen." +
+               "\nWir wünschen Ihnen viel Erfolg und Spaß mit Ihrer neu gewonnen Zeit."
+               , "Hilfe", MessageBoxButtons.OK);
         }
     }   
 }
