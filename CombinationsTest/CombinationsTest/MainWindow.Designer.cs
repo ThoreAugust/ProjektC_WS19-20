@@ -53,6 +53,7 @@
             this.autostartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.neueKategorieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.programmTabs = new System.Windows.Forms.TabControl();
@@ -69,6 +70,8 @@
             this.savedUsedTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.savedMaxTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.detailBox = new System.Windows.Forms.GroupBox();
+            this.individualLimitCheckBox = new System.Windows.Forms.CheckBox();
+            this.individualLimitLabel = new System.Windows.Forms.Label();
             this.kategorieDropDown = new System.Windows.Forms.ComboBox();
             this.kategorieLabel = new System.Windows.Forms.Label();
             this.saveProgButton = new System.Windows.Forms.Button();
@@ -86,7 +89,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -119,7 +121,7 @@
             this.currentProgsListView.UseCompatibleStateImageBehavior = false;
             this.currentProgsListView.View = System.Windows.Forms.View.Details;
             this.currentProgsListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.currentProgsListView_ColumnClick);
-            this.currentProgsListView.SelectedIndexChanged += new System.EventHandler(this.CurrentProgsListView_SelectedIndexChanged);
+            this.currentProgsListView.Click += new System.EventHandler(this.CurrentProgsListView_Click);
             // 
             // processID
             // 
@@ -250,28 +252,35 @@
             this.optionMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.autostartToolStripMenuItem});
             this.optionMenuItem.Name = "optionMenuItem";
-            this.optionMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.optionMenuItem.Size = new System.Drawing.Size(124, 22);
             this.optionMenuItem.Text = "Optionen";
             // 
             // autostartToolStripMenuItem
             // 
             this.autostartToolStripMenuItem.CheckOnClick = true;
             this.autostartToolStripMenuItem.Name = "autostartToolStripMenuItem";
-            this.autostartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.autostartToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.autostartToolStripMenuItem.Text = "Autostart";
             this.autostartToolStripMenuItem.Click += new System.EventHandler(this.AutostartToolStripMenuItem_Click);
             // 
             // importMenuItem
             // 
             this.importMenuItem.Name = "importMenuItem";
-            this.importMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importMenuItem.Size = new System.Drawing.Size(124, 22);
             this.importMenuItem.Text = "Import";
             // 
             // exportMenuItem
             // 
             this.exportMenuItem.Name = "exportMenuItem";
-            this.exportMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportMenuItem.Size = new System.Drawing.Size(124, 22);
             this.exportMenuItem.Text = "Export";
+            // 
+            // hilfeToolStripMenuItem
+            // 
+            this.hilfeToolStripMenuItem.Name = "hilfeToolStripMenuItem";
+            this.hilfeToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.hilfeToolStripMenuItem.Text = "Hilfe";
+            this.hilfeToolStripMenuItem.Click += new System.EventHandler(this.HilfeToolStripMenuItem_Click);
             // 
             // neueKategorieToolStripMenuItem
             // 
@@ -335,7 +344,7 @@
             this.installedProgsListView.UseCompatibleStateImageBehavior = false;
             this.installedProgsListView.View = System.Windows.Forms.View.Details;
             this.installedProgsListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.installedProgsListView_ColumnClick);
-            this.installedProgsListView.SelectedIndexChanged += new System.EventHandler(this.installedProgsListView_SelectedIndexChanged);
+            this.installedProgsListView.Click += new System.EventHandler(this.InstalledProgsListView_Click);
             // 
             // installedName
             // 
@@ -388,7 +397,7 @@
             this.savedProgsListView.UseCompatibleStateImageBehavior = false;
             this.savedProgsListView.View = System.Windows.Forms.View.Details;
             this.savedProgsListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.savedProgsListView_ColumnClick);
-            this.savedProgsListView.SelectedIndexChanged += new System.EventHandler(this.SavedProgsListView_SelectedIndexChanged);
+            this.savedProgsListView.Click += new System.EventHandler(this.SavedProgsListView_Click);
             // 
             // savedName
             // 
@@ -420,6 +429,8 @@
             this.detailBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.detailBox.Controls.Add(this.individualLimitCheckBox);
+            this.detailBox.Controls.Add(this.individualLimitLabel);
             this.detailBox.Controls.Add(this.kategorieDropDown);
             this.detailBox.Controls.Add(this.kategorieLabel);
             this.detailBox.Controls.Add(this.saveProgButton);
@@ -442,6 +453,26 @@
             this.detailBox.Text = "detailBox";
             this.detailBox.Visible = false;
             // 
+            // individualLimitCheckBox
+            // 
+            this.individualLimitCheckBox.AutoSize = true;
+            this.individualLimitCheckBox.Checked = true;
+            this.individualLimitCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.individualLimitCheckBox.Location = new System.Drawing.Point(143, 154);
+            this.individualLimitCheckBox.Name = "individualLimitCheckBox";
+            this.individualLimitCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.individualLimitCheckBox.TabIndex = 14;
+            this.individualLimitCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // individualLimitLabel
+            // 
+            this.individualLimitLabel.AutoSize = true;
+            this.individualLimitLabel.Location = new System.Drawing.Point(15, 155);
+            this.individualLimitLabel.Name = "individualLimitLabel";
+            this.individualLimitLabel.Size = new System.Drawing.Size(89, 13);
+            this.individualLimitLabel.TabIndex = 13;
+            this.individualLimitLabel.Text = "Individuelles Limit";
+            // 
             // kategorieDropDown
             // 
             this.kategorieDropDown.FormattingEnabled = true;
@@ -454,7 +485,7 @@
             // kategorieLabel
             // 
             this.kategorieLabel.AutoSize = true;
-            this.kategorieLabel.Location = new System.Drawing.Point(21, 255);
+            this.kategorieLabel.Location = new System.Drawing.Point(15, 255);
             this.kategorieLabel.Name = "kategorieLabel";
             this.kategorieLabel.Size = new System.Drawing.Size(106, 13);
             this.kategorieLabel.TabIndex = 11;
@@ -510,7 +541,7 @@
             // usedTimeLabel
             // 
             this.usedTimeLabel.AutoSize = true;
-            this.usedTimeLabel.Location = new System.Drawing.Point(18, 194);
+            this.usedTimeLabel.Location = new System.Drawing.Point(15, 194);
             this.usedTimeLabel.Name = "usedTimeLabel";
             this.usedTimeLabel.Size = new System.Drawing.Size(131, 13);
             this.usedTimeLabel.TabIndex = 5;
@@ -600,13 +631,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // hilfeToolStripMenuItem
-            // 
-            this.hilfeToolStripMenuItem.Name = "hilfeToolStripMenuItem";
-            this.hilfeToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.hilfeToolStripMenuItem.Text = "Hilfe";
-            this.hilfeToolStripMenuItem.Click += new System.EventHandler(this.HilfeToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -698,6 +722,8 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ColumnHeader installedPath;
         private System.Windows.Forms.ToolStripMenuItem hilfeToolStripMenuItem;
+        private System.Windows.Forms.CheckBox individualLimitCheckBox;
+        private System.Windows.Forms.Label individualLimitLabel;
     }
 }
 

@@ -20,10 +20,18 @@ namespace CombinationsTest
         {
             InitializeComponent();
             mw = main;
-            FillListView();
+            FillListView(false);
         }
-        public void FillListView()
+        public void FillListView(bool edited)
         {
+            List<String> selected = new List<string>();
+            if(categoryList.SelectedItems.Count > 0)
+            {
+                foreach(ListViewItem item in categoryList.SelectedItems)
+                {
+                    selected.Add(item.SubItems[0].Text);
+                }
+            }
             categoryList.Items.Clear();
             List<String[]> list = mw.GetKategorien();
             ListViewItem lvi;
@@ -31,6 +39,22 @@ namespace CombinationsTest
             {
                 lvi = new ListViewItem(item);
                 categoryList.Items.Add(lvi);
+                if(edited && textBox1.Text != "" && textBox1.Text == item[0])
+                {
+                    categoryList.Items[categoryList.Items.Count - 1].Selected = true;
+                }
+                else
+                {
+                    if (selected.Contains(item[0]))
+                    {
+                        categoryList.Items[categoryList.Items.Count - 1].Selected = true;
+                    }
+                }
+            }
+            if (edited)
+            {
+                textBox1.Clear();
+                textBox2.Clear();
             }
         }
         private void DeleteCategory_Click(object sender, EventArgs e)
@@ -41,7 +65,7 @@ namespace CombinationsTest
                 {
                     mw.DeleteKategorie(categoryList.SelectedItems[i].SubItems[0].Text);
                 }
-                FillListView();
+                FillListView(true);
             }
         }
         private void AddCategory_Click(object sender, EventArgs e)
@@ -65,9 +89,7 @@ namespace CombinationsTest
                     }
                 }
                 mw.AddKategorie(textBox1.Text, maxTime);
-                textBox1.Clear();
-                textBox2.Clear();
-                FillListView();
+                FillListView(true);
             }
         }
         private void EditCategory_Click(object sender, EventArgs e)
@@ -95,10 +117,13 @@ namespace CombinationsTest
                         mw.EditKategorie(name, name, maxTime);
                     }
                 }
-                textBox1.Clear();
-                textBox2.Clear();
-                FillListView();
+                FillListView(true);
             }
+        }
+        private void EditCategory_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
         }
     }
 

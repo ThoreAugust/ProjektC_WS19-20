@@ -27,6 +27,8 @@ namespace CombinationsTest
         private ListViewComparer lvwColumnSorter;
         private EditCategory editKats;
         private String projectName = "CombinationsTest";
+        private int remainingSecondsForWarning1 = 300;
+        private int remainingSecondsForWarning2 = 60;
 
 
         public MainWindow()
@@ -37,6 +39,7 @@ namespace CombinationsTest
             resetTime = DateTime.Now;
             InitializeComponent();
             LoadLog();
+            editKats = new EditCategory(this);
             if (!setUp.passSet())
             {
                 setUp.ShowDialog();
@@ -92,10 +95,12 @@ namespace CombinationsTest
                         if (i == 1 && !newDay)
                         {
                             logProgramme.Add(new Programm(splitLine[0], splitLine[1], Convert.ToInt32(splitLine[2]), Convert.ToInt32(splitLine[3])));
+                            logProgramme[(logProgramme.Count - 1)].setIndividualLimit(Convert.ToBoolean(splitLine[4]));
                         }
                         if (i == 1 && newDay)
                         {
                             logProgramme.Add(new Programm(splitLine[0], splitLine[1], 0, Convert.ToInt32(splitLine[3])));
+                            logProgramme[(logProgramme.Count - 1)].setIndividualLimit(Convert.ToBoolean(splitLine[4]));
                         }
                         if (i == 2)
                         {
@@ -143,22 +148,6 @@ namespace CombinationsTest
             List<String> programmNames = new List<String>();
             List<Programm> installedProgs = new List<Programm>();
             RegistryKey key;
-            void addNamesForKey(RegistryKey regKey)
-            {
-                string displayName;
-                foreach (String keyName in regKey.GetSubKeyNames())
-                {
-                    RegistryKey subkey = regKey.OpenSubKey(keyName);
-                    displayName = subkey.GetValue("DisplayName") as string;
-                    if (displayName != null && !displayName.Contains("Microsoft") && !displayName.Contains("Windows"))
-                    {
-                        if (!programmNames.Contains(displayName))
-                        {
-                            programmNames.Add(displayName);
-                        }
-                    }
-                }
-            }
             void addPathByDisplayName(RegistryKey regKey)
             {
                 string displayName;
@@ -319,9 +308,8 @@ namespace CombinationsTest
                 {
                     if (programm == p)
                     {
-                        if (p.getMaxTime() != maxTime)
+                        if (p.getMaxTime() != maxTime || (katName != "" && katName != p.getKategorie()) || p.getIndividualLimit() != individualLimitCheckBox.Checked)
                         {
-                            String message = "Maximale Nutzungszeit gespeichert!";
                             if (p.getKategorie() != katName)
                             {
                                 foreach(Kategorie k in logKategorien)
@@ -336,28 +324,10 @@ namespace CombinationsTest
                                     }
                                 }
                                 p.setKategorie(katName);
-                                message = "Änderungen gespeichert!.";
                             }
+                            p.setIndividualLimit(individualLimitCheckBox.Checked);
                             p.setMaxTime(maxTime);
-                            MessageBox.Show(message, "Success", MessageBoxButtons.OK);
-                            SaveLogs();
-                            break;
-                        }
-                        else if(katName != "")
-                        {
-                            foreach (Kategorie k in logKategorien)
-                            {
-                                if (k.getName() == p.getKategorie())
-                                {
-                                    k.RemoveProgramm(p);
-                                }
-                                if (k.getName() == katName)
-                                {
-                                    k.AddProgramm(p);
-                                }
-                            }
-                            p.setKategorie(katName);
-                            MessageBox.Show("Kategorie gespeichert!", "Success", MessageBoxButtons.OK);
+                            MessageBox.Show("Änderungen gespeichert!", "Success", MessageBoxButtons.OK);
                             SaveLogs();
                             break;
                         }
@@ -443,11 +413,17 @@ namespace CombinationsTest
                         if (foundOne)
                         {
                             kategorie.setUsedTime(kategorie.getUsedTime() + 1);
+                            if(kategorie.getUsedTime() == (kategorie.getMaxTime() - remainingSecondsForWarning1))
+                            {
+                                MessageBox.Show("Die Zeit für " + kategorie.getName() + " ist bald aufgebraucht!", "Warnung", MessageBoxButtons.OK);
+                            }
+                            if (kategorie.getUsedTime() == (kategorie.getMaxTime() - remainingSecondsForWarning2))
+                            {
+                                MessageBox.Show("Programme aus " + kategorie.getName() + " werden gleich beendet!", "Warnung", MessageBoxButtons.OK);
+                            }
                             break;
                         }
                     }
-                    //DEBUG
-                    Console.WriteLine(kategorie.getName() + ": " + kategorie.getUsedTime() + " / " + kategorie.getMaxTime());
                 }
                 for (int i = 0; i < currentProgsListView.Items.Count; i++)
                 {
@@ -469,16 +445,26 @@ namespace CombinationsTest
                         try
                         {
                             Programm savedProg = (Programm)savedProgsListView.Items[j].Tag;
-                            if (process.MainModule.FileName.Contains(savedProg.getPath()) && process.ProcessName == savedProg.getName())
+                            if ((process.MainModule.FileName.Contains(savedProg.getPath()) || savedProg.getPath().Contains(process.MainModule.FileName))
+                                && process.ProcessName == savedProg.getName())
                             {
                                 savedProg.setUsedTime(Convert.ToInt32(usage.TotalSeconds));
+                                //Zeitwarnung
+                                if(savedProg.getIndividualLimit() && savedProg.getUsedTime() == (savedProg.getMaxTime() - remainingSecondsForWarning1))
+                                {
+                                    MessageBox.Show("Die Zeit für " + savedProg.getName() + " ist bald aufgebraucht!", "Warnung", MessageBoxButtons.OK);
+                                }
+                                if (savedProg.getIndividualLimit() && savedProg.getUsedTime() == (savedProg.getMaxTime() - remainingSecondsForWarning2))
+                                {
+                                    MessageBox.Show(savedProg.getName() + " wird gleich beendet!", "Warnung", MessageBoxButtons.OK);
+                                }
                                 //Maximale Nutzungszeit des Programms überschritten
-                                if (savedProg.getUsedTime() >= savedProg.getMaxTime())
+                                if (savedProg.getIndividualLimit() && savedProg.getUsedTime() >= savedProg.getMaxTime())
                                 {
                                     CloseProgram(process);
                                 }
                                 //Maximale Nutzungszeit der Kategorie überschritten
-                                if (savedProg.getKategorie() != "")
+                                if (savedProg.getKategorie() != "" && savedProg.getKategorie() != null)
                                 {
                                     Kategorie kat = logKategorien.Find(k => k.getName().Equals(savedProg.getKategorie()));
                                     if (kat.getUsedTime() >= kat.getMaxTime())
@@ -528,7 +514,8 @@ namespace CombinationsTest
                 {
                     fillSavedProgsListView();
                 }
-                updateDetailBox();
+                editKats.FillListView(false);
+                updateDetailBox(false);
             }
 
         }
@@ -640,7 +627,6 @@ namespace CombinationsTest
         }
         public void AddKategorie(string name, int maxTime)
         {
-            Programm test;
             List<Programm> testList = new List<Programm>();
             bool isUnique = true;
             if (logKategorien.Count != 0 )
@@ -656,9 +642,6 @@ namespace CombinationsTest
             }
             if (isUnique)
             {
-                //test = new Programm("test", "X://test.exe", 120, 18000);
-                //test.setKategorie(name);
-                //testList.Add(test);
                 logKategorien.Add(new Kategorie(name, 0, maxTime, testList));
                 fillKategorieDropDown();
                 SaveLogs();
@@ -705,7 +688,7 @@ namespace CombinationsTest
             List<String[]> list = new List<String[]>();
             foreach (Kategorie k in logKategorien)
             {
-                list.Add(new String[] { k.getName(), "" + k.getMaxTime() });
+                list.Add(new String[] { k.getName(), "" + k.getUsedTime(), "" + k.getMaxTime() });
             }
             return list;
         }
@@ -784,8 +767,9 @@ namespace CombinationsTest
             // Perform the sort with these new sort options.
             savedProgsListView.Sort();
         }
-        private void updateDetailBox()
+        private void updateDetailBox(bool changedIndex)
         {
+            Programm programm = null;
             if (programmTabs.SelectedTab == installedProgs)
             {
                 if(installedProgsListView.SelectedItems.Count > 0)
@@ -813,17 +797,33 @@ namespace CombinationsTest
                 if (currentProgsListView.SelectedItems.Count > 0)
                 {
                     Process process = (Process)currentProgsListView.SelectedItems[0].Tag;
-                    if (process.StartTime.Date == resetTime.Date)
+                    programm = logProgramme.Find(prog => prog.getName().Equals(process.ProcessName) && 
+                    (prog.getPath().Contains(process.MainModule.FileName) || process.MainModule.FileName.Contains(prog.getPath())));
+                    if(programm != null)
                     {
-                        usage = DateTime.Now.Subtract(process.StartTime);
+                        updateDBox(currentProgsListView);
                     }
                     else
                     {
-                        usage = DateTime.Now.Subtract(resetTime);
+                        if (process.StartTime.Date == resetTime.Date)
+                        {
+                            usage = DateTime.Now.Subtract(process.StartTime);
+                        }
+                        else
+                        {
+                            usage = DateTime.Now.Subtract(resetTime);
+                        }
+                        detailBox.Text = process.ProcessName;
+                        detailBox.Visible = true;
+                        currentUseTimeTextBox.Text = usage.ToString(@"hh\:mm\:ss");
+                        if (changedIndex)
+                        {
+                            individualLimitCheckBox.Checked = true;
+                            maxHourUseTimeTextBox.Text = "0";
+                            maxMinuteUseTimeTextBox.Text = "0";
+                            maxUseTimeTrackbar.Value = 0;
+                        }
                     }
-                    detailBox.Text = process.ProcessName;
-                    detailBox.Visible = true;
-                    currentUseTimeTextBox.Text = usage.ToString(@"hh\:mm\:ss");
                 }
                 else
                 {
@@ -835,11 +835,26 @@ namespace CombinationsTest
                 int usedHours;
                 int usedMinutes;
                 int usedSeconds;
-                var selectedItem = (Programm)listView.SelectedItems[0].Tag;
+                Programm selectedItem;
+                if (programm != null)
+                {
+                    selectedItem = programm;
+                }
+                else
+                {
+                    selectedItem = (Programm)listView.SelectedItems[0].Tag;
+                }
                 if (selectedItem != null)
                 {
                     detailBox.Text = selectedItem.getName();
                     detailBox.Visible = true;
+                    if (changedIndex)
+                    {
+                        individualLimitCheckBox.Checked = selectedItem.getIndividualLimit();
+                        maxHourUseTimeTextBox.Text = "" + selectedItem.getMaxTime() / 3600;
+                        maxMinuteUseTimeTextBox.Text = "" + (selectedItem.getMaxTime() % 3600) / 60;
+                        maxUseTimeTrackbar.Value = selectedItem.getMaxTime();
+                    }
                     usedHours = selectedItem.getUsedTime() / 3600;
                     usedMinutes = (selectedItem.getUsedTime() % 3600) / 60;
                     usedSeconds = selectedItem.getUsedTime() % 60;
@@ -849,23 +864,10 @@ namespace CombinationsTest
         }
         private void ProgrammTabs_Selected(object sender, TabControlEventArgs e)
         {
-            updateDetailBox();
-        }
-        private void installedProgsListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            updateDetailBox();
-        }
-        private void CurrentProgsListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            updateDetailBox();
-        }
-        private void SavedProgsListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            updateDetailBox();
+            updateDetailBox(true);
         }
         private void NeueKategorieToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            editKats = new EditCategory(this);
             editKats.Show();
         }
         private void HilfeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -881,6 +883,18 @@ namespace CombinationsTest
         public String getProjectName()
         {
             return projectName;
+        }
+        private void InstalledProgsListView_Click(object sender, EventArgs e)
+        {
+            updateDetailBox(true);
+        }
+        private void CurrentProgsListView_Click(object sender, EventArgs e)
+        {
+            updateDetailBox(true);
+        }
+        private void SavedProgsListView_Click(object sender, EventArgs e)
+        {
+            updateDetailBox(true);
         }
     }   
 }

@@ -13,6 +13,7 @@ namespace CombinationsTest
         private int usedTime;
         private int maxTime;
         private string kategorie;
+        private bool individualLimit;
 
         public Programm(String n, String p, int ut, int mt)
         {
@@ -21,6 +22,7 @@ namespace CombinationsTest
             usedTime = ut;
             maxTime = mt;
             kategorie = "";
+            individualLimit = true;
         }
         public void setUsedTime(int newUsedTime)
         {
@@ -54,9 +56,17 @@ namespace CombinationsTest
         {
             kategorie = newKategorie;
         }
+        public bool getIndividualLimit()
+        {
+            return individualLimit;
+        }
+        public void setIndividualLimit(bool limit)
+        {
+            individualLimit = limit;
+        }
         public override string ToString()
         {
-            return name + ";" + path + ";" + usedTime + ";" + maxTime + ";" + kategorie;
+            return name + ";" + path + ";" + usedTime + ";" + maxTime + ";" + individualLimit;
         }
     }
 }
