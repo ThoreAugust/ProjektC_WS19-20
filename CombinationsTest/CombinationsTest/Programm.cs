@@ -22,7 +22,7 @@ namespace CombinationsTest
             usedTime = ut;
             maxTime = mt;
             kategorie = "";
-            individualLimit = true;
+            individualLimit = false;
         }
         public void setUsedTime(int newUsedTime)
         {

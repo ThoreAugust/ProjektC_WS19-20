@@ -456,7 +456,7 @@
             // individualLimitCheckBox
             // 
             this.individualLimitCheckBox.AutoSize = true;
-            this.individualLimitCheckBox.Checked = true;
+            this.individualLimitCheckBox.Checked = false;
             this.individualLimitCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.individualLimitCheckBox.Location = new System.Drawing.Point(143, 154);
             this.individualLimitCheckBox.Name = "individualLimitCheckBox";

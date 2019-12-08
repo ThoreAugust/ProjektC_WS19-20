@@ -29,6 +29,7 @@ namespace CombinationsTest
         private String projectName = "CombinationsTest";
         private int remainingSecondsForWarning1 = 300;
         private int remainingSecondsForWarning2 = 60;
+        private bool individualLimitDefault = false;
 
 
         public MainWindow()
@@ -450,16 +451,19 @@ namespace CombinationsTest
                             {
                                 savedProg.setUsedTime(Convert.ToInt32(usage.TotalSeconds));
                                 //Zeitwarnung
-                                if(savedProg.getIndividualLimit() && savedProg.getUsedTime() == (savedProg.getMaxTime() - remainingSecondsForWarning1))
+                                if((savedProg.getIndividualLimit() || savedProg.getKategorie() == "" || savedProg.getKategorie() == null) 
+                                    && savedProg.getUsedTime() == (savedProg.getMaxTime() - remainingSecondsForWarning1))
                                 {
                                     MessageBox.Show("Die Zeit für " + savedProg.getName() + " ist bald aufgebraucht!", "Warnung", MessageBoxButtons.OK);
                                 }
-                                if (savedProg.getIndividualLimit() && savedProg.getUsedTime() == (savedProg.getMaxTime() - remainingSecondsForWarning2))
+                                if ((savedProg.getIndividualLimit() || savedProg.getKategorie() == "" || savedProg.getKategorie() == null)
+                                    && savedProg.getUsedTime() == (savedProg.getMaxTime() - remainingSecondsForWarning2))
                                 {
                                     MessageBox.Show(savedProg.getName() + " wird gleich beendet!", "Warnung", MessageBoxButtons.OK);
                                 }
                                 //Maximale Nutzungszeit des Programms überschritten
-                                if (savedProg.getIndividualLimit() && savedProg.getUsedTime() >= savedProg.getMaxTime())
+                                if ((savedProg.getIndividualLimit() || savedProg.getKategorie() == "" || savedProg.getKategorie() == null)
+                                    && savedProg.getUsedTime() >= savedProg.getMaxTime())
                                 {
                                     CloseProgram(process);
                                 }
@@ -818,7 +822,7 @@ namespace CombinationsTest
                         currentUseTimeTextBox.Text = usage.ToString(@"hh\:mm\:ss");
                         if (changedIndex)
                         {
-                            individualLimitCheckBox.Checked = true;
+                            individualLimitCheckBox.Checked = individualLimitDefault;
                             maxHourUseTimeTextBox.Text = "0";
                             maxMinuteUseTimeTextBox.Text = "0";
                             maxUseTimeTrackbar.Value = 0;
