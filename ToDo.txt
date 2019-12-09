@@ -30,10 +30,13 @@
 (Done)Autostart Einstellung speichern
 (Done)Sich selbst nicht in aktuellen Programmen anzeigen
 !Log.txt oder kompletten Ordner Zugriffsrechte anheben
+!Passwort ändern
+!Beschriftungen überarbeiten
+!Menü überarbeiten
 
 Geringe Priorität:
 !Abgelaufene Nutzungszeit ProgressBar mit Funktion
--Zeitwarnungen als Popup
+(Done)Zeitwarnungen als Popup
 -Passwort in log.txt speichern
 !Import/Export
 (Done)Infofenster
