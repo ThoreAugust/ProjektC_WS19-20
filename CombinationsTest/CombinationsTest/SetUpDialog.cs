@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CombinationsTest
+namespace BalanceTech
 {
     public partial class SetUpDialog : Form
     {

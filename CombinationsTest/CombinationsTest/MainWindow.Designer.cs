@@ -1,4 +1,4 @@
-﻿namespace CombinationsTest
+﻿namespace BalanceTech
 {
     partial class MainWindow
     {
@@ -456,7 +456,7 @@
             // individualLimitCheckBox
             // 
             this.individualLimitCheckBox.AutoSize = true;
-            this.individualLimitCheckBox.Checked = false;
+            this.individualLimitCheckBox.Checked = true;
             this.individualLimitCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.individualLimitCheckBox.Location = new System.Drawing.Point(143, 154);
             this.individualLimitCheckBox.Name = "individualLimitCheckBox";
@@ -645,7 +645,6 @@
             this.Text = "MainWindow";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.Move += new System.EventHandler(this.Form1_Move);
             this.contextMenuStrip1.ResumeLayout(false);
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();

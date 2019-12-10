@@ -1,4 +1,4 @@
-﻿namespace CombinationsTest
+﻿namespace BalanceTech
 {
     partial class EditCategory
     {

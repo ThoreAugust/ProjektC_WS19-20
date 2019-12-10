@@ -13,7 +13,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Diagnostics;
 using Microsoft.Win32;
-namespace CombinationsTest
+namespace BalanceTech
 {
     public partial class MainWindow : Form
     {
@@ -26,9 +26,9 @@ namespace CombinationsTest
         private DateTime resetTime;
         private ListViewComparer lvwColumnSorter;
         private EditCategory editKats;
-        private String projectName = "CombinationsTest";
+        private String projectName = "BalanceTech";
         private int remainingSecondsForWarning1 = 300;
-        private int remainingSecondsForWarning2 = 60;
+        private int remainingSecondsForWarning2 = 10;
         private bool individualLimitDefault = false;
 
 
@@ -205,6 +205,7 @@ namespace CombinationsTest
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Text = projectName;
             fillCurrentProgsListView();
             fillInstalledProgsListView();
             fillSavedProgsListView();
@@ -349,14 +350,6 @@ namespace CombinationsTest
         {
             this.Close();
         }
-        private void Form1_Move(object sender, EventArgs e)
-        {
-            if (this.WindowState == FormWindowState.Minimized)
-            {
-                this.Hide();
-                timerNotification.ShowBalloonTip(1000, "Important notice" , "You have xxx Seconds left for your CurrentApplication", ToolTipIcon.Info);
-            }
-        }
         private void ExitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -454,12 +447,30 @@ namespace CombinationsTest
                                 if((savedProg.getIndividualLimit() || savedProg.getKategorie() == "" || savedProg.getKategorie() == null) 
                                     && savedProg.getUsedTime() == (savedProg.getMaxTime() - remainingSecondsForWarning1))
                                 {
-                                    MessageBox.Show("Die Zeit für " + savedProg.getName() + " ist bald aufgebraucht!", "Warnung", MessageBoxButtons.OK);
+                                    String msg = "Die Zeit für " + savedProg.getName() + " ist bald aufgebraucht!";
+                                    if (this.WindowState == FormWindowState.Minimized)
+                                    {
+                                        this.Hide();
+                                        timerNotification.ShowBalloonTip(1000, "Warnung", msg, ToolTipIcon.Info);
+                                    }
+                                    else
+                                    {
+                                         MessageBox.Show(msg, "Warnung", MessageBoxButtons.OK);   
+                                    }
                                 }
                                 if ((savedProg.getIndividualLimit() || savedProg.getKategorie() == "" || savedProg.getKategorie() == null)
                                     && savedProg.getUsedTime() == (savedProg.getMaxTime() - remainingSecondsForWarning2))
                                 {
-                                    MessageBox.Show(savedProg.getName() + " wird gleich beendet!", "Warnung", MessageBoxButtons.OK);
+                                    String msg = savedProg.getName() + " wird gleich beendet!";
+                                    if (this.WindowState == FormWindowState.Minimized)
+                                    {
+                                        this.Hide();
+                                        timerNotification.ShowBalloonTip(1000, "Warnung", msg, ToolTipIcon.Info);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show(msg, "Warnung", MessageBoxButtons.OK);
+                                    }
                                 }
                                 //Maximale Nutzungszeit des Programms überschritten
                                 if ((savedProg.getIndividualLimit() || savedProg.getKategorie() == "" || savedProg.getKategorie() == null)
@@ -599,6 +610,7 @@ namespace CombinationsTest
         private bool confirmCloseWithPassword()
         {
             PasswordDialog pw = new PasswordDialog();
+            pw.Text = projectName + " - Passworteingabe";
             pw.ShowDialog();            
 
             return pw.keepWindowOpen();

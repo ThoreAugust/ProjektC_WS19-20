@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CombinationsTest
+namespace BalanceTech
 {
     using System;
     using System.Collections;
