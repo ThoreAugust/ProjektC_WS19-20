@@ -20,23 +20,26 @@
 (Done)AddProgramm() erweitern, siehe Kommentar
 (Done)Listview sortieren
 (Done)Prozesse beenden / killen
--Kategorien: Liste enthaltener Programme, UsedTime = UsedTime aller enthaltener Programme
--Bug bei speichern von Kategorien: Enthaltene Programme werden nicht gespeichert
+(Done)Kategorien: Liste enthaltener Programme, UsedTime = UsedTime aller enthaltener Programme
+(Done)Bug bei speichern von Kategorien: Enthaltene Programme werden nicht gespeichert
 (Done)DetailBox an ausgewählten Tab binden
 -/-Programme über Name statt Pfad identifizieren
 	->Funktioniert wieder per Pfad, solang nicht mehrere Programme im gleichen Ordner installiert sind
 (Done)Neu Kategorie überarbeiten
 (Done)Bug: Doppelte Kategorien in Dropdown
-!Autostart Einstellung speichern
+(Done)Autostart Einstellung speichern
 (Done)Sich selbst nicht in aktuellen Programmen anzeigen
 !Log.txt oder kompletten Ordner Zugriffsrechte anheben
+!Passwort ändern
+!Beschriftungen überarbeiten
+!Menü überarbeiten
 
 Geringe Priorität:
 !Abgelaufene Nutzungszeit ProgressBar mit Funktion
--Zeitwarnungen als Popup
+(Done)Zeitwarnungen als Popup
 -Passwort in log.txt speichern
 !Import/Export
-!Infofenster
+(Done)Infofenster
 
 Bonus:
 Statistik aktiver Programme
