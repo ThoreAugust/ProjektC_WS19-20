@@ -84,7 +84,7 @@
       <DependentUpon>PasswordDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Programm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SetUpDialog.cs">
       <SubType>Form</SubType>

@@ -40,7 +40,7 @@ namespace BalanceTech
                     // add categorys to CategoryList
                     foreach (string category in categoryBox.Text.Split(';'))
                     {
-                        mw.Addcategory(category, 0);
+                        mw.AddCategory(category, 0);
                     }
                 }
                 //to turn autostart on/off

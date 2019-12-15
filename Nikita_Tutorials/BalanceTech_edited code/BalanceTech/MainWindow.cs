@@ -21,7 +21,7 @@ namespace BalanceTech
         private TimeSpan usage;
         private ListViewItem lvi;
         private List<Category> logCategorys;
-        private List<Program> logPrograms;
+        private List<Programm> logPrograms;
         private int ticks;
         private SetUpDialog setUp;
         private DateTime resetTime;
@@ -39,7 +39,7 @@ namespace BalanceTech
             //initialize
             setUp = new SetUpDialog(this);
             logCategorys = new List<Category>();
-            logPrograms = new List<Program>();
+            logPrograms = new List<Programm>();
             resetTime = DateTime.Now;
             InitializeComponent();
             LoadLog();
@@ -81,7 +81,7 @@ namespace BalanceTech
                     int i = 0;
                     String readLine;
                     String[] splitLine;
-                    List<Program> programs = null;
+                    List<Programm> programs = null;
                     int usedTime = 0;
                     bool newDay = false;
                     if (File.GetLastWriteTime("Log.txt").Date.CompareTo(DateTime.Today) < 0)
@@ -103,23 +103,23 @@ namespace BalanceTech
                         splitLine = readLine.Split(';');
                         if (i == 1 && !newDay)
                         {
-                            logPrograms.Add(new Program(splitLine[0], splitLine[1], Convert.ToInt32(splitLine[2]), Convert.ToInt32(splitLine[3])));
+                            logPrograms.Add(new Programm(splitLine[0], splitLine[1], Convert.ToInt32(splitLine[2]), Convert.ToInt32(splitLine[3])));
                             logPrograms[(logPrograms.Count - 1)].setIndividualLimit(Convert.ToBoolean(splitLine[4]));
                         }
                         if (i == 1 && newDay)
                         {
-                            logPrograms.Add(new Program(splitLine[0], splitLine[1], 0, Convert.ToInt32(splitLine[3])));
+                            logPrograms.Add(new Programm(splitLine[0], splitLine[1], 0, Convert.ToInt32(splitLine[3])));
                             logPrograms[(logPrograms.Count - 1)].setIndividualLimit(Convert.ToBoolean(splitLine[4]));
                         }
                         if (i == 2)
                         {
-                            programs = new List<Program>();
+                            programs = new List<Programm>();
                             usedTime = 0;
                             for(int j = 2; j < splitLine.Length; j++)
                             {
                                 String name = splitLine[j].Split(',')[0];
                                 String path = splitLine[j].Split(',')[1];
-                                foreach (Program program in logPrograms)
+                                foreach (Programm program in logPrograms)
                                 {
                                     if (program.getName() == name && program.getPath() == path)
                                     {
@@ -143,7 +143,7 @@ namespace BalanceTech
             using (StreamWriter writer = File.CreateText("Log.txt"))
             {
                 writer.WriteLine("[Programme]");
-                foreach (Program program in logPrograms)
+                foreach (Programm program in logPrograms)
                 {
                     writer.WriteLine(program);
                 }
@@ -189,7 +189,7 @@ namespace BalanceTech
             categoryDropDown.Items.Clear();
             if(logCategorys.Count != 0)
             {
-                foreach (Categorys item in logCategorys)
+                foreach (Category item in logCategorys)
                 {
                     categoryDropDown.Items.Add(item.getName());
                 }
@@ -200,7 +200,7 @@ namespace BalanceTech
         private void fillInstalledProgsListView()
         {
             installedProgsListView.Items.Clear();
-            foreach (Program prog in getInstalledPrograms())
+            foreach (Programm prog in getInstalledPrograms())
             {
                     Console.WriteLine(prog.ToString());
                     string[] row = new string[] { prog.getName(), prog.getPath() };
@@ -215,7 +215,7 @@ namespace BalanceTech
         private void fillSavedProgsListView()
         {
             savedProgsListView.Items.Clear();
-            foreach (Program savedProgs in logPrograms)
+            foreach (Programm savedProgs in logPrograms)
             {
                 string[] row = new string[] { savedProgs.getName(), savedProgs.getPath(), savedProgs.getCategory(), "" + savedProgs.getUsedTime(), "" + savedProgs.getMaxTime() };
                 lvi = new ListViewItem(row);
@@ -237,10 +237,10 @@ namespace BalanceTech
         }
 
         //to check logPrograms for unique path and name and save them
-        private void AddProgram(Program program, int maxTime, string catName)
+        private void AddProgram(Programm program, int maxTime, string catName)
         {
             bool isUnique = true;
-            foreach (Program p in logPrograms)
+            foreach (Programm p in logPrograms)
             {
                 if ((program.getPath().Contains(p.getPath()) || p.getPath().Contains(program.getPath()))
                     && program.getName() == p.getName())
@@ -271,7 +271,7 @@ namespace BalanceTech
             }
             else
             {
-                foreach (Program p in logPrograms)
+                foreach (Programm p in logPrograms)
                 {
                     if (program == p)
                     {
@@ -318,7 +318,7 @@ namespace BalanceTech
                 if(resetTime.Date != DateTime.Now.Date)
                 {
                     resetTime = DateTime.Now;
-                    foreach(Program p in logPrograms)
+                    foreach(Programm p in logPrograms)
                     {
                         p.setUsedTime(0);
                     }
@@ -335,7 +335,7 @@ namespace BalanceTech
                     {
                         var item = currentProgsListView.Items[i];
                         Process process = (Process)item.Tag;
-                        foreach(Program program in category.GetPrograms())
+                        foreach(Programm program in category.GetPrograms())
                         {
                             try
                             {
@@ -383,7 +383,7 @@ namespace BalanceTech
                     {
                         try
                         {
-                            Program savedProg = (Program)savedProgsListView.Items[j].Tag;
+                            Programm savedProg = (Programm)savedProgsListView.Items[j].Tag;
                             if ((process.MainModule.FileName.Contains(savedProg.getPath()) || savedProg.getPath().Contains(process.MainModule.FileName))
                                 && process.ProcessName == savedProg.getName())
                             {
@@ -475,7 +475,7 @@ namespace BalanceTech
                 {
                     fillSavedProgsListView();
                 }
-                editCatss.FillCategoryListView(false);
+                editCats.FillCategoryListView(false);
                 updateDetailBox(false);
             }
 
@@ -580,22 +580,22 @@ namespace BalanceTech
 
         private void saveProgButton_Click(object sender, EventArgs e)
         {
-            Program p = null;
+            Programm p = null;
             if (programTabs.SelectedTab == installedProgs)
             {
-                p = (Program)installedProgsListView.SelectedItems[0].Tag;
+                p = (Programm)installedProgsListView.SelectedItems[0].Tag;
             }
             if (programTabs.SelectedTab == savedProgs)
             {
-                p = (Program)savedProgsListView.SelectedItems[0].Tag;
+                p = (Programm)savedProgsListView.SelectedItems[0].Tag;
             }
             if (programTabs.SelectedTab == currentProgs)
             {
                 Process process = (Process)currentProgsListView.SelectedItems[0].Tag;
-                p = new Program(process.ProcessName, process.MainModule.FileName, 0, 0);
+                p = new Programm(process.ProcessName, process.MainModule.FileName, 0, 0);
             }
             int maxUseTime = maxUseTimeTrackbar.Value;
-            string caName = (string) categoryDropDown.SelectedItem;
+            string catName = (string) categoryDropDown.SelectedItem;
             AddProgram(p, maxUseTime,catName);
             fillSavedProgsListView();
         }
@@ -616,7 +616,7 @@ namespace BalanceTech
 
         public void AddCategory(string name, int maxTime)
         {
-            List<Program> progList = new List<Program>();
+            List<Programm> progList = new List<Programm>();
             bool isUnique = true;
             if (logCategorys.Count != 0 )
             {
@@ -646,7 +646,7 @@ namespace BalanceTech
                 {
                     if (newName != "")
                     {
-                        foreach(Program program in logPrograms)
+                        foreach(Programm program in logPrograms)
                         {
                             if (program.getCategory() == logCategorys[i].getName())
                                 program.setCategory(newName);
@@ -762,7 +762,7 @@ namespace BalanceTech
 
         private void updateDetailBox(bool changedIndex)
         {
-            Program program = null;
+            Programm program = null;
             if (programTabs.SelectedTab == installedProgs)
             {
                 if(installedProgsListView.SelectedItems.Count > 0)
@@ -830,14 +830,14 @@ namespace BalanceTech
                 int usedHours;
                 int usedMinutes;
                 int usedSeconds;
-                Program selectedItem;
-                if (Program != null)
+                Programm selectedItem;
+                if (program != null)
                 {
                     selectedItem = program;
                 }
                 else
                 {
-                    selectedItem = (Program)listView.SelectedItems[0].Tag;
+                    selectedItem = (Programm)listView.SelectedItems[0].Tag;
                 }
                 if (selectedItem != null)
                 {
@@ -863,10 +863,10 @@ namespace BalanceTech
         //_______________________________________
 
         //to get installed programs       
-        private List<Program> getInstalledPrograms()
+        private List<Programm> getInstalledPrograms()
         {   
             List<String> programNames = new List<String>();
-            List<Program> installedProgs = new List<Program>();
+            List<Programm> installedProgs = new List<Programm>();
             RegistryKey key;
 
             //to add path and name to installed programs
@@ -881,7 +881,7 @@ namespace BalanceTech
                     {
                         displayName = subKey.GetValue("DisplayName") as string;
                         path = subKey.GetValue("InstallLocation") as string;
-                        Program temp = new Program(displayName, path, 0, 0);
+                        Programm temp = new Programm(displayName, path, 0, 0);
                         if (!installedProgs.Contains(temp))
                         {
                             installedProgs.Add(temp);

@@ -12,10 +12,10 @@ namespace BalanceTech
         private String name;
         private int usedTime;
         private int maxTime;
-        private List<Program> programs;
+        private List<Programm> programs;
 
         //constructor
-        public Category(String n, int ut, int mt, List<Program> p)
+        public Category(String n, int ut, int mt, List<Programm> p)
         {
             //initialize
             name = n;
@@ -25,7 +25,7 @@ namespace BalanceTech
         }
 
         //getter/setter 
-        public void AddProgram(Program prog)
+        public void AddProgram(Programm prog)
         {
             if (!programs.Contains(prog))
             {
@@ -56,7 +56,7 @@ namespace BalanceTech
         {
             usedTime = ut;
         }
-        public List<Program> GetPrograms()
+        public List<Programm> GetPrograms()
         {
             return programs;
         }
@@ -65,12 +65,12 @@ namespace BalanceTech
             String p = "";
             if (programs != null)
             {
-                foreach (Program program in programs)
+                foreach (Programm program in programs)
                     p += ";" + program.getName() + "," + program.getPath();
             }
             return name + ";" + maxTime + p;
         }
-        public void RemoveProgram(Program program)
+        public void RemoveProgram(Programm program)
         {
             programs.Remove(program);
         }
